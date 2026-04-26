@@ -46,11 +46,11 @@ const textValue = ref('')
         </div>
         <div>
           <label class="block text-sm font-bold text-neu-text/60 mb-2">禁用状态</label>
-          <NeuInput disabled placeholder="不可编辑" />
+          <NeuInput :modelValue="''" disabled placeholder="不可编辑" />
         </div>
         <div>
           <label class="block text-sm font-bold text-neu-text/60 mb-2">错误状态</label>
-          <NeuInput error placeholder="输入内容有误" />
+          <NeuInput :modelValue="''" error placeholder="输入内容有误" />
         </div>
       </NeuCard>
       <CodeBlock :code="usageCode" language="html" />

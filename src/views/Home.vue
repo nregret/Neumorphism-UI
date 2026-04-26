@@ -33,7 +33,7 @@ const toggleDark = useToggle(isDark)
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-neu-accent to-purple-500">UI组件库</span>
         </h1>
         <p class="text-lg md:text-xl text-neu-text/80 max-w-lg leading-relaxed">
-          NeuUI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 22+ 核心组件。
+          NeuUI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 32 个核心组件。
         </p>
         <div class="flex items-center space-x-6 pt-4">
           <router-link to="/components">

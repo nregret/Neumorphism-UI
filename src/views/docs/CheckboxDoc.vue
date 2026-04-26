@@ -63,7 +63,7 @@ const multipleChecked = ref(['apple'])
         <div>
           <h3 class="font-bold text-lg mb-4 text-neu-text/60">禁用状态</h3>
           <div class="flex flex-col gap-4">
-            <NeuCheckbox disabled label="未选中的禁用" />
+            <NeuCheckbox :modelValue="false" disabled label="未选中的禁用" />
             <NeuCheckbox :modelValue="true" disabled label="选中的禁用" />
           </div>
         </div>

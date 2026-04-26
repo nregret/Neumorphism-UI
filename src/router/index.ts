@@ -122,6 +122,56 @@ const routes: RouteRecordRaw[] = [
         name: 'DocsToast',
         component: () => import('../views/docs/ToastDoc.vue'),
       },
+      {
+        path: 'spin',
+        name: 'DocsSpin',
+        component: () => import('../views/docs/SpinDoc.vue'),
+      },
+      {
+        path: 'popconfirm',
+        name: 'DocsPopconfirm',
+        component: () => import('../views/docs/PopconfirmDoc.vue'),
+      },
+      {
+        path: 'steps',
+        name: 'DocsSteps',
+        component: () => import('../views/docs/StepsDoc.vue'),
+      },
+      {
+        path: 'menu',
+        name: 'DocsMenu',
+        component: () => import('../views/docs/MenuDoc.vue'),
+      },
+      {
+        path: 'select',
+        name: 'DocsSelect',
+        component: () => import('../views/docs/SelectDoc.vue'),
+      },
+      {
+        path: 'form',
+        name: 'DocsForm',
+        component: () => import('../views/docs/FormDoc.vue'),
+      },
+      {
+        path: 'datepicker',
+        name: 'DocsDatePicker',
+        component: () => import('../views/docs/DatePickerDoc.vue'),
+      },
+      {
+        path: 'upload',
+        name: 'DocsUpload',
+        component: () => import('../views/docs/UploadDoc.vue'),
+      },
+      {
+        path: 'tag',
+        name: 'DocsTag',
+        component: () => import('../views/docs/TagDoc.vue'),
+      },
+      {
+        path: 'tree',
+        name: 'DocsTree',
+        component: () => import('../views/docs/TreeDoc.vue'),
+      },
     ],
   },
 ]

@@ -1,0 +1,11 @@
+- [x] NeuSpin is implemented with neumorphic design and documented
+- [x] NeuPopconfirm is implemented with neumorphic design and documented
+- [x] NeuSteps is implemented with neumorphic design and documented
+- [x] NeuMenu is implemented with neumorphic design and documented
+- [x] NeuTag is implemented with neumorphic design and documented
+- [x] NeuTree is implemented with neumorphic design and documented
+- [x] NeuForm is implemented with neumorphic design and documented
+- [x] NeuDatePicker is implemented with neumorphic design and documented
+- [x] NeuUpload is implemented with neumorphic design and documented
+- [x] All new components are accessible via the documentation sidebar
+- [x] The Home page reflects the correct total number of components

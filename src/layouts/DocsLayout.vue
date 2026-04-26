@@ -25,14 +25,20 @@ const componentGroups = [
     links: [
       { name: 'Breadcrumb 面包屑', path: '/components/breadcrumb' },
       { name: 'Dropdown 下拉菜单', path: '/components/dropdown' },
+      { name: 'Menu 导航菜单', path: '/components/menu' },
       { name: 'Pagination 分页', path: '/components/pagination' },
+      { name: 'Steps 步骤条', path: '/components/steps' },
       { name: 'Tabs 标签页', path: '/components/tabs' },
     ]
   },
   {
     title: '表单/交互 (Forms)',
     links: [
+      { name: 'Form 表单', path: '/components/form' },
       { name: 'Input 输入框', path: '/components/input' },
+      { name: 'Select 下拉选择', path: '/components/select' },
+      { name: 'DatePicker 日期选择', path: '/components/datepicker' },
+      { name: 'Upload 上传', path: '/components/upload' },
       { name: 'Switch 开关', path: '/components/switch' },
       { name: 'Radio 单选框', path: '/components/radio' },
       { name: 'Checkbox 多选框', path: '/components/checkbox' },
@@ -48,6 +54,8 @@ const componentGroups = [
       { name: 'Progress 进度条', path: '/components/progress' },
       { name: 'Accordion 折叠面板', path: '/components/accordion' },
       { name: 'Skeleton 骨架屏', path: '/components/skeleton' },
+      { name: 'Tag 标签', path: '/components/tag' },
+      { name: 'Tree 树形控件', path: '/components/tree' },
     ]
   },
   {
@@ -58,6 +66,8 @@ const componentGroups = [
       { name: 'Drawer 抽屉', path: '/components/drawer' },
       { name: 'Toast 全局提示', path: '/components/toast' },
       { name: 'Tooltip 文字提示', path: '/components/tooltip' },
+      { name: 'Popconfirm 气泡确认框', path: '/components/popconfirm' },
+      { name: 'Spin 加载中', path: '/components/spin' },
     ]
   }
 ]

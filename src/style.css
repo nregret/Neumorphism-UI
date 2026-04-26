@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #e0e5ec;
+    --text-color: #333333;
+    --text-muted: #666666;
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3b1c6;
+    --accent: #4f46e5;
+  }
+
+  .dark {
+    --bg-color: #292d32;
+    --text-color: #e0e5ec;
+    --text-muted: #a0a5aa;
+    --shadow-light: #353a40;
+    --shadow-dark: #1d1f24;
+    --accent: #6366f1;
+  }
+}
+
+:root {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+

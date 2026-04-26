@@ -172,7 +172,7 @@ const drawerClasses = computed(() => {
 
 /* Slide Right */
 .neu-drawer-slide-right-enter-active {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .neu-drawer-slide-right-leave-active {
   transition: transform 0.3s ease-in;
@@ -184,7 +184,7 @@ const drawerClasses = computed(() => {
 
 /* Slide Left */
 .neu-drawer-slide-left-enter-active {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .neu-drawer-slide-left-leave-active {
   transition: transform 0.3s ease-in;
@@ -196,7 +196,7 @@ const drawerClasses = computed(() => {
 
 /* Slide Bottom */
 .neu-drawer-slide-bottom-enter-active {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .neu-drawer-slide-bottom-leave-active {
   transition: transform 0.3s ease-in;
@@ -208,7 +208,7 @@ const drawerClasses = computed(() => {
 
 /* Slide Top */
 .neu-drawer-slide-top-enter-active {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .neu-drawer-slide-top-leave-active {
   transition: transform 0.3s ease-in;

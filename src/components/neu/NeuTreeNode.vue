@@ -63,50 +63,60 @@ const onChildSelect = (node: TreeNode) => {
 <template>
   <div class="neu-tree-node select-none">
     <div
-      class="flex items-center py-2 px-3 my-1 rounded-2xl transition-all duration-300 cursor-pointer border border-transparent"
+      class="group flex items-center py-2 px-3 my-0.5 rounded-xl transition-all duration-300 cursor-pointer border border-transparent relative"
       :class="[
         isSelected 
-          ? 'shadow-neu-pressed bg-[var(--bg-color)]' 
-          : 'hover:shadow-neu-flat hover:bg-[var(--bg-color)]',
+          ? 'shadow-neu-pressed-sm bg-neu-bg/60' 
+          : 'hover:bg-neu-text/5',
         node.disabled ? 'opacity-50 cursor-not-allowed' : ''
       ]"
-      :style="{ paddingLeft: `${level * 24 + 12}px` }"
+      :style="{ paddingLeft: `${level * 20 + 12}px` }"
       @click="handleRowClick"
     >
       <!-- Caret Icon for expanding -->
       <span
-        class="w-6 h-6 flex items-center justify-center mr-2 transition-transform duration-300 rounded-full"
+        class="w-5 h-5 flex items-center justify-center mr-1.5 transition-transform duration-300 rounded-lg"
         :class="[
           !hasChildren ? 'invisible' : '',
-          isExpanded ? 'rotate-90 text-neu-accent' : 'text-neu-text/60',
+          isExpanded ? 'rotate-90 text-neu-accent' : 'text-neu-text/40 group-hover:text-neu-text/70',
           isSelected && !isExpanded ? 'text-neu-accent' : ''
         ]"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5">
           <path d="m9 18 6-6-6-6" />
         </svg>
       </span>
       
       <!-- Label -->
       <span 
-        class="truncate font-medium transition-colors duration-300"
-        :class="isSelected ? 'text-neu-accent' : 'text-neu-text'"
+        class="truncate transition-all duration-300"
+        :class="[
+          isSelected ? 'text-neu-accent font-bold translate-x-0.5' : 'text-neu-text/80 group-hover:text-neu-text font-medium'
+        ]"
       >
         {{ node.label }}
       </span>
     </div>
 
-    <!-- Children -->
-    <div v-if="hasChildren" v-show="isExpanded" class="neu-tree-node-children">
-      <NeuTreeNode
-        v-for="child in node.children"
-        :key="child.key"
-        :node="child"
-        :level="level + 1"
-        :selected-keys="selectedKeys"
-        @toggle="onChildToggle"
-        @select="onChildSelect"
-      />
+    <!-- Children with expansion animation -->
+    <div 
+      v-if="hasChildren" 
+      class="grid transition-all duration-300 ease-out"
+      :class="isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'"
+    >
+      <div class="overflow-hidden">
+        <div class="neu-tree-node-children">
+          <NeuTreeNode
+            v-for="child in node.children"
+            :key="child.key"
+            :node="child"
+            :level="level + 1"
+            :selected-keys="selectedKeys"
+            @toggle="onChildToggle"
+            @select="onChildSelect"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

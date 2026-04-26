@@ -18,6 +18,7 @@ const componentGroups = [
     links: [
       { name: 'Button 按钮', path: '/components/button' },
       { name: 'Card 卡片', path: '/components/card' },
+      { name: 'Divider 分割线', path: '/components/divider' },
     ]
   },
   {
@@ -38,6 +39,9 @@ const componentGroups = [
       { name: 'Input 输入框', path: '/components/input' },
       { name: 'Select 下拉选择', path: '/components/select' },
       { name: 'DatePicker 日期选择', path: '/components/datepicker' },
+      { name: 'TimePicker 时间选择', path: '/components/timepicker' },
+      { name: 'ColorPicker 颜色选择', path: '/components/colorpicker' },
+      { name: 'Rate 评分', path: '/components/rate' },
       { name: 'Upload 上传', path: '/components/upload' },
       { name: 'Switch 开关', path: '/components/switch' },
       { name: 'Radio 单选框', path: '/components/radio' },
@@ -53,9 +57,11 @@ const componentGroups = [
       { name: 'Badge 徽标', path: '/components/badge' },
       { name: 'Progress 进度条', path: '/components/progress' },
       { name: 'Accordion 折叠面板', path: '/components/accordion' },
+      { name: 'Carousel 轮播图', path: '/components/carousel' },
       { name: 'Skeleton 骨架屏', path: '/components/skeleton' },
       { name: 'Tag 标签', path: '/components/tag' },
       { name: 'Tree 树形控件', path: '/components/tree' },
+      { name: 'Empty 空状态', path: '/components/empty' },
     ]
   },
   {

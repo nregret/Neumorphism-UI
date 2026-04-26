@@ -172,6 +172,36 @@ const routes: RouteRecordRaw[] = [
         name: 'DocsTree',
         component: () => import('../views/docs/TreeDoc.vue'),
       },
+      {
+        path: 'timepicker',
+        name: 'DocsTimePicker',
+        component: () => import('../views/docs/TimePickerDoc.vue'),
+      },
+      {
+        path: 'carousel',
+        name: 'DocsCarousel',
+        component: () => import('../views/docs/CarouselDoc.vue'),
+      },
+      {
+        path: 'rate',
+        name: 'DocsRate',
+        component: () => import('../views/docs/RateDoc.vue'),
+      },
+      {
+        path: 'colorpicker',
+        name: 'DocsColorPicker',
+        component: () => import('../views/docs/ColorPickerDoc.vue'),
+      },
+      {
+        path: 'divider',
+        name: 'DocsDivider',
+        component: () => import('../views/docs/DividerDoc.vue'),
+      },
+      {
+        path: 'empty',
+        name: 'DocsEmpty',
+        component: () => import('../views/docs/EmptyDoc.vue'),
+      },
     ],
   },
 ]

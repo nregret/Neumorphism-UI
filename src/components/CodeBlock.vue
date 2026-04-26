@@ -30,17 +30,55 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative group rounded-2xl overflow-hidden shadow-neu-pressed p-4 bg-[#2d2d2d] my-6">
-    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-      <button
-        @click="copyToClipboard"
-        class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
-        title="Copy code"
-      >
-        <Check v-if="copied" class="w-4 h-4 text-green-400" />
-        <Copy v-else class="w-4 h-4" />
-      </button>
+  <!-- Outer Neumorphic Bezel -->
+  <div class="rounded-[2rem] shadow-neu-pressed p-3 bg-[var(--bg-color)] my-8">
+    <!-- Inner Dark Screen -->
+    <div class="relative group rounded-2xl overflow-hidden bg-[#1e1e1e] shadow-[inset_0_4px_20px_rgba(0,0,0,0.5)] border border-[#333]">
+      
+      <!-- Window Header -->
+      <div class="flex items-center justify-between px-4 py-3 bg-[#2d2d2d]/80 border-b border-[#333]">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500/80 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.2)]"></div>
+          <div class="w-3 h-3 rounded-full bg-amber-500/80 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.2)]"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500/80 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.2)]"></div>
+        </div>
+        <div class="text-[#888] text-xs font-mono lowercase">{{ language || 'html' }}</div>
+      </div>
+
+      <!-- Copy Button -->
+      <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <button
+          @click="copyToClipboard"
+          class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm active:scale-95"
+          title="Copy code"
+        >
+          <Check v-if="copied" class="w-4 h-4 text-green-400" />
+          <Copy v-else class="w-4 h-4 text-[#888] group-hover:text-white" />
+        </button>
+      </div>
+      
+      <!-- Code Content -->
+      <div class="p-4 overflow-x-auto custom-scrollbar-dark">
+        <pre :class="`language-${language || 'html'} text-sm m-0 bg-transparent p-0`"><code :class="`language-${language || 'html'}`">{{ code }}</code></pre>
+      </div>
     </div>
-    <pre :class="`language-${language || 'html'} text-sm m-0 bg-transparent p-0`"><code :class="`language-${language || 'html'}`">{{ code }}</code></pre>
   </div>
 </template>
+
+<style scoped>
+/* Custom scrollbar for the dark screen area */
+.custom-scrollbar-dark::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar-dark::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar-dark::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+.custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+</style>

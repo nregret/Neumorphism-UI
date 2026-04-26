@@ -131,7 +131,7 @@ const toggleSidebar = () => {
       <nav class="space-y-8">
         <div v-for="group in componentGroups" :key="group.title">
           <h4 class="text-xs font-bold text-neu-text/40 uppercase tracking-wider mb-3 px-2">{{ group.title }}</h4>
-          <ul class="space-y-2">
+          <ul class="space-y-4">
             <li v-for="link in group.links" :key="link.path">
               <router-link :to="link.path" @click="isSidebarOpen = false">
                 <NeuCard

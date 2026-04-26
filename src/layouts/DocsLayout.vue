@@ -5,12 +5,15 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
+import ThemeConfigurator from '../components/ThemeConfigurator.vue'
+import { Palette } from 'lucide-vue-next'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const route = useRoute()
 
 const isSidebarOpen = ref(false)
+const isThemeConfigOpen = ref(false)
 
 const componentGroups = [
   {
@@ -89,6 +92,9 @@ const toggleSidebar = () => {
     <div class="md:hidden flex items-center justify-between p-4 z-50 sticky top-0 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--shadow-dark)]/10">
       <router-link to="/" class="text-xl font-bold tracking-tighter">Neu<span class="text-neu-accent">UI</span></router-link>
       <div class="flex items-center gap-4">
+        <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
+          <Palette class="w-4 h-4" />
+        </NeuButton>
         <NeuButton variant="icon" shape="circle" size="sm" @click="toggleDark()">
           <Moon v-if="!isDark" class="w-4 h-4" />
           <Sun v-else class="w-4 h-4" />
@@ -111,10 +117,15 @@ const toggleSidebar = () => {
     >
       <div class="hidden md:flex items-center justify-between mb-12">
         <router-link to="/" class="text-2xl font-bold tracking-tighter">Neu<span class="text-neu-accent">UI</span></router-link>
-        <NeuButton variant="icon" shape="circle" size="sm" @click="toggleDark()">
-          <Moon v-if="!isDark" class="w-4 h-4" />
-          <Sun v-else class="w-4 h-4" />
-        </NeuButton>
+        <div class="flex items-center gap-2">
+          <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
+            <Palette class="w-4 h-4" />
+          </NeuButton>
+          <NeuButton variant="icon" shape="circle" size="sm" @click="toggleDark()">
+            <Moon v-if="!isDark" class="w-4 h-4" />
+            <Sun v-else class="w-4 h-4" />
+          </NeuButton>
+        </div>
       </div>
 
       <nav class="space-y-8">
@@ -154,6 +165,9 @@ const toggleSidebar = () => {
         </transition>
       </router-view>
     </main>
+
+    <!-- Global Theme Configurator -->
+    <ThemeConfigurator v-model="isThemeConfigOpen" />
   </div>
 </template>
 

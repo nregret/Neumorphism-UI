@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Palette, Copy, Check, X } from 'lucide-vue-next'
 import NeuColorPicker from './neu/NeuColorPicker.vue'
 import NeuButton from './neu/NeuButton.vue'
 import NeuDrawer from './neu/NeuDrawer.vue'
+import {
+  DEFAULT_THEME_PALETTE,
+  applyThemePalette,
+  readThemePalette,
+  saveThemePalette,
+} from '../composables/useThemePalette'
 
 interface Props {
   modelValue: boolean
@@ -19,9 +25,10 @@ const isOpen = computed({
   set: (val) => emit('update:modelValue', val)
 })
 
-const baseColor = ref('#e0e5ec')
-const accentColor = ref('#4f46e5')
-const textColor = ref('#333333')
+const savedPalette = readThemePalette()
+const baseColor = ref(savedPalette?.bg ?? DEFAULT_THEME_PALETTE.bg)
+const accentColor = ref(savedPalette?.accent ?? DEFAULT_THEME_PALETTE.accent)
+const textColor = ref(savedPalette?.text ?? DEFAULT_THEME_PALETTE.text)
 
 // Preset themes
 const presets = [
@@ -75,17 +82,21 @@ const shadowDark = computed(() => {
 })
 
 const updateCSSVariables = () => {
-  const root = document.documentElement
-  root.style.setProperty('--bg-color', baseColor.value)
-  root.style.setProperty('--accent', accentColor.value)
-  root.style.setProperty('--text-color', textColor.value)
-  root.style.setProperty('--shadow-light', shadowLight.value)
-  root.style.setProperty('--shadow-dark', shadowDark.value)
+  applyThemePalette({
+    bg: baseColor.value,
+    accent: accentColor.value,
+    text: textColor.value,
+  })
 }
 
 // Watchers to live-update the page
 watch([baseColor, accentColor, textColor], () => {
   updateCSSVariables()
+  saveThemePalette({
+    bg: baseColor.value,
+    accent: accentColor.value,
+    text: textColor.value,
+  })
 }, { immediate: true })
 
 const generatedCSS = computed(() => {

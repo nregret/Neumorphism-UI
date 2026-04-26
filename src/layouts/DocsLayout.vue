@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-import { Moon, Sun, Menu, X } from 'lucide-vue-next'
+import { Menu, X } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import NeuButton from '../components/neu/NeuButton.vue'
@@ -8,8 +7,6 @@ import NeuCard from '../components/neu/NeuCard.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
 import { Palette } from 'lucide-vue-next'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const route = useRoute()
 
 const isSidebarOpen = ref(false)
@@ -95,10 +92,6 @@ const toggleSidebar = () => {
         <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
           <Palette class="w-4 h-4" />
         </NeuButton>
-        <NeuButton variant="icon" shape="circle" size="sm" @click="toggleDark()">
-          <Moon v-if="!isDark" class="w-4 h-4" />
-          <Sun v-else class="w-4 h-4" />
-        </NeuButton>
         <NeuButton variant="icon" shape="circle" size="sm" @click="toggleSidebar">
           <Menu v-if="!isSidebarOpen" class="w-4 h-4" />
           <X v-else class="w-4 h-4" />
@@ -120,10 +113,6 @@ const toggleSidebar = () => {
         <div class="flex items-center gap-2">
           <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
             <Palette class="w-4 h-4" />
-          </NeuButton>
-          <NeuButton variant="icon" shape="circle" size="sm" @click="toggleDark()">
-            <Moon v-if="!isDark" class="w-4 h-4" />
-            <Sun v-else class="w-4 h-4" />
           </NeuButton>
         </div>
       </div>

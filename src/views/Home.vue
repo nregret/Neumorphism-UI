@@ -1,11 +1,69 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-import { Moon, Sun, ArrowRight, Github } from 'lucide-vue-next'
+import { computed, onUnmounted, ref } from 'vue'
+import { ArrowRight, Github, Palette, Pause, Play, SkipBack, SkipForward } from 'lucide-vue-next'
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
+import ThemeConfigurator from '../components/ThemeConfigurator.vue'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const isThemeConfigOpen = ref(false)
+
+const durationSeconds = 3 * 60 + 42
+const currentTimeSeconds = ref(0)
+const isPlaying = ref(false)
+const playbackTimer = ref<number | null>(null)
+
+const progressPercent = computed(() => {
+  return (currentTimeSeconds.value / durationSeconds) * 100
+})
+
+const formatTime = (seconds: number) => {
+  const mins = Math.floor(seconds / 60)
+  const secs = Math.floor(seconds % 60)
+  return `${mins}:${secs.toString().padStart(2, '0')}`
+}
+
+const stopPlayback = () => {
+  if (playbackTimer.value !== null) {
+    window.clearInterval(playbackTimer.value)
+    playbackTimer.value = null
+  }
+  isPlaying.value = false
+}
+
+const startPlayback = () => {
+  if (isPlaying.value) return
+  if (currentTimeSeconds.value >= durationSeconds) {
+    currentTimeSeconds.value = 0
+  }
+
+  isPlaying.value = true
+  playbackTimer.value = window.setInterval(() => {
+    const next = currentTimeSeconds.value + 0.2
+    if (next >= durationSeconds) {
+      currentTimeSeconds.value = durationSeconds
+      stopPlayback()
+      return
+    }
+    currentTimeSeconds.value = next
+  }, 200)
+}
+
+const togglePlayback = () => {
+  if (isPlaying.value) {
+    stopPlayback()
+  } else {
+    startPlayback()
+  }
+}
+
+const seekBy = (deltaSeconds: number) => {
+  const next = Math.min(durationSeconds, Math.max(0, currentTimeSeconds.value + deltaSeconds))
+  currentTimeSeconds.value = next
+}
+
+onUnmounted(() => {
+  stopPlayback()
+})
 </script>
 
 <template>
@@ -18,9 +76,8 @@ const toggleDark = useToggle(isDark)
         <a href="https://github.com" target="_blank" class="text-neu-text hover:text-neu-accent transition-colors">
           <Github class="w-6 h-6" />
         </a>
-        <NeuButton variant="icon" shape="circle" @click="toggleDark()">
-          <Moon v-if="!isDark" class="w-5 h-5" />
-          <Sun v-else class="w-5 h-5" />
+        <NeuButton variant="icon" shape="circle" @click="isThemeConfigOpen = true" title="Theme Config">
+          <Palette class="w-5 h-5" />
         </NeuButton>
       </div>
     </nav>
@@ -42,7 +99,12 @@ const toggleDark = useToggle(isDark)
               <ArrowRight class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </NeuButton>
           </router-link>
-          <NeuButton size="lg">查看文档</NeuButton>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <NeuButton size="lg" class="group">
+              <Github class="w-5 h-5 mr-2" />
+              GitHub
+            </NeuButton>
+          </a>
         </div>
       </div>
 
@@ -68,22 +130,31 @@ const toggleDark = useToggle(isDark)
 
             <div class="space-y-4">
               <div class="h-2 bg-[var(--bg-color)] shadow-neu-pressed rounded-full overflow-hidden">
-                <div class="h-full bg-neu-accent w-1/3 rounded-full"></div>
+                <div class="h-full bg-neu-accent rounded-full transition-[width] duration-200 ease-linear" :style="{ width: `${progressPercent}%` }"></div>
               </div>
               <div class="flex justify-between text-sm font-medium text-neu-text/60">
-                <span>1:24</span>
-                <span>3:42</span>
+                <span>{{ formatTime(currentTimeSeconds) }}</span>
+                <span>{{ formatTime(durationSeconds) }}</span>
               </div>
             </div>
 
             <div class="flex justify-center space-x-6">
-              <NeuButton variant="icon" shape="circle">⏮</NeuButton>
-              <NeuButton variant="icon" shape="circle" size="lg" class="text-neu-accent">▶</NeuButton>
-              <NeuButton variant="icon" shape="circle">⏭</NeuButton>
+              <NeuButton variant="icon" shape="circle" @click="seekBy(-10)" title="后退 10 秒">
+                <SkipBack class="w-5 h-5" />
+              </NeuButton>
+              <NeuButton variant="icon" shape="circle" size="lg" class="text-neu-accent" @click="togglePlayback" :title="isPlaying ? '暂停' : '播放'">
+                <Pause v-if="isPlaying" class="w-6 h-6" />
+                <Play v-else class="w-6 h-6" />
+              </NeuButton>
+              <NeuButton variant="icon" shape="circle" @click="seekBy(10)" title="前进 10 秒">
+                <SkipForward class="w-5 h-5" />
+              </NeuButton>
             </div>
           </div>
         </NeuCard>
       </div>
     </main>
+
+    <ThemeConfigurator v-model="isThemeConfigOpen" />
   </div>
 </template>

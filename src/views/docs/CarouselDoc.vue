@@ -108,7 +108,7 @@ const manualUsage = `<NeuCarousel :items="items" :auto-play="false" :show-progre
             <NeuCarousel
               :items="carouselItems"
               effect="fade"
-              class="h-64 w-full max-w-2xl mx-auto"
+              class="h-72 w-full max-w-2xl mx-auto"
             >
               <template #default="{ item }">
                 <div
@@ -132,7 +132,7 @@ const manualUsage = `<NeuCarousel :items="items" :auto-play="false" :show-progre
             <NeuCarousel
               :items="carouselItems"
               :auto-play="false"
-              class="h-48 w-full max-w-2xl mx-auto"
+              class="h-72 w-full max-w-2xl mx-auto"
             >
               <template #default="{ item }">
                 <div

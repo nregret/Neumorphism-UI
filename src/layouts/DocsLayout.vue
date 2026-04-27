@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Menu, Palette, Search, X } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import NeuButton from '../components/neu/NeuButton.vue'
-import NeuCard from '../components/neu/NeuCard.vue'
+import NeuScrollbar from '../components/neu/NeuScrollbar.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
 
 const route = useRoute()
@@ -161,25 +161,28 @@ const highlightText = (text: string, query: string): { text: string; match: bool
       </div>
     </div>
 
-    <!-- Sidebar -->
+    <!-- Sidebar — flush on top/bottom/left, raised shadow only on the right -->
     <aside
       :class="[
-        'fixed inset-y-0 left-0 z-40 w-72 transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
-        'bg-[var(--bg-color)] shadow-[inset_-8px_0_16px_var(--shadow-dark),inset_-8px_0_16px_var(--shadow-light)] md:shadow-none md:border-r md:border-[var(--shadow-dark)]/10',
+        'fixed inset-y-0 left-0 z-40 w-72 md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
+        'transition-transform duration-300 ease-in-out',
+        'flex flex-col bg-[var(--bg-color)] rounded-r-[2rem] overflow-hidden',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
-        'flex flex-col overflow-hidden'
       ]"
+      style="box-shadow: var(--neu-d3) 0 var(--neu-b3) var(--shadow-dark), var(--neu-d1) 0 var(--neu-b2) var(--shadow-light);"
     >
       <!-- Logo + Theme Button -->
-      <div class="hidden md:flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
-        <router-link to="/" class="text-2xl font-bold tracking-tighter">Neu<span class="text-neu-accent">UI</span></router-link>
+      <div class="hidden md:flex items-center justify-between px-5 pt-5 pb-3 shrink-0">
+        <router-link to="/" class="text-2xl font-bold tracking-tighter">
+          Neu<span class="text-neu-accent">UI</span>
+        </router-link>
         <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
           <Palette class="w-4 h-4" />
         </NeuButton>
       </div>
 
       <!-- Search Box -->
-      <div class="px-6 pb-4 shrink-0">
+      <div class="px-4 pb-3 shrink-0">
         <div
           class="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[var(--bg-color)] shadow-neu-pressed-sm transition-all duration-200"
         >
@@ -206,56 +209,59 @@ const highlightText = (text: string, query: string): { text: string; match: bool
         </div>
       </div>
 
-      <!-- Nav Links (scrollable) -->
-      <nav class="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
-        <!-- Results -->
-        <template v-if="hasResults">
-          <div
-            v-for="group in filteredGroups"
-            :key="group.title"
-            class="mb-8"
-          >
-            <h4 class="text-xs font-bold text-neu-text/40 uppercase tracking-wider mb-3 px-2">
-              {{ group.title }}
-            </h4>
-            <ul class="space-y-2.5">
-              <li v-for="link in group.links" :key="link.path">
-                <router-link :to="link.path" @click="isSidebarOpen = false">
-                  <div
-                    class="px-3 py-2 rounded-xl text-sm cursor-pointer transition-all duration-200 bg-[var(--bg-color)]"
-                    :class="[
-                      route.path === link.path
-                        ? 'shadow-neu-pressed-sm text-neu-accent font-semibold'
-                        : 'shadow-neu-flat-sm text-neu-text/70 hover:text-neu-accent hover:shadow-neu-flat'
-                    ]"
-                  >
-                    <!-- Highlight matched text -->
-                    <template v-if="isSearching">
-                      <span
-                        v-for="(part, i) in highlightText(link.name, searchQuery)"
-                        :key="i"
-                        :class="part.match ? 'text-neu-accent font-bold' : ''"
-                      >{{ part.text }}</span>
-                    </template>
-                    <template v-else>
-                      {{ link.name }}
-                    </template>
-                  </div>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-        </template>
+      <!-- Nav Links via NeuScrollbar -->
+      <!-- trackInset=28: 圆角 rounded-r-[2rem]=32px，留28px让轨道不侵入圆角 -->
+      <NeuScrollbar fill :auto-hide="true" :track-inset="28">
+        <nav class="px-4 pb-4">
+          <!-- Results -->
+          <template v-if="hasResults">
+            <div
+              v-for="group in filteredGroups"
+              :key="group.title"
+              class="mb-6"
+            >
+              <h4 class="text-[11px] font-bold text-neu-text/40 uppercase tracking-widest mb-2.5 px-1">
+                {{ group.title }}
+              </h4>
+              <ul class="space-y-2.5">
+                <li v-for="link in group.links" :key="link.path">
+                  <router-link :to="link.path" @click="isSidebarOpen = false">
+                    <div
+                      class="px-3 py-3 rounded-xl text-sm cursor-pointer transition-all duration-200 bg-[var(--bg-color)]"
+                      :class="[
+                        route.path === link.path
+                          ? 'shadow-neu-pressed-sm text-neu-accent font-semibold'
+                          : 'shadow-neu-flat-sm text-neu-text/70 hover:text-neu-accent hover:shadow-neu-flat'
+                      ]"
+                    >
+                      <!-- Highlight matched text -->
+                      <template v-if="isSearching">
+                        <span
+                          v-for="(part, i) in highlightText(link.name, searchQuery)"
+                          :key="i"
+                          :class="part.match ? 'text-neu-accent font-bold' : ''"
+                        >{{ part.text }}</span>
+                      </template>
+                      <template v-else>
+                        {{ link.name }}
+                      </template>
+                    </div>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </template>
 
-        <!-- No Results -->
-        <div v-else class="flex flex-col items-center justify-center py-12 text-center">
-          <div class="w-12 h-12 rounded-full bg-[var(--bg-color)] shadow-neu-pressed flex items-center justify-center mb-4">
-            <Search class="w-5 h-5 text-neu-text/30" />
+          <!-- No Results -->
+          <div v-else class="flex flex-col items-center justify-center py-12 text-center">
+            <div class="w-12 h-12 rounded-full bg-[var(--bg-color)] shadow-neu-pressed flex items-center justify-center mb-4">
+              <Search class="w-5 h-5 text-neu-text/30" />
+            </div>
+            <p class="text-sm text-neu-text/40">未找到 "<span class="text-neu-accent">{{ searchQuery }}</span>"</p>
+            <button @click="clearSearch" class="mt-3 text-xs text-neu-accent hover:underline">清除搜索</button>
           </div>
-          <p class="text-sm text-neu-text/40">未找到 "<span class="text-neu-accent">{{ searchQuery }}</span>"</p>
-          <button @click="clearSearch" class="mt-3 text-xs text-neu-accent hover:underline">清除搜索</button>
-        </div>
-      </nav>
+        </nav>
+      </NeuScrollbar>
     </aside>
 
     <!-- Overlay for mobile sidebar -->

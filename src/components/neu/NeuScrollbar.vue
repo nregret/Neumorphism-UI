@@ -5,12 +5,22 @@ interface Props {
   height?: string
   maxHeight?: string
   autoHide?: boolean
+  /** 填满父容器剩余高度（flex-1），用于侧边栏等场景 */
+  fill?: boolean
+  /**
+   * 滚动条轨道距容器顶部和底部的像素间距。
+   * 当父容器有圆角时（如侧边栏 rounded-r-[2rem] = 32px），
+   * 需设置足够大的值避免轨道伸入圆角区域。默认 8px。
+   */
+  trackInset?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   height: 'auto',
   maxHeight: undefined,
   autoHide: false,
+  fill: false,
+  trackInset: 8,
 })
 
 const containerRef = ref<HTMLDivElement | null>(null)
@@ -40,10 +50,14 @@ const updateScrollbar = () => {
     return
   }
 
+  // Track height = container height minus top+bottom insets
+  const trackHeight = clientHeight - 2 * props.trackInset
   const ratio = clientHeight / scrollHeight
-  thumbHeight.value = Math.max(32, ratio * clientHeight)
+  // Thumb sized relative to track (not container), so it stays within bounds
+  thumbHeight.value = Math.max(32, ratio * trackHeight)
+  // Thumb offset is within [0, trackHeight - thumbHeight]
   thumbTop.value =
-    (scrollTop / (scrollHeight - clientHeight)) * (clientHeight - thumbHeight.value)
+    (scrollTop / (scrollHeight - clientHeight)) * (trackHeight - thumbHeight.value)
 }
 
 const onScroll = () => {
@@ -73,8 +87,10 @@ const onThumbMouseMove = (e: MouseEvent) => {
   if (!isDragging.value || !containerRef.value) return
   const el = containerRef.value
   const { scrollHeight, clientHeight } = el
+  const trackHeight = clientHeight - 2 * props.trackInset
   const delta = e.clientY - dragStartY
-  const scrollRatio = delta / (clientHeight - thumbHeight.value)
+  // Map drag delta within track space → scroll position
+  const scrollRatio = delta / (trackHeight - thumbHeight.value)
   el.scrollTop = dragStartScrollTop + scrollRatio * (scrollHeight - clientHeight)
 }
 
@@ -99,8 +115,10 @@ const onTrackClick = (e: MouseEvent) => {
   const clickY = e.clientY - trackRect.top
   const el = containerRef.value
   const { scrollHeight, clientHeight } = el
-  const targetRatio = (clickY - thumbHeight.value / 2) / (clientHeight - thumbHeight.value)
-  el.scrollTop = targetRatio * (scrollHeight - clientHeight)
+  const trackHeight = clientHeight - 2 * props.trackInset
+  // Convert click position within track to scroll ratio
+  const targetRatio = (clickY - thumbHeight.value / 2) / (trackHeight - thumbHeight.value)
+  el.scrollTop = Math.max(0, targetRatio) * (scrollHeight - clientHeight)
 }
 
 const resizeObserver = new ResizeObserver(() => {
@@ -137,7 +155,11 @@ watch(
 </script>
 
 <template>
-  <div class="neu-scrollbar-wrapper" :style="{ height, maxHeight }">
+  <div
+    class="neu-scrollbar-wrapper"
+    :class="{ 'neu-scrollbar-fill': fill }"
+    :style="fill ? { maxHeight } : { height, maxHeight }"
+  >
     <!-- Scroll content area — padding-right reserves space for the track -->
     <div
       ref="containerRef"
@@ -153,6 +175,7 @@ watch(
         v-if="isScrollbarNeeded && isVisible"
         ref="trackRef"
         class="neu-scrollbar-track"
+        :style="{ top: `${trackInset}px`, bottom: `${trackInset}px` }"
         @click="onTrackClick"
       >
         <!-- Thumb -->
@@ -176,6 +199,17 @@ watch(
 .neu-scrollbar-wrapper {
   position: relative;
   display: flex;
+}
+
+/* Fill mode: stretch to fill remaining flex space */
+.neu-scrollbar-fill {
+  flex: 1;
+  min-height: 0;      /* crucial: prevents flex child from overflowing */
+}
+
+.neu-scrollbar-fill .neu-scrollbar-content {
+  flex: 1;
+  min-height: 0;
 }
 
 /* ─────────────────────────────────────────────
@@ -213,8 +247,7 @@ watch(
 .neu-scrollbar-track {
   position: absolute;
   right: 4px;
-  top: 8px;
-  bottom: 8px;
+  /* top / bottom are set via inline style by the :trackInset prop */
   width: 8px;
   border-radius: 999px;
   background: var(--bg-color);

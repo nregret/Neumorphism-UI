@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import NeuButton from './NeuButton.vue'
 
 interface Props {
@@ -22,10 +22,65 @@ const emit = defineEmits<{
 }>()
 
 const show = ref(false)
+const triggerRef = ref<HTMLElement | null>(null)
+const popRef = ref<HTMLElement | null>(null)
 const popconfirmRef = ref<HTMLElement | null>(null)
 
-const toggle = () => {
+// Fixed viewport coordinates for the popup
+const popStyle = ref<Record<string, string>>({})
+
+const GAP = 12 // px gap between trigger and popup
+
+const computePosition = async () => {
+  await nextTick()
+  if (!triggerRef.value || !popRef.value) return
+
+  const tr = triggerRef.value.getBoundingClientRect()
+  const pr = popRef.value.getBoundingClientRect()
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const scrollX = window.scrollX
+  const scrollY = window.scrollY
+
+  let top = 0
+  let left = 0
+
+  switch (props.position) {
+    case 'top':
+      top  = tr.top  + scrollY - pr.height - GAP
+      left = tr.left + scrollX + tr.width / 2 - pr.width / 2
+      break
+    case 'bottom':
+      top  = tr.bottom + scrollY + GAP
+      left = tr.left   + scrollX + tr.width / 2 - pr.width / 2
+      break
+    case 'left':
+      top  = tr.top  + scrollY + tr.height / 2 - pr.height / 2
+      left = tr.left + scrollX - pr.width - GAP
+      break
+    case 'right':
+      top  = tr.top   + scrollY + tr.height / 2 - pr.height / 2
+      left = tr.right + scrollX + GAP
+      break
+  }
+
+  // Clamp to viewport with 8px edge margin
+  const margin = 8
+  left = Math.max(margin + scrollX, Math.min(left, scrollX + vw - pr.width  - margin))
+  top  = Math.max(margin + scrollY, Math.min(top,  scrollY + vh - pr.height - margin))
+
+  popStyle.value = {
+    position: 'absolute',
+    top: `${top}px`,
+    left: `${left}px`,
+  }
+}
+
+const toggle = async () => {
   show.value = !show.value
+  if (show.value) {
+    await computePosition()
+  }
 }
 
 const handleConfirm = () => {
@@ -39,70 +94,83 @@ const handleCancel = () => {
 }
 
 const handleClickOutside = (event: MouseEvent) => {
-  if (show.value && popconfirmRef.value && !popconfirmRef.value.contains(event.target as Node)) {
+  if (
+    show.value &&
+    popconfirmRef.value &&
+    !popconfirmRef.value.contains(event.target as Node) &&
+    !(popRef.value && popRef.value.contains(event.target as Node))
+  ) {
     show.value = false
   }
 }
 
+onMounted(() => document.addEventListener('click', handleClickOutside))
+onUnmounted(() => document.removeEventListener('click', handleClickOutside))
+
+// Recompute on resize/scroll
+const recompute = () => { if (show.value) computePosition() }
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
+  window.addEventListener('resize', recompute)
+  window.addEventListener('scroll', recompute, true)
 })
-
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('resize', recompute)
+  window.removeEventListener('scroll', recompute, true)
 })
 
-const positionClasses = computed(() => {
+// Origin for scale animation
+const transformOrigin = computed(() => {
   switch (props.position) {
-    case 'top':
-      return 'bottom-full left-1/2 -translate-x-1/2 mb-3 origin-bottom'
-    case 'bottom':
-      return 'top-full left-1/2 -translate-x-1/2 mt-3 origin-top'
-    case 'left':
-      return 'right-full top-1/2 -translate-y-1/2 mr-3 origin-right'
-    case 'right':
-      return 'left-full top-1/2 -translate-y-1/2 ml-3 origin-left'
-    default:
-      return 'bottom-full left-1/2 -translate-x-1/2 mb-3 origin-bottom'
+    case 'top':    return 'center bottom'
+    case 'bottom': return 'center top'
+    case 'left':   return 'right center'
+    case 'right':  return 'left center'
+    default:       return 'center bottom'
   }
 })
 </script>
 
 <template>
-  <div class="relative inline-flex" ref="popconfirmRef">
-    <div @click.stop="toggle" class="inline-flex cursor-pointer">
+  <div class="inline-flex" ref="popconfirmRef">
+    <!-- Trigger -->
+    <div ref="triggerRef" @click.stop="toggle" class="inline-flex cursor-pointer">
       <slot />
     </div>
 
-    <Transition name="neu-popconfirm">
-      <div 
-        v-if="show"
-        class="absolute z-50 min-w-[200px]"
-        :class="positionClasses"
-      >
-        <div class="p-4 rounded-2xl shadow-neu-flat bg-neu-bg text-neu-text relative">
-          <div class="font-medium mb-1">{{ title }}</div>
-          <div v-if="content" class="text-sm text-neu-text/70 mb-4">{{ content }}</div>
-          <div v-else class="mb-4"></div>
-          
-          <div class="flex justify-end gap-3">
-            <NeuButton size="sm" @click.stop="handleCancel">{{ cancelText }}</NeuButton>
-            <NeuButton size="sm" variant="primary" @click.stop="handleConfirm">{{ confirmText }}</NeuButton>
-          </div>
+    <!-- Popup — teleported to body so it's never clipped by parent overflow -->
+    <Teleport to="body">
+      <Transition name="neu-popconfirm">
+        <div
+          v-if="show"
+          ref="popRef"
+          class="z-[9999] min-w-[220px] max-w-[280px]"
+          :style="{ ...popStyle, transformOrigin }"
+          @click.stop
+        >
+          <div class="p-4 rounded-2xl shadow-neu-flat bg-[var(--bg-color)] text-neu-text relative">
+            <div class="font-semibold text-sm mb-1">{{ title }}</div>
+            <div v-if="content" class="text-xs text-neu-text/60 mb-4 leading-relaxed">{{ content }}</div>
+            <div v-else class="mb-4" />
 
-          <!-- Arrow -->
-          <div 
-            class="absolute w-3 h-3 bg-neu-bg rotate-45"
-            :class="{
-              '-bottom-1.5 left-1/2 -translate-x-1/2 shadow-[2px_2px_4px_var(--shadow-dark)]': position === 'top',
-              '-top-1.5 left-1/2 -translate-x-1/2 shadow-[-2px_-2px_4px_var(--shadow-light)]': position === 'bottom',
-              '-right-1.5 top-1/2 -translate-y-1/2 shadow-[2px_-2px_4px_var(--shadow-dark)]': position === 'left',
-              '-left-1.5 top-1/2 -translate-y-1/2 shadow-[-2px_2px_4px_var(--shadow-light)]': position === 'right',
-            }"
-          ></div>
+            <div class="flex justify-end gap-2">
+              <NeuButton size="sm" @click.stop="handleCancel">{{ cancelText }}</NeuButton>
+              <NeuButton size="sm" variant="primary" @click.stop="handleConfirm">{{ confirmText }}</NeuButton>
+            </div>
+
+            <!-- Arrow -->
+            <div
+              class="absolute w-3 h-3 bg-[var(--bg-color)] rotate-45"
+              :class="{
+                '-bottom-1.5 left-1/2 -translate-x-1/2 shadow-[2px_2px_4px_var(--shadow-dark)]':   position === 'top',
+                '-top-1.5 left-1/2 -translate-x-1/2 shadow-[-2px_-2px_4px_var(--shadow-light)]': position === 'bottom',
+                '-right-1.5 top-1/2 -translate-y-1/2 shadow-[2px_-2px_4px_var(--shadow-dark)]':  position === 'left',
+                '-left-1.5 top-1/2 -translate-y-1/2 shadow-[-2px_2px_4px_var(--shadow-light)]':  position === 'right',
+              }"
+            />
+          </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -115,17 +183,6 @@ const positionClasses = computed(() => {
 .neu-popconfirm-enter-from,
 .neu-popconfirm-leave-to {
   opacity: 0;
-  transform: scale(0.9) !important;
+  transform: scale(0.88);
 }
-
-/* Ensure transform from positionClasses is preserved but scaled */
-.neu-popconfirm-enter-active.bottom-full { transform: translate(-50%, 0) scale(1) !important; }
-.neu-popconfirm-enter-active.top-full { transform: translate(-50%, 0) scale(1) !important; }
-.neu-popconfirm-enter-active.right-full { transform: translate(0, -50%) scale(1) !important; }
-.neu-popconfirm-enter-active.left-full { transform: translate(0, -50%) scale(1) !important; }
-
-.neu-popconfirm-enter-from.bottom-full, .neu-popconfirm-leave-to.bottom-full { transform: translate(-50%, 10px) scale(0.9) !important; }
-.neu-popconfirm-enter-from.top-full, .neu-popconfirm-leave-to.top-full { transform: translate(-50%, -10px) scale(0.9) !important; }
-.neu-popconfirm-enter-from.right-full, .neu-popconfirm-leave-to.right-full { transform: translate(10px, -50%) scale(0.9) !important; }
-.neu-popconfirm-enter-from.left-full, .neu-popconfirm-leave-to.left-full { transform: translate(-10px, -50%) scale(0.9) !important; }
 </style>

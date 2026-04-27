@@ -164,7 +164,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
     <!-- Sidebar -->
     <aside
       :class="[
-        'fixed inset-y-0 left-0 z-40 w-64 transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
+        'fixed inset-y-0 left-0 z-40 w-72 transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
         'bg-[var(--bg-color)] shadow-[inset_-8px_0_16px_var(--shadow-dark),inset_-8px_0_16px_var(--shadow-light)] md:shadow-none md:border-r md:border-[var(--shadow-dark)]/10',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'flex flex-col overflow-hidden'
@@ -218,15 +218,16 @@ const highlightText = (text: string, query: string): { text: string; match: bool
             <h4 class="text-xs font-bold text-neu-text/40 uppercase tracking-wider mb-3 px-2">
               {{ group.title }}
             </h4>
-            <ul class="space-y-1.5">
+            <ul class="space-y-2.5">
               <li v-for="link in group.links" :key="link.path">
                 <router-link :to="link.path" @click="isSidebarOpen = false">
-                  <NeuCard
-                    :pressed="route.path === link.path"
-                    padding="sm"
-                    rounded="md"
-                    class="hover:text-neu-accent cursor-pointer transition-colors"
-                    :class="route.path === link.path ? 'text-neu-accent font-semibold' : ''"
+                  <div
+                    class="px-3 py-2 rounded-xl text-sm cursor-pointer transition-all duration-200 bg-[var(--bg-color)]"
+                    :class="[
+                      route.path === link.path
+                        ? 'shadow-neu-pressed-sm text-neu-accent font-semibold'
+                        : 'shadow-neu-flat-sm text-neu-text/70 hover:text-neu-accent hover:shadow-neu-flat'
+                    ]"
                   >
                     <!-- Highlight matched text -->
                     <template v-if="isSearching">
@@ -239,7 +240,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
                     <template v-else>
                       {{ link.name }}
                     </template>
-                  </NeuCard>
+                  </div>
                 </router-link>
               </li>
             </ul>

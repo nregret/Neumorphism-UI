@@ -2,14 +2,26 @@ export interface ThemePalette {
   bg: string
   accent: string
   text: string
+  /** 全局阴影深度乘数，0.4 极柔 ~ 1.0 默认 ~ 1.6 强烈 */
+  scale?: number
+  /** sm 级 offset (px)，对应 --neu-d1 基础值（乘以 scale 前） */
+  depthSm?: number
+  /** md 级 offset (px)，对应 --neu-d2 基础值 */
+  depthMd?: number
+  /** lg 级 offset (px)，对应 --neu-d3 基础值 */
+  depthLg?: number
 }
 
 export const THEME_PALETTE_STORAGE_KEY = 'neu-theme-palette'
 
-export const DEFAULT_THEME_PALETTE: ThemePalette = {
+export const DEFAULT_THEME_PALETTE: Required<ThemePalette> = {
   bg: '#e0e5ec',
   accent: '#4f46e5',
   text: '#333333',
+  scale: 1,
+  depthSm: 3,
+  depthMd: 6,
+  depthLg: 12,
 }
 
 const blendColor = (hex: string, amount: number, isLighten: boolean) => {
@@ -51,11 +63,38 @@ const isValidHexColor = (value: unknown): value is string => {
 
 export const applyThemePalette = (palette: ThemePalette) => {
   const root = document.documentElement
+
+  // Colors
   root.style.setProperty('--bg-color', palette.bg)
   root.style.setProperty('--accent', palette.accent)
   root.style.setProperty('--text-color', palette.text)
   root.style.setProperty('--shadow-light', getShadowLight(palette.bg))
   root.style.setProperty('--shadow-dark', getShadowDark(palette.bg))
+
+  // Depth system
+  const scale  = palette.scale  ?? DEFAULT_THEME_PALETTE.scale
+  const dSm    = palette.depthSm ?? DEFAULT_THEME_PALETTE.depthSm
+  const dMd    = palette.depthMd ?? DEFAULT_THEME_PALETTE.depthMd
+  const dLg    = palette.depthLg ?? DEFAULT_THEME_PALETTE.depthLg
+
+  root.style.setProperty('--neu-scale', String(scale))
+
+  // Override the base pixel values so calc() uses the custom depths
+  // (CSS doesn't support "multiplying two CSS vars with units",
+  //  so we pre-compute here and write the final values directly)
+  const fmt = (px: number) => `${px}px`
+
+  root.style.setProperty('--neu-d1',   fmt(dSm * scale))
+  root.style.setProperty('--neu-d1-n', fmt(-dSm * scale))
+  root.style.setProperty('--neu-b1',   fmt(dSm * scale * 2.2))
+
+  root.style.setProperty('--neu-d2',   fmt(dMd * scale))
+  root.style.setProperty('--neu-d2-n', fmt(-dMd * scale))
+  root.style.setProperty('--neu-b2',   fmt(dMd * scale * 2.2))
+
+  root.style.setProperty('--neu-d3',   fmt(dLg * scale))
+  root.style.setProperty('--neu-d3-n', fmt(-dLg * scale))
+  root.style.setProperty('--neu-b3',   fmt(dLg * scale * 2.2))
 }
 
 export const saveThemePalette = (palette: ThemePalette) => {
@@ -75,6 +114,10 @@ export const readThemePalette = (): ThemePalette | null => {
       bg: parsed.bg,
       accent: parsed.accent,
       text: parsed.text,
+      scale:   typeof parsed.scale   === 'number' ? parsed.scale   : DEFAULT_THEME_PALETTE.scale,
+      depthSm: typeof parsed.depthSm === 'number' ? parsed.depthSm : DEFAULT_THEME_PALETTE.depthSm,
+      depthMd: typeof parsed.depthMd === 'number' ? parsed.depthMd : DEFAULT_THEME_PALETTE.depthMd,
+      depthLg: typeof parsed.depthLg === 'number' ? parsed.depthLg : DEFAULT_THEME_PALETTE.depthLg,
     }
   } catch {
     return null

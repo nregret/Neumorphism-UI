@@ -10,6 +10,28 @@
     --shadow-light: #ffffff;
     --shadow-dark: #a3b1c6;
     --accent: #4f46e5;
+
+    /* ─── Neumorphic Depth System ─────────────────────────────── *
+     *  --neu-scale   : 全局深度乘数  (0.4 极柔 → 1.0 默认 → 1.6 强烈)  *
+     *  三个基础级别: sm(精细元素) / md(通用卡片) / lg(主体面板)         *
+     *  Tailwind 工具类 shadow-neu-{flat|pressed}-{sm|md|lg} 均引用此值 *
+     * ──────────────────────────────────────────────────────────── */
+    --neu-scale: 1;
+
+    /* sm — 搜索框、标签、小徽标等精细控件 */
+    --neu-d1:   calc(3px  * var(--neu-scale));
+    --neu-d1-n: calc(-3px * var(--neu-scale));
+    --neu-b1:   calc(7px  * var(--neu-scale));
+
+    /* md — 卡片、按钮、表单项等通用控件 (默认) */
+    --neu-d2:   calc(6px  * var(--neu-scale));
+    --neu-d2-n: calc(-6px * var(--neu-scale));
+    --neu-b2:   calc(14px * var(--neu-scale));
+
+    /* lg — 侧边栏、英雄区、抽屉等主体面板 */
+    --neu-d3:   calc(12px  * var(--neu-scale));
+    --neu-d3-n: calc(-12px * var(--neu-scale));
+    --neu-b3:   calc(26px  * var(--neu-scale));
   }
 
   .dark {

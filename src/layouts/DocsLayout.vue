@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { Menu, X } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { Menu, Palette, Search, X } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
-import { Palette } from 'lucide-vue-next'
 
 const route = useRoute()
 
 const isSidebarOpen = ref(false)
 const isThemeConfigOpen = ref(false)
+const searchQuery = ref('')
+const searchInputRef = ref<HTMLInputElement | null>(null)
 
 const componentGroups = [
   {
@@ -58,6 +59,7 @@ const componentGroups = [
       { name: 'Progress 进度条', path: '/components/progress' },
       { name: 'Accordion 折叠面板', path: '/components/accordion' },
       { name: 'Carousel 轮播图', path: '/components/carousel' },
+      { name: 'Scrollbar 滚动条', path: '/components/scrollbar' },
       { name: 'Skeleton 骨架屏', path: '/components/skeleton' },
       { name: 'Tag 标签', path: '/components/tag' },
       { name: 'Tree 树形控件', path: '/components/tree' },
@@ -78,8 +80,68 @@ const componentGroups = [
   }
 ]
 
+// Filtered groups based on search query
+const filteredGroups = computed(() => {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return componentGroups
+
+  return componentGroups
+    .map(group => ({
+      ...group,
+      links: group.links.filter(link =>
+        link.name.toLowerCase().includes(q)
+      )
+    }))
+    .filter(group => group.links.length > 0)
+})
+
+const hasResults = computed(() => filteredGroups.value.length > 0)
+const isSearching = computed(() => searchQuery.value.trim().length > 0)
+
+const clearSearch = () => {
+  searchQuery.value = ''
+  searchInputRef.value?.focus()
+}
+
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
+}
+
+// Global Ctrl+K shortcut to focus search
+const onKeydown = (e: KeyboardEvent) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault()
+    searchInputRef.value?.focus()
+    isSidebarOpen.value = true
+  }
+  if (e.key === 'Escape' && searchQuery.value) {
+    clearSearch()
+  }
+}
+
+onMounted(() => document.addEventListener('keydown', onKeydown))
+onUnmounted(() => document.removeEventListener('keydown', onKeydown))
+
+// Helper: highlight matched text parts
+const highlightText = (text: string, query: string): { text: string; match: boolean }[] => {
+  if (!query) return [{ text, match: false }]
+  const lq = query.trim().toLowerCase()
+  const result: { text: string; match: boolean }[] = []
+  let remaining = text
+  let lRemaining = text.toLowerCase()
+
+  while (lRemaining.length > 0) {
+    const idx = lRemaining.indexOf(lq)
+    if (idx === -1) {
+      result.push({ text: remaining, match: false })
+      break
+    }
+    if (idx > 0) result.push({ text: remaining.slice(0, idx), match: false })
+    result.push({ text: remaining.slice(idx, idx + lq.length), match: true })
+    remaining = remaining.slice(idx + lq.length)
+    lRemaining = lRemaining.slice(idx + lq.length)
+  }
+  return result
 }
 </script>
 
@@ -102,39 +164,95 @@ const toggleSidebar = () => {
     <!-- Sidebar -->
     <aside
       :class="[
-        'fixed inset-y-0 left-0 z-40 w-64 p-6 transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
+        'fixed inset-y-0 left-0 z-40 w-64 transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:h-screen md:sticky md:top-0',
         'bg-[var(--bg-color)] shadow-[inset_-8px_0_16px_var(--shadow-dark),inset_-8px_0_16px_var(--shadow-light)] md:shadow-none md:border-r md:border-[var(--shadow-dark)]/10',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
-        'overflow-y-auto custom-scrollbar'
+        'flex flex-col overflow-hidden'
       ]"
     >
-      <div class="hidden md:flex items-center justify-between mb-12">
+      <!-- Logo + Theme Button -->
+      <div class="hidden md:flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
         <router-link to="/" class="text-2xl font-bold tracking-tighter">Neu<span class="text-neu-accent">UI</span></router-link>
-        <div class="flex items-center gap-2">
-          <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
-            <Palette class="w-4 h-4" />
-          </NeuButton>
+        <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
+          <Palette class="w-4 h-4" />
+        </NeuButton>
+      </div>
+
+      <!-- Search Box -->
+      <div class="px-6 pb-4 shrink-0">
+        <div
+          class="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[var(--bg-color)] shadow-neu-pressed-sm transition-all duration-200"
+        >
+          <Search class="w-4 h-4 text-neu-text/40 shrink-0" />
+          <input
+            ref="searchInputRef"
+            v-model="searchQuery"
+            type="text"
+            placeholder="搜索组件…"
+            class="flex-1 bg-transparent text-sm text-neu-text placeholder:text-neu-text/30 outline-none min-w-0"
+            aria-label="搜索组件"
+          />
+          <div class="hidden md:flex items-center gap-1 shrink-0" v-if="!isSearching">
+            <kbd class="px-1 py-0.5 rounded text-[10px] font-mono text-neu-text/30 bg-[var(--bg-color)] shadow-neu-flat-sm">⌃K</kbd>
+          </div>
+          <button
+            v-if="isSearching"
+            @click="clearSearch"
+            class="shrink-0 w-4 h-4 flex items-center justify-center rounded-full text-neu-text/40 hover:text-neu-text transition-colors"
+            aria-label="清除搜索"
+          >
+            <X class="w-3 h-3" />
+          </button>
         </div>
       </div>
 
-      <nav class="space-y-8">
-        <div v-for="group in componentGroups" :key="group.title">
-          <h4 class="text-xs font-bold text-neu-text/40 uppercase tracking-wider mb-3 px-2">{{ group.title }}</h4>
-          <ul class="space-y-4">
-            <li v-for="link in group.links" :key="link.path">
-              <router-link :to="link.path" @click="isSidebarOpen = false">
-                <NeuCard
-                  :pressed="route.path === link.path"
-                  padding="sm"
-                  rounded="md"
-                  class="hover:text-neu-accent cursor-pointer transition-colors"
-                  :class="route.path === link.path ? 'text-neu-accent font-semibold' : ''"
-                >
-                  {{ link.name }}
-                </NeuCard>
-              </router-link>
-            </li>
-          </ul>
+      <!-- Nav Links (scrollable) -->
+      <nav class="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
+        <!-- Results -->
+        <template v-if="hasResults">
+          <div
+            v-for="group in filteredGroups"
+            :key="group.title"
+            class="mb-8"
+          >
+            <h4 class="text-xs font-bold text-neu-text/40 uppercase tracking-wider mb-3 px-2">
+              {{ group.title }}
+            </h4>
+            <ul class="space-y-1.5">
+              <li v-for="link in group.links" :key="link.path">
+                <router-link :to="link.path" @click="isSidebarOpen = false">
+                  <NeuCard
+                    :pressed="route.path === link.path"
+                    padding="sm"
+                    rounded="md"
+                    class="hover:text-neu-accent cursor-pointer transition-colors"
+                    :class="route.path === link.path ? 'text-neu-accent font-semibold' : ''"
+                  >
+                    <!-- Highlight matched text -->
+                    <template v-if="isSearching">
+                      <span
+                        v-for="(part, i) in highlightText(link.name, searchQuery)"
+                        :key="i"
+                        :class="part.match ? 'text-neu-accent font-bold' : ''"
+                      >{{ part.text }}</span>
+                    </template>
+                    <template v-else>
+                      {{ link.name }}
+                    </template>
+                  </NeuCard>
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </template>
+
+        <!-- No Results -->
+        <div v-else class="flex flex-col items-center justify-center py-12 text-center">
+          <div class="w-12 h-12 rounded-full bg-[var(--bg-color)] shadow-neu-pressed flex items-center justify-center mb-4">
+            <Search class="w-5 h-5 text-neu-text/30" />
+          </div>
+          <p class="text-sm text-neu-text/40">未找到 "<span class="text-neu-accent">{{ searchQuery }}</span>"</p>
+          <button @click="clearSearch" class="mt-3 text-xs text-neu-accent hover:underline">清除搜索</button>
         </div>
       </nav>
     </aside>
@@ -160,6 +278,9 @@ const toggleSidebar = () => {
   </div>
 </template>
 
+
+
+
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
@@ -172,11 +293,11 @@ const toggleSidebar = () => {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--bg-color);
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {

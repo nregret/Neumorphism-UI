@@ -202,6 +202,11 @@ const routes: RouteRecordRaw[] = [
         name: 'DocsEmpty',
         component: () => import('../views/docs/EmptyDoc.vue'),
       },
+      {
+        path: 'scrollbar',
+        name: 'DocsScrollbar',
+        component: () => import('../views/docs/ScrollbarDoc.vue'),
+      },
     ],
   },
 ]

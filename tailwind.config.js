@@ -16,12 +16,15 @@ export default {
         },
       },
       boxShadow: {
-        "neu-flat": "8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light)",
-        "neu-flat-sm": "4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light)",
-        "neu-flat-lg": "12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light)",
-        "neu-pressed": "inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light)",
-        "neu-pressed-sm": "inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light)",
-        "neu-pressed-lg": "inset 12px 12px 24px var(--shadow-dark), inset -12px -12px 24px var(--shadow-light)",
+        // ── sm: 搜索框、徽标、小控件 ──────────────────────────────
+        "neu-flat-sm":    "var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light)",
+        "neu-pressed-sm": "inset var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), inset var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light)",
+        // ── md: 卡片、按钮、通用元素 (默认) ─────────────────────────
+        "neu-flat":       "var(--neu-d2) var(--neu-d2) var(--neu-b2) var(--shadow-dark), var(--neu-d2-n) var(--neu-d2-n) var(--neu-b2) var(--shadow-light)",
+        "neu-pressed":    "inset var(--neu-d2) var(--neu-d2) var(--neu-b2) var(--shadow-dark), inset var(--neu-d2-n) var(--neu-d2-n) var(--neu-b2) var(--shadow-light)",
+        // ── lg: 主体面板、侧边栏、英雄区 ─────────────────────────────
+        "neu-flat-lg":    "var(--neu-d3) var(--neu-d3) var(--neu-b3) var(--shadow-dark), var(--neu-d3-n) var(--neu-d3-n) var(--neu-b3) var(--shadow-light)",
+        "neu-pressed-lg": "inset var(--neu-d3) var(--neu-d3) var(--neu-b3) var(--shadow-dark), inset var(--neu-d3-n) var(--neu-d3-n) var(--neu-b3) var(--shadow-light)",
       },
     },
   },

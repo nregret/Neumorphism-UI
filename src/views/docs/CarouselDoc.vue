@@ -170,7 +170,7 @@ const manualUsage = `<NeuCarousel :items="items" :auto-play="false" :show-progre
                   ['showArrows',    'boolean',          'true',    '是否显示左右箭头'],
                   ['showDots',      'boolean',          'true',    '是否显示指示器'],
                   ['showProgress',  'boolean',          'false',   '是否显示播放进度条'],
-                ]" :key="row[0]" class=\"border-t border-[var(--shadow-dark)]/10\">
+                ]" :key="row[0]" class="border-t border-[var(--shadow-dark)]/10">
                   <td class="px-5 py-3 font-mono text-neu-accent">{{ row[0] }}</td>
                   <td class="px-5 py-3 text-neu-text/70">{{ row[1] }}</td>
                   <td class="px-5 py-3 text-neu-text/50 font-mono text-xs">{{ row[2] }}</td>

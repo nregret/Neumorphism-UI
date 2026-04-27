@@ -150,7 +150,7 @@ const textClasses = computed(() => {
           <!-- Hours Column -->
           <div 
             ref="hoursRef"
-            class="h-40 w-16 overflow-y-auto custom-scrollbar scroll-smooth snap-y snap-mandatory relative px-1 py-[60px]"
+            class="h-40 w-16 overflow-y-auto neu-scrollbar-hidden scroll-smooth snap-y snap-mandatory relative px-1 py-[60px]"
             @scroll="handleHourScroll"
           >
             <div 
@@ -168,7 +168,7 @@ const textClasses = computed(() => {
           <!-- Minutes Column -->
           <div 
             ref="minsRef"
-            class="h-40 w-16 overflow-y-auto custom-scrollbar scroll-smooth snap-y snap-mandatory relative px-1 py-[60px]"
+            class="h-40 w-16 overflow-y-auto neu-scrollbar-hidden scroll-smooth snap-y snap-mandatory relative px-1 py-[60px]"
             @scroll="handleMinScroll"
           >
             <div 
@@ -205,14 +205,5 @@ const textClasses = computed(() => {
 .neu-fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-15px) scale(0.98);
-}
-
-/* Hide scrollbar for a cleaner look like iOS picker */
-.custom-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.custom-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 </style>

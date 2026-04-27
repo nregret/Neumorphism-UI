@@ -145,7 +145,7 @@ const textClasses = computed(() => {
     <Transition name="neu-select">
       <div 
         v-if="isOpen"
-        class="absolute z-50 w-full mt-3 bg-[var(--bg-color)] shadow-neu-flat-lg rounded-2xl py-3 max-h-60 overflow-y-auto custom-scrollbar"
+        class="absolute z-50 w-full mt-3 bg-[var(--bg-color)] shadow-neu-flat-lg rounded-2xl py-3 max-h-60 overflow-y-auto neu-scrollbar"
         role="listbox"
       >
         <div class="px-3 flex flex-col gap-1">
@@ -203,23 +203,5 @@ const textClasses = computed(() => {
 .fade-leave-to {
   opacity: 0;
   transform: scale(0.5);
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 8px 0;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--shadow-dark);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
 }
 </style>

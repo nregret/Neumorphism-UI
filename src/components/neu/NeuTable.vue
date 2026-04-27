@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ChevronUp, ChevronDown } from 'lucide-vue-next'
+import NeuSpin from './NeuSpin.vue'
 
 export interface TableColumn {
   key: string
@@ -100,7 +101,7 @@ const getAlignClass = (align?: 'left' | 'center' | 'right') => {
         
         <!-- Loading Overlay -->
         <div v-if="loading" class="absolute inset-0 z-10 flex items-center justify-center bg-[var(--bg-color)]/50 backdrop-blur-sm rounded-xl">
-          <div class="w-8 h-8 border-4 border-neu-accent/30 border-t-neu-accent rounded-full animate-spin"></div>
+          <NeuSpin size="sm" />
         </div>
 
         <tr 

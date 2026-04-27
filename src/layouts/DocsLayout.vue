@@ -272,7 +272,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
     ></div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 md:p-12 lg:p-20 overflow-y-auto w-full max-w-4xl mx-auto custom-scrollbar">
+    <main class="flex-1 p-6 md:p-12 lg:p-20 overflow-y-auto w-full max-w-4xl mx-auto neu-scrollbar-thin">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
@@ -297,22 +297,5 @@ const highlightText = (text: string, query: string): { text: string; match: bool
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--shadow-dark);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
 }
 </style>

@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = unknown">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import NeuButton from './NeuButton.vue'
 
 interface Props {
-  items: unknown[]
+  items: T[]
   autoPlay?: boolean
   interval?: number
   showArrows?: boolean
@@ -98,15 +99,13 @@ const trackStyle = computed(() => {
 
 <template>
   <div
-    class="relative w-full overflow-hidden rounded-[2rem] bg-[var(--bg-color)]"
-    style="box-shadow: inset var(--neu-d2) var(--neu-d2) var(--neu-b2) var(--shadow-dark), inset var(--neu-d2-n) var(--neu-d2-n) var(--neu-b2) var(--shadow-light);"
+    class="relative w-full overflow-hidden rounded-[2rem] bg-[var(--bg-color)] shadow-neu-pressed"
     @mouseenter="stopAutoPlay"
     @mouseleave="startAutoPlay"
   >
     <!-- Inner frame with subtle outer shadow -->
     <div
-      class="m-2 rounded-[1.5rem] overflow-hidden relative"
-      style="box-shadow: var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light);"
+      class="m-2 rounded-[1.5rem] overflow-hidden relative shadow-neu-flat-sm"
     >
       <!-- ── SLIDE effect ─────────────────── -->
       <template v-if="effect === 'slide'">
@@ -145,31 +144,31 @@ const trackStyle = computed(() => {
       <!-- ── Navigation Arrows ─────────────── -->
       <template v-if="showArrows && items.length > 1">
         <!-- Prev -->
-        <button
-          @click.stop="prev"
-          class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-200 group"
-          style="
-            background: color-mix(in srgb, var(--bg-color) 70%, transparent);
-            backdrop-filter: blur(8px);
-            box-shadow: var(--neu-d2) var(--neu-d2) var(--neu-b2) var(--shadow-dark), var(--neu-d2-n) var(--neu-d2-n) var(--neu-b2) var(--shadow-light);
-          "
-          aria-label="Previous slide"
-        >
-          <ChevronLeft class="w-5 h-5 text-neu-text/50 group-hover:text-neu-accent transition-colors duration-200 -ml-0.5" />
-        </button>
+        <div class="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+          <NeuButton
+            variant="icon"
+            shape="circle"
+            size="sm"
+            @click.stop="prev"
+            aria-label="Previous slide"
+            class="bg-[var(--bg-color)]/80 backdrop-blur-sm shadow-neu-flat"
+          >
+            <ChevronLeft class="w-5 h-5" />
+          </NeuButton>
+        </div>
         <!-- Next -->
-        <button
-          @click.stop="next"
-          class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-200 group"
-          style="
-            background: color-mix(in srgb, var(--bg-color) 70%, transparent);
-            backdrop-filter: blur(8px);
-            box-shadow: var(--neu-d2) var(--neu-d2) var(--neu-b2) var(--shadow-dark), var(--neu-d2-n) var(--neu-d2-n) var(--neu-b2) var(--shadow-light);
-          "
-          aria-label="Next slide"
-        >
-          <ChevronRight class="w-5 h-5 text-neu-text/50 group-hover:text-neu-accent transition-colors duration-200 ml-0.5" />
-        </button>
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+          <NeuButton
+            variant="icon"
+            shape="circle"
+            size="sm"
+            @click.stop="next"
+            aria-label="Next slide"
+            class="bg-[var(--bg-color)]/80 backdrop-blur-sm shadow-neu-flat"
+          >
+            <ChevronRight class="w-5 h-5" />
+          </NeuButton>
+        </div>
       </template>
 
       <!-- ── Dots + Progress ───────────────── -->
@@ -178,24 +177,18 @@ const trackStyle = computed(() => {
         class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
         <!-- Dot indicators -->
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full"
-          style="background: color-mix(in srgb, var(--bg-color) 60%, transparent); backdrop-filter: blur(6px); box-shadow: inset var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), inset var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light);"
-        >
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-color)]/60 backdrop-blur-sm shadow-neu-pressed-sm">
           <button
             v-for="(_, index) in items"
             :key="index"
             @click.stop="goTo(index)"
             :aria-label="`Go to slide ${index + 1}`"
             class="transition-all duration-350 ease-out rounded-full"
-            :style="{
-              width:      index === currentIndex ? '24px'  : '8px',
-              height:     '8px',
-              background: index === currentIndex ? 'var(--accent)' : 'var(--shadow-dark)',
-              opacity:    index === currentIndex ? 1 : 0.45,
-              boxShadow:  index === currentIndex
-                ? '0 0 10px color-mix(in srgb, var(--accent) 60%, transparent)'
-                : 'none',
-            }"
+            :class="[
+              index === currentIndex
+                ? 'w-6 h-2 bg-[var(--accent)] opacity-100 shadow-[0_0_10px_var(--accent)]'
+                : 'w-2 h-2 bg-[var(--shadow-dark)] opacity-45'
+            ]"
           />
         </div>
 
@@ -219,14 +212,7 @@ const trackStyle = computed(() => {
       <!-- ── Slide counter badge (top-right) ─ -->
       <div
         v-if="items.length > 1"
-        class="absolute top-3 right-3 z-10 text-[11px] font-mono font-semibold px-2 py-0.5 rounded-lg"
-        style="
-          background: color-mix(in srgb, var(--bg-color) 70%, transparent);
-          backdrop-filter: blur(6px);
-          color: var(--text-color);
-          opacity: 0.7;
-          box-shadow: var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light);
-        "
+        class="absolute top-3 right-3 z-10 text-[11px] font-mono font-semibold px-2 py-0.5 rounded-lg bg-[var(--bg-color)]/70 backdrop-blur-sm text-[var(--text-color)] opacity-70 shadow-neu-flat-sm"
       >
         {{ currentIndex + 1 }} / {{ items.length }}
       </div>

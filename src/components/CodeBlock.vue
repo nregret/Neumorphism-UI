@@ -58,27 +58,10 @@ onMounted(() => {
       </div>
       
       <!-- Code Content -->
-      <div class="p-4 overflow-x-auto custom-scrollbar-dark">
+      <div class="p-4 overflow-x-auto neu-scrollbar-dark">
         <pre :class="`language-${language || 'html'} text-sm m-0 bg-transparent p-0`"><code :class="`language-${language || 'html'}`">{{ code }}</code></pre>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-/* Custom scrollbar for the dark screen area */
-.custom-scrollbar-dark::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-.custom-scrollbar-dark::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar-dark::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 4px;
-}
-.custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
-  background: #666;
-}
-</style>

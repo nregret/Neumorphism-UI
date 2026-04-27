@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, watch, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import { X } from 'lucide-vue-next'
 import NeuCard from './NeuCard.vue'
 import NeuButton from './NeuButton.vue'
+import { useOverlay } from '@/composables/useOverlay'
 
 interface Props {
   modelValue: boolean
@@ -33,49 +34,13 @@ const close = () => {
   emit('close')
 }
 
-const handleOutsideClick = (e: MouseEvent) => {
-  if (props.closeOnClickOutside && (e.target as HTMLElement).classList.contains('neu-modal-overlay')) {
-    close()
-  }
-}
-
-const handleEscKey = (e: KeyboardEvent) => {
-  if (props.closeOnEsc && e.key === 'Escape' && props.modelValue) {
-    close()
-  }
-}
-
-let scrollbarWidth = 0
-
-const lockScroll = () => {
-  scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-  if (scrollbarWidth > 0) {
-    document.body.style.paddingRight = `${scrollbarWidth}px`
-  }
-  document.body.style.overflow = 'hidden'
-}
-
-const unlockScroll = () => {
-  document.body.style.overflow = ''
-  document.body.style.paddingRight = ''
-}
-
-watch(() => props.modelValue, (newVal) => {
-  if (newVal) {
-    emit('open')
-    lockScroll()
-  } else {
-    unlockScroll()
-  }
-})
-
-onMounted(() => {
-  window.addEventListener('keydown', handleEscKey)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleEscKey)
-  unlockScroll()
+const { handleOutsideClick } = useOverlay({
+  isOpen: () => props.modelValue,
+  closeOnEsc: () => props.closeOnEsc,
+  closeOnClickOutside: () => props.closeOnClickOutside,
+  overlayClass: 'neu-modal-overlay',
+  onClose: close,
+  onOpen: () => emit('open'),
 })
 
 const widthClasses = {
@@ -132,7 +97,7 @@ const containerClasses = computed(() => {
             </div>
 
             <!-- Body -->
-            <div class="flex-1 overflow-y-auto pr-2 -mx-2 px-2 custom-scrollbar">
+            <div class="flex-1 overflow-y-auto pr-2 -mx-2 px-2 neu-scrollbar">
               <div class="py-4">
                 <slot></slot>
               </div>
@@ -193,22 +158,4 @@ const containerClasses = computed(() => {
   transform: scale(0.9) translateY(30px);
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--bg-color);
-  border-radius: 4px;
-  box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--shadow-dark);
-  border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
 </style>

@@ -5,6 +5,8 @@ import NeuCard from './NeuCard.vue'
 import NeuButton from './NeuButton.vue'
 import { useOverlay } from '@/composables/useOverlay'
 
+defineOptions({ inheritAttrs: false })
+
 interface Props {
   modelValue: boolean
   title?: string

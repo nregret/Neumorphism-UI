@@ -60,7 +60,7 @@ const positionClasses = computed(() => {
         :class="positionClasses"
         role="tooltip"
       >
-        <div class="px-4 py-2 text-sm font-medium whitespace-nowrap rounded-xl shadow-neu-flat bg-[var(--bg-color)] text-neu-text relative">
+        <div class="px-4 py-2 text-sm font-medium whitespace-nowrap rounded-neu-sm shadow-neu-flat bg-[var(--bg-color)] text-neu-text relative">
           {{ content }}
           
           <!-- Arrow -->

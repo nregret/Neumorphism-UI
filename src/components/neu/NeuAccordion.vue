@@ -59,7 +59,7 @@ const toggle = (id: string | number, disabled?: boolean) => {
     <div 
       v-for="item in items" 
       :key="item.id"
-      class="rounded-2xl bg-[var(--bg-color)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] overflow-hidden"
+      class="rounded-neu-md bg-[var(--bg-color)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] overflow-hidden"
       :class="[
         isOpen(item.id) ? 'shadow-neu-flat' : 'shadow-neu-flat hover:shadow-neu-flat-sm',
         item.disabled ? 'opacity-50' : ''

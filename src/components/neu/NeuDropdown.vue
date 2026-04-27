@@ -95,7 +95,7 @@ const placementClasses = computed(() => {
     <!-- Trigger -->
     <div @click="toggle" class="cursor-pointer">
       <slot name="trigger">
-        <button class="px-4 py-2 bg-[var(--bg-color)] shadow-neu-flat rounded-xl hover:shadow-neu-flat-sm active:shadow-neu-pressed transition-all">
+        <button class="px-4 py-2 bg-[var(--bg-color)] shadow-neu-flat rounded-neu-sm hover:shadow-neu-flat-sm active:shadow-neu-pressed transition-all">
           Dropdown
         </button>
       </slot>
@@ -105,7 +105,7 @@ const placementClasses = computed(() => {
     <Transition name="neu-dropdown">
       <div 
         v-if="isOpen"
-        class="absolute z-50 min-w-[12rem] bg-[var(--bg-color)] shadow-[12px_12px_24px_rgba(0,0,0,0.15),-12px_-12px_24px_var(--shadow-light)] rounded-2xl py-2"
+        class="absolute z-50 min-w-[12rem] bg-[var(--bg-color)] shadow-[12px_12px_24px_rgba(0,0,0,0.15),-12px_-12px_24px_var(--shadow-light)] rounded-neu-md py-2"
         :class="placementClasses"
       >
         <div class="px-2">
@@ -118,7 +118,7 @@ const placementClasses = computed(() => {
             <button
               v-else
               @click="handleSelect(item)"
-              class="w-full text-left px-4 py-2.5 rounded-xl transition-all duration-200 flex items-center gap-3"
+              class="w-full text-left px-4 py-2.5 rounded-neu-sm transition-all duration-200 flex items-center gap-3"
               :class="[
                 item.disabled 
                   ? 'opacity-50 cursor-not-allowed text-neu-text/50' 

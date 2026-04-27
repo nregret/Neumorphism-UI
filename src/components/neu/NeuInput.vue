@@ -22,7 +22,7 @@ const emit = defineEmits<{
 
 const computedClasses = computed(() => {
   return [
-    'w-full px-6 py-4 text-base font-medium rounded-2xl outline-none transition-all duration-300',
+    'w-full px-6 py-4 text-base font-medium rounded-neu-md outline-none transition-all duration-300',
     'bg-[var(--bg-color)] text-neu-text placeholder:text-neu-text/50',
     'shadow-neu-pressed focus:shadow-neu-pressed-sm',
     props.disabled ? 'opacity-50 cursor-not-allowed' : '',

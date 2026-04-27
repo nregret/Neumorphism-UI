@@ -34,7 +34,7 @@ const iconSizeClasses = {
 }
 
 const shapeClasses = {
-  rounded: 'rounded-2xl',
+  rounded: 'rounded-neu-md',
   circle: 'rounded-full',
 }
 

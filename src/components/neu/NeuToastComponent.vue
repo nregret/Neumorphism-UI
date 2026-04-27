@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { Info, CheckCircle, AlertTriangle, XCircle, X } from 'lucide-vue-next'
 
+defineOptions({ inheritAttrs: false })
+
 const props = defineProps<{
   show: boolean
   message: string

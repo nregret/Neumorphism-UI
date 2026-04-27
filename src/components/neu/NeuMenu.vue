@@ -32,7 +32,7 @@ const handleSelect = (item: MenuItem) => {
 
 <template>
   <nav 
-    class="flex p-2 rounded-2xl bg-[var(--bg-color)]"
+    class="flex p-2 rounded-neu-md bg-[var(--bg-color)]"
     :class="[
       mode === 'vertical' ? 'flex-col space-y-1' : 'flex-row items-center space-x-1 shadow-neu-flat w-max',
       mode === 'vertical' ? 'shadow-neu-flat w-64' : ''

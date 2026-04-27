@@ -32,6 +32,22 @@
     --neu-d3:   calc(12px  * var(--neu-scale));
     --neu-d3-n: calc(-12px * var(--neu-scale));
     --neu-b3:   calc(26px  * var(--neu-scale));
+
+    /* ─── Neumorphic Border-Radius System ───────────────────────── *
+     *  --neu-radius-scale : 全局圆角乘数 (0.5 锐利 → 1.0 默认 → 1.5 圆润) *
+     *  三个基础级别: sm(精细控件) / md(通用卡片) / lg(主体面板)          *
+     *  Tailwind 工具类 rounded-neu-{sm|md|lg} 均引用此值               *
+     * ──────────────────────────────────────────────────────────── */
+    --neu-radius-scale: 1;
+
+    /* sm — 标签、徽标、小按钮等精细控件 */
+    --neu-radius-sm: calc(8px  * var(--neu-radius-scale));
+
+    /* md — 卡片、输入框、按钮等通用元素 (默认) */
+    --neu-radius-md: calc(16px * var(--neu-radius-scale));
+
+    /* lg — 面板、抽屉、模态框等主体容器 */
+    --neu-radius-lg: calc(24px * var(--neu-radius-scale));
   }
 
   .dark {

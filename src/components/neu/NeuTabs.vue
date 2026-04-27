@@ -53,7 +53,7 @@ onMounted(updateIndicator)
 
 const containerClasses = computed(() => {
   if (props.variant === 'pills') {
-    return 'relative flex items-center p-1 rounded-2xl bg-[var(--bg-color)] shadow-neu-pressed overflow-hidden'
+    return 'relative flex items-center p-1 rounded-neu-md bg-[var(--bg-color)] shadow-neu-pressed overflow-hidden'
   }
   return 'relative flex items-center border-b border-[var(--shadow-dark)]/20'
 })

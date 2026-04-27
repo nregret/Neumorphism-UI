@@ -21,9 +21,9 @@ const paddingClasses = {
 }
 
 const roundedClasses = {
-  sm: 'rounded-xl',
-  md: 'rounded-2xl',
-  lg: 'rounded-[2rem]',
+  sm: 'rounded-neu-sm',
+  md: 'rounded-neu-md',
+  lg: 'rounded-neu-lg',
   full: 'rounded-full',
 }
 

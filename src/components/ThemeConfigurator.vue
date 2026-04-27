@@ -11,6 +11,8 @@ import {
   saveThemePalette,
 } from '../composables/useThemePalette'
 
+defineOptions({ inheritAttrs: false })
+
 interface Props {
   modelValue: boolean
 }
@@ -33,6 +35,10 @@ const neuScale    = ref(saved?.scale   ?? DEFAULT_THEME_PALETTE.scale)
 const depthSm     = ref(saved?.depthSm ?? DEFAULT_THEME_PALETTE.depthSm)
 const depthMd     = ref(saved?.depthMd ?? DEFAULT_THEME_PALETTE.depthMd)
 const depthLg     = ref(saved?.depthLg ?? DEFAULT_THEME_PALETTE.depthLg)
+const radiusScale = ref(saved?.radiusScale ?? DEFAULT_THEME_PALETTE.radiusScale)
+const radiusSm    = ref(saved?.radiusSm    ?? DEFAULT_THEME_PALETTE.radiusSm)
+const radiusMd    = ref(saved?.radiusMd    ?? DEFAULT_THEME_PALETTE.radiusMd)
+const radiusLg    = ref(saved?.radiusLg    ?? DEFAULT_THEME_PALETTE.radiusLg)
 
 // ── Presets ──────────────────────────────────────────────
 const presets = [
@@ -51,13 +57,17 @@ const applyPreset = (preset: (typeof presets)[0]) => {
 
 // ── Live update ───────────────────────────────────────────
 const currentPalette = computed(() => ({
-  bg:      baseColor.value,
-  accent:  accentColor.value,
-  text:    textColor.value,
-  scale:   neuScale.value,
-  depthSm: depthSm.value,
-  depthMd: depthMd.value,
-  depthLg: depthLg.value,
+  bg:          baseColor.value,
+  accent:      accentColor.value,
+  text:        textColor.value,
+  scale:       neuScale.value,
+  depthSm:     depthSm.value,
+  depthMd:     depthMd.value,
+  depthLg:     depthLg.value,
+  radiusScale: radiusScale.value,
+  radiusSm:    radiusSm.value,
+  radiusMd:    radiusMd.value,
+  radiusLg:    radiusLg.value,
 }))
 
 watch(
@@ -74,6 +84,13 @@ const resetDepths = () => {
   depthSm.value  = DEFAULT_THEME_PALETTE.depthSm
   depthMd.value  = DEFAULT_THEME_PALETTE.depthMd
   depthLg.value  = DEFAULT_THEME_PALETTE.depthLg
+}
+
+const resetRadius = () => {
+  radiusScale.value = DEFAULT_THEME_PALETTE.radiusScale
+  radiusSm.value    = DEFAULT_THEME_PALETTE.radiusSm
+  radiusMd.value    = DEFAULT_THEME_PALETTE.radiusMd
+  radiusLg.value    = DEFAULT_THEME_PALETTE.radiusLg
 }
 
 // ── Shadow helpers (for preview dots) ────────────────────
@@ -115,6 +132,12 @@ const generatedCSS = computed(() => `:root {
   --neu-d3:       ${(depthLg.value * neuScale.value).toFixed(1)}px;
   --neu-d3-n:     ${(-depthLg.value * neuScale.value).toFixed(1)}px;
   --neu-b3:       ${(depthLg.value * neuScale.value * 2.2).toFixed(1)}px;
+
+  /* Border-radius system */
+  --neu-radius-scale: ${radiusScale.value};
+  --neu-radius-sm:    ${(radiusSm.value * radiusScale.value).toFixed(1)}px;
+  --neu-radius-md:    ${(radiusMd.value * radiusScale.value).toFixed(1)}px;
+  --neu-radius-lg:    ${(radiusLg.value * radiusScale.value).toFixed(1)}px;
 }`)
 
 const copied = ref(false)
@@ -203,7 +226,7 @@ const copyCSS = async () => {
           <div class="flex items-end gap-4 justify-center py-3">
             <div class="flex flex-col items-center gap-2">
               <div
-                class="rounded-2xl bg-[var(--bg-color)]"
+                class="rounded-neu-md bg-[var(--bg-color)]"
                 :style="{
                   width:'36px', height:'36px',
                   boxShadow: `${depthSm*neuScale}px ${depthSm*neuScale}px ${depthSm*neuScale*2.2}px ${shadowDark}, ${-depthSm*neuScale}px ${-depthSm*neuScale}px ${depthSm*neuScale*2.2}px ${shadowLight}`
@@ -213,7 +236,7 @@ const copyCSS = async () => {
             </div>
             <div class="flex flex-col items-center gap-2">
               <div
-                class="rounded-2xl bg-[var(--bg-color)]"
+                class="rounded-neu-md bg-[var(--bg-color)]"
                 :style="{
                   width:'48px', height:'48px',
                   boxShadow: `${depthMd*neuScale}px ${depthMd*neuScale}px ${depthMd*neuScale*2.2}px ${shadowDark}, ${-depthMd*neuScale}px ${-depthMd*neuScale}px ${depthMd*neuScale*2.2}px ${shadowLight}`
@@ -223,7 +246,7 @@ const copyCSS = async () => {
             </div>
             <div class="flex flex-col items-center gap-2">
               <div
-                class="rounded-2xl bg-[var(--bg-color)]"
+                class="rounded-neu-md bg-[var(--bg-color)]"
                 :style="{
                   width:'64px', height:'64px',
                   boxShadow: `${depthLg*neuScale}px ${depthLg*neuScale}px ${depthLg*neuScale*2.2}px ${shadowDark}, ${-depthLg*neuScale}px ${-depthLg*neuScale}px ${depthLg*neuScale*2.2}px ${shadowLight}`
@@ -259,6 +282,99 @@ const copyCSS = async () => {
               <span class="text-xs font-mono text-neu-text/60">{{ depthLg }}px</span>
             </div>
             <input v-model.number="depthLg" type="range" min="6" max="24" step="1" class="neu-range w-full" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Border-Radius System ──────────────────── -->
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-[var(--shadow-dark)]/10 pb-2">
+          <h3 class="text-sm font-bold text-neu-text flex items-center gap-2">
+            <Layers class="w-4 h-4" /> 圆角规格
+          </h3>
+          <button
+            @click="resetRadius"
+            class="text-xs text-neu-accent hover:underline"
+          >重置</button>
+        </div>
+
+        <!-- Global radius scale -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="text-sm text-neu-text/80">全局圆角乘数 (Scale)</label>
+            <span class="text-sm font-mono font-bold text-neu-accent">× {{ radiusScale.toFixed(2) }}</span>
+          </div>
+          <div class="px-1">
+            <input
+              v-model.number="radiusScale"
+              type="range" min="0.5" max="1.5" step="0.05"
+              class="neu-range w-full"
+            />
+            <div class="flex justify-between text-[10px] text-neu-text/30 mt-1">
+              <span>锐利 0.5</span><span>默认 1.0</span><span>圆润 1.5</span>
+            </div>
+          </div>
+
+          <!-- Preview dots -->
+          <div class="flex items-end gap-4 justify-center py-3">
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="bg-[var(--accent)]"
+                :style="{
+                  width:'36px', height:'36px',
+                  borderRadius: `${radiusSm * radiusScale}px`
+                }"
+              />
+              <span class="text-[10px] text-neu-text/40">sm</span>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="bg-[var(--accent)]"
+                :style="{
+                  width:'48px', height:'48px',
+                  borderRadius: `${radiusMd * radiusScale}px`
+                }"
+              />
+              <span class="text-[10px] text-neu-text/40">md</span>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="bg-[var(--accent)]"
+                :style="{
+                  width:'64px', height:'64px',
+                  borderRadius: `${radiusLg * radiusScale}px`
+                }"
+              />
+              <span class="text-[10px] text-neu-text/40">lg</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Per-level fine tuning -->
+        <div class="space-y-4 pt-1">
+          <!-- sm -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-xs text-neu-text/60">sm — 精细 (标签 / 徽标 / 小按钮)</label>
+              <span class="text-xs font-mono text-neu-text/60">{{ radiusSm }}px</span>
+            </div>
+            <input v-model.number="radiusSm" type="range" min="4" max="16" step="1" class="neu-range w-full" />
+          </div>
+          <!-- md -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-xs text-neu-text/60">md — 通用 (卡片 / 按钮 / 输入框)</label>
+              <span class="text-xs font-mono text-neu-text/60">{{ radiusMd }}px</span>
+            </div>
+            <input v-model.number="radiusMd" type="range" min="8" max="28" step="1" class="neu-range w-full" />
+          </div>
+          <!-- lg -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-xs text-neu-text/60">lg — 主体 (面板 / 抽屉 / 模态框)</label>
+              <span class="text-xs font-mono text-neu-text/60">{{ radiusLg }}px</span>
+            </div>
+            <input v-model.number="radiusLg" type="range" min="12" max="40" step="1" class="neu-range w-full" />
           </div>
         </div>
       </div>

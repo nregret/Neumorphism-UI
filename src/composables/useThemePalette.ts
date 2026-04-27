@@ -10,6 +10,14 @@ export interface ThemePalette {
   depthMd?: number
   /** lg 级 offset (px)，对应 --neu-d3 基础值 */
   depthLg?: number
+  /** 全局圆角乘数，0.5 锐利 ~ 1.0 默认 ~ 1.5 圆润 */
+  radiusScale?: number
+  /** sm 级圆角基础值 (px) */
+  radiusSm?: number
+  /** md 级圆角基础值 (px) */
+  radiusMd?: number
+  /** lg 级圆角基础值 (px) */
+  radiusLg?: number
 }
 
 export const THEME_PALETTE_STORAGE_KEY = 'neu-theme-palette'
@@ -22,6 +30,10 @@ export const DEFAULT_THEME_PALETTE: Required<ThemePalette> = {
   depthSm: 3,
   depthMd: 6,
   depthLg: 12,
+  radiusScale: 1,
+  radiusSm: 8,
+  radiusMd: 16,
+  radiusLg: 24,
 }
 
 const blendColor = (hex: string, amount: number, isLighten: boolean) => {
@@ -95,6 +107,17 @@ export const applyThemePalette = (palette: ThemePalette) => {
   root.style.setProperty('--neu-d3',   fmt(dLg * scale))
   root.style.setProperty('--neu-d3-n', fmt(-dLg * scale))
   root.style.setProperty('--neu-b3',   fmt(dLg * scale * 2.2))
+
+  // Border-radius system
+  const rScale = palette.radiusScale ?? DEFAULT_THEME_PALETTE.radiusScale
+  const rSm    = palette.radiusSm    ?? DEFAULT_THEME_PALETTE.radiusSm
+  const rMd    = palette.radiusMd    ?? DEFAULT_THEME_PALETTE.radiusMd
+  const rLg    = palette.radiusLg    ?? DEFAULT_THEME_PALETTE.radiusLg
+
+  root.style.setProperty('--neu-radius-scale', String(rScale))
+  root.style.setProperty('--neu-radius-sm',    fmt(rSm * rScale))
+  root.style.setProperty('--neu-radius-md',    fmt(rMd * rScale))
+  root.style.setProperty('--neu-radius-lg',    fmt(rLg * rScale))
 }
 
 export const saveThemePalette = (palette: ThemePalette) => {
@@ -114,10 +137,14 @@ export const readThemePalette = (): ThemePalette | null => {
       bg: parsed.bg,
       accent: parsed.accent,
       text: parsed.text,
-      scale:   typeof parsed.scale   === 'number' ? parsed.scale   : DEFAULT_THEME_PALETTE.scale,
-      depthSm: typeof parsed.depthSm === 'number' ? parsed.depthSm : DEFAULT_THEME_PALETTE.depthSm,
-      depthMd: typeof parsed.depthMd === 'number' ? parsed.depthMd : DEFAULT_THEME_PALETTE.depthMd,
-      depthLg: typeof parsed.depthLg === 'number' ? parsed.depthLg : DEFAULT_THEME_PALETTE.depthLg,
+      scale:       typeof parsed.scale       === 'number' ? parsed.scale       : DEFAULT_THEME_PALETTE.scale,
+      depthSm:     typeof parsed.depthSm     === 'number' ? parsed.depthSm     : DEFAULT_THEME_PALETTE.depthSm,
+      depthMd:     typeof parsed.depthMd     === 'number' ? parsed.depthMd     : DEFAULT_THEME_PALETTE.depthMd,
+      depthLg:     typeof parsed.depthLg     === 'number' ? parsed.depthLg     : DEFAULT_THEME_PALETTE.depthLg,
+      radiusScale: typeof parsed.radiusScale === 'number' ? parsed.radiusScale : DEFAULT_THEME_PALETTE.radiusScale,
+      radiusSm:    typeof parsed.radiusSm    === 'number' ? parsed.radiusSm    : DEFAULT_THEME_PALETTE.radiusSm,
+      radiusMd:    typeof parsed.radiusMd    === 'number' ? parsed.radiusMd    : DEFAULT_THEME_PALETTE.radiusMd,
+      radiusLg:    typeof parsed.radiusLg    === 'number' ? parsed.radiusLg    : DEFAULT_THEME_PALETTE.radiusLg,
     }
   } catch {
     return null

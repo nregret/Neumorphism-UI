@@ -97,7 +97,7 @@ onUnmounted(() => {
 // --- Computed Classes ---
 const triggerClasses = computed(() => {
   return [
-    'relative w-full px-6 py-4 text-base font-medium rounded-2xl transition-all duration-300 flex items-center justify-between select-none',
+    'relative w-full px-6 py-4 text-base font-medium rounded-neu-md transition-all duration-300 flex items-center justify-between select-none',
     'bg-[var(--bg-color)]',
     props.disabled ? 'opacity-50 cursor-not-allowed shadow-neu-flat' : 'cursor-pointer',
     !props.disabled && !isOpen.value ? 'shadow-neu-flat hover:shadow-neu-flat-sm active:shadow-neu-pressed' : '',
@@ -145,7 +145,7 @@ const textClasses = computed(() => {
     <Transition name="neu-select">
       <div 
         v-if="isOpen"
-        class="absolute z-50 w-full mt-3 bg-[var(--bg-color)] shadow-neu-flat-lg rounded-2xl py-3 max-h-60 overflow-y-auto neu-scrollbar"
+        class="absolute z-50 w-full mt-3 bg-[var(--bg-color)] shadow-neu-flat-lg rounded-neu-md py-3 max-h-60 overflow-y-auto neu-scrollbar"
         role="listbox"
       >
         <div class="px-3 flex flex-col gap-1">
@@ -153,7 +153,7 @@ const textClasses = computed(() => {
             v-for="option in options"
             :key="option.value"
             @click="handleSelect(option)"
-            class="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between"
+            class="w-full text-left px-4 py-3 rounded-neu-sm transition-all duration-200 flex items-center justify-between"
             :class="[
               option.disabled 
                 ? 'opacity-50 cursor-not-allowed text-neu-text/50' 

@@ -184,7 +184,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
       <!-- Search Box -->
       <div class="px-4 pb-3 shrink-0">
         <div
-          class="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[var(--bg-color)] shadow-neu-pressed-sm transition-all duration-200"
+          class="flex items-center gap-2 px-3 py-2 rounded-neu-md bg-[var(--bg-color)] shadow-neu-pressed-sm transition-all duration-200"
         >
           <Search class="w-4 h-4 text-neu-text/40 shrink-0" />
           <input
@@ -227,7 +227,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
                 <li v-for="link in group.links" :key="link.path">
                   <router-link :to="link.path" @click="isSidebarOpen = false">
                     <div
-                      class="px-3 py-3 rounded-xl text-sm cursor-pointer transition-all duration-200 bg-[var(--bg-color)]"
+                      class="px-3 py-3 rounded-neu-sm text-sm cursor-pointer transition-all duration-200 bg-[var(--bg-color)]"
                       :class="[
                         route.path === link.path
                           ? 'shadow-neu-pressed-sm text-neu-accent font-semibold'

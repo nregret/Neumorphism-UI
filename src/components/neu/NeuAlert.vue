@@ -66,7 +66,7 @@ const variantStyles = computed(() => {
   <Transition name="neu-alert">
     <div 
       v-if="isVisible"
-      class="relative w-full rounded-2xl p-5 flex items-start gap-4 transition-all duration-300"
+      class="relative w-full rounded-neu-md p-5 flex items-start gap-4 transition-all duration-300"
       :class="variantStyles.bgClass"
       role="alert"
     >

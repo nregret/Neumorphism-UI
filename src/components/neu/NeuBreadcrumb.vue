@@ -29,7 +29,7 @@ const handleNavigate = (item: BreadcrumbItem) => {
 
 const containerClasses = computed(() => {
   return [
-    'inline-flex items-center px-6 py-3 rounded-2xl bg-[var(--bg-color)]',
+    'inline-flex items-center px-6 py-3 rounded-neu-md bg-[var(--bg-color)]',
     props.variant === 'flat' ? 'shadow-neu-flat' : 'shadow-neu-pressed'
   ].join(' ')
 })

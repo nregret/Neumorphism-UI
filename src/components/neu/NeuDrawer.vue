@@ -4,6 +4,8 @@ import { X } from 'lucide-vue-next'
 import NeuButton from './NeuButton.vue'
 import { useOverlay } from '@/composables/useOverlay'
 
+defineOptions({ inheritAttrs: false })
+
 interface Props {
   modelValue: boolean
   title?: string
@@ -54,10 +56,10 @@ const drawerStyle = computed(() => {
 const drawerClasses = computed(() => {
   return [
     'fixed bg-[var(--bg-color)] z-[110] flex flex-col shadow-neu-flat-lg border border-[var(--bg-color)]',
-    props.placement === 'right' ? 'top-4 right-4 h-[calc(100%-2rem)] rounded-3xl' : '',
-    props.placement === 'left' ? 'top-4 left-4 h-[calc(100%-2rem)] rounded-3xl' : '',
-    props.placement === 'bottom' ? 'bottom-4 left-4 w-[calc(100%-2rem)] rounded-3xl' : '',
-    props.placement === 'top' ? 'top-4 left-4 w-[calc(100%-2rem)] rounded-3xl' : '',
+    props.placement === 'right' ? 'top-4 right-4 h-[calc(100%-2rem)] rounded-neu-lg' : '',
+    props.placement === 'left' ? 'top-4 left-4 h-[calc(100%-2rem)] rounded-neu-lg' : '',
+    props.placement === 'bottom' ? 'bottom-4 left-4 w-[calc(100%-2rem)] rounded-neu-lg' : '',
+    props.placement === 'top' ? 'top-4 left-4 w-[calc(100%-2rem)] rounded-neu-lg' : '',
   ].join(' ')
 })
 </script>

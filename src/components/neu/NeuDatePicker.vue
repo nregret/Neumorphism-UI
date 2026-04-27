@@ -149,7 +149,7 @@ onUnmounted(() => {
 
 const computedClasses = computed(() => {
   return [
-    'relative w-full px-6 py-4 text-base font-medium rounded-2xl transition-all duration-300 flex items-center justify-between select-none',
+    'relative w-full px-6 py-4 text-base font-medium rounded-neu-md transition-all duration-300 flex items-center justify-between select-none',
     'bg-[var(--bg-color)]',
     props.disabled ? 'opacity-50 cursor-not-allowed shadow-neu-flat' : 'cursor-pointer hover:shadow-neu-flat-sm active:shadow-neu-pressed',
     !props.disabled && !isOpen.value ? 'shadow-neu-flat' : '',
@@ -190,7 +190,7 @@ const textClasses = computed(() => {
     <Transition name="neu-fade-slide">
       <div 
         v-if="isOpen"
-        class="absolute z-[100] mt-4 p-5 w-[320px] sm:w-[340px] bg-[var(--bg-color)] shadow-neu-flat-lg rounded-3xl"
+        class="absolute z-[100] mt-4 p-5 w-[320px] sm:w-[340px] bg-[var(--bg-color)] shadow-neu-flat-lg rounded-neu-lg"
         style="top: 100%; left: 0;"
       >
         <!-- Header: Month/Year and Nav -->

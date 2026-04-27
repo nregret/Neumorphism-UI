@@ -2,6 +2,8 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import NeuButton from './NeuButton.vue'
 
+defineOptions({ inheritAttrs: false })
+
 interface Props {
   title: string
   content?: string
@@ -147,7 +149,7 @@ const transformOrigin = computed(() => {
           :style="{ ...popStyle, transformOrigin }"
           @click.stop
         >
-          <div class="p-4 rounded-2xl shadow-neu-flat bg-[var(--bg-color)] text-neu-text relative">
+          <div class="p-4 rounded-neu-md shadow-neu-flat bg-[var(--bg-color)] text-neu-text relative">
             <div class="font-semibold text-sm mb-1">{{ title }}</div>
             <div v-if="content" class="text-xs text-neu-text/60 mb-4 leading-relaxed">{{ content }}</div>
             <div v-else class="mb-4" />

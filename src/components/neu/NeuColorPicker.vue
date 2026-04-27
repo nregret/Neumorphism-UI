@@ -212,7 +212,7 @@ onUnmounted(() => {
     <Transition name="neu-fade-slide">
       <div 
         v-if="isOpen"
-        class="absolute z-[100] mt-4 p-5 w-[300px] bg-[var(--bg-color)] shadow-neu-flat-lg rounded-3xl cursor-default"
+        class="absolute z-[100] mt-4 p-5 w-[300px] bg-[var(--bg-color)] shadow-neu-flat-lg rounded-neu-lg cursor-default"
         :style="panelStyle"
       >
         <!-- 2D Color Palette (Saturation & Value) -->

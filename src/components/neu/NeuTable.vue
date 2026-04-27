@@ -59,7 +59,7 @@ const getAlignClass = (align?: 'left' | 'center' | 'right') => {
 </script>
 
 <template>
-  <div class="w-full overflow-x-auto rounded-2xl bg-[var(--bg-color)] shadow-neu-pressed p-4">
+  <div class="w-full overflow-x-auto rounded-neu-md bg-[var(--bg-color)] shadow-neu-pressed p-4">
     <table class="w-full text-sm text-left whitespace-nowrap">
       
       <!-- Table Header -->

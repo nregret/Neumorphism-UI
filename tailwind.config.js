@@ -15,6 +15,14 @@ export default {
           accent: "var(--accent)",
         },
       },
+      borderRadius: {
+        // ── sm: 标签、徽标、小控件 ────────────────────────────────
+        "neu-sm": "var(--neu-radius-sm)",
+        // ── md: 卡片、按钮、输入框 (默认) ──────────────────────────
+        "neu-md": "var(--neu-radius-md)",
+        // ── lg: 面板、抽屉、模态框 ─────────────────────────────────
+        "neu-lg": "var(--neu-radius-lg)",
+      },
       boxShadow: {
         // ── sm: 搜索框、徽标、小控件 ──────────────────────────────
         "neu-flat-sm":    "var(--neu-d1) var(--neu-d1) var(--neu-b1) var(--shadow-dark), var(--neu-d1-n) var(--neu-d1-n) var(--neu-b1) var(--shadow-light)",

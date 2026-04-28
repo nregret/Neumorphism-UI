@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import NeuSelect, { type SelectOption } from './neu/NeuSelect.vue'
 import { i18n } from '../i18n'
 import type { SupportedLocale } from '../i18n/locale'
-import { switchLocaleWithSand } from '../i18n/sandTransition'
+import { switchLocaleWithFade } from '../i18n/localeTransition'
 
 defineOptions({ inheritAttrs: false })
 
@@ -29,7 +29,7 @@ const model = computed({
   set: (val) => {
     const next = val as SupportedLocale
     if (next === (i18n.global.locale.value as SupportedLocale)) return
-    switchLocaleWithSand(next)
+    switchLocaleWithFade(next)
   },
 })
 </script>

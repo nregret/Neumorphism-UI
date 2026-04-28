@@ -13,36 +13,15 @@ type Particle = {
   b: number
   s: number
   f: number
+  s1: number
+  s2: number
+  wFreq: number
+  wAmp: number
+  gFreq: number
+  gAmp: number
 }
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v))
-
-const fract = (x: number) => x - Math.floor(x)
-
-const hash2 = (x: number, y: number) => {
-  return fract(Math.sin(x * 127.1 + y * 311.7) * 43758.5453123)
-}
-
-const smooth = (t: number) => t * t * (3 - 2 * t)
-
-const noise2 = (x: number, y: number) => {
-  const x0 = Math.floor(x)
-  const y0 = Math.floor(y)
-  const xf = x - x0
-  const yf = y - y0
-
-  const a = hash2(x0, y0)
-  const b = hash2(x0 + 1, y0)
-  const c = hash2(x0, y0 + 1)
-  const d = hash2(x0 + 1, y0 + 1)
-
-  const u = smooth(xf)
-  const v = smooth(yf)
-
-  const ab = a + (b - a) * u
-  const cd = c + (d - c) * u
-  return ab + (cd - ab) * v
-}
 
 export const switchLocaleWithSand = async (next: SupportedLocale) => {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -71,7 +50,7 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
 
   const canvas = await html2canvas(appEl, {
     backgroundColor: null,
-    scale: window.devicePixelRatio || 1,
+    scale: Math.min(window.devicePixelRatio || 1, 1.25),
     useCORS: true,
     logging: false,
   })
@@ -104,7 +83,7 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
   const data = image.data
 
   const particles: Particle[] = []
-  const target = clamp(Math.floor(28000 / Math.pow(dpr, 1.6)), 9000, 28000)
+  const target = clamp(Math.floor(16000 / Math.pow(dpr, 1.2)), 6500, 16000)
   let attempts = 0
   const maxAttempts = target * 18
 
@@ -120,9 +99,8 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
     const g = data[idx + 1]
     const b = data[idx + 2]
 
-    const n = noise2(x * 0.012, y * 0.012)
-    const wind = (0.35 + n * 1.55) * (0.8 + Math.random() * 0.6)
-    const lift = (-0.25 - (1 - n) * 0.95) * (0.8 + Math.random() * 0.7)
+    const wind = (0.35 + Math.random() * 1.65) * (0.75 + Math.random() * 0.55)
+    const lift = (-0.35 - Math.random() * 1.1) * (0.75 + Math.random() * 0.55)
 
     particles.push({
       x: x + (Math.random() - 0.5) * 1.6,
@@ -135,6 +113,12 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
       b,
       s: 0.9 + Math.random() * 1.9,
       f: 0.85 + Math.random() * 0.6,
+      s1: Math.random() * Math.PI * 2,
+      s2: Math.random() * Math.PI * 2,
+      wFreq: 0.6 + Math.random() * 1.2,
+      wAmp: 0.45 + Math.random() * 1.35,
+      gFreq: 0.7 + Math.random() * 1.3,
+      gAmp: 0.35 + Math.random() * 1.1,
     })
   }
 
@@ -143,9 +127,9 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
 
   setLocale(next)
 
-  const duration = 980
-  const revealStart = 180
-  const revealDuration = 640
+  const duration = 1400
+  const revealStart = 240
+  const revealDuration = 980
 
   const start = performance.now()
   let prev = start
@@ -160,16 +144,14 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
 
     const decay = Math.pow(1 - p, 1.8)
     const time = now * 0.001
-    const windBase = 0.85 + p * 2.4
-    const gravity = 0.18 + p * 0.55
-    const drag = 0.965 - p * 0.015
+    const windBase = 0.55 + p * 1.9
+    const gravity = 0.12 + p * 0.42
+    const drag = 0.972 - p * 0.01
 
     for (let i = 0; i < particles.length; i++) {
       const pt = particles[i]
-      const n1 = noise2(pt.x * 0.01 + time * 0.65, pt.y * 0.01)
-      const n2 = noise2(pt.x * 0.014, pt.y * 0.014 + time * 0.8)
-      const ax = (windBase + (n1 - 0.5) * 2.2) * pt.f
-      const ay = (gravity + (n2 - 0.5) * 1.25) * pt.f
+      const ax = (windBase + Math.sin(time * pt.wFreq + pt.s1) * pt.wAmp) * pt.f
+      const ay = (gravity + Math.cos(time * pt.gFreq + pt.s2) * pt.gAmp) * pt.f
 
       pt.vx = pt.vx * drag + ax * 0.22 * dt
       pt.vy = pt.vy * drag + ay * 0.24 * dt

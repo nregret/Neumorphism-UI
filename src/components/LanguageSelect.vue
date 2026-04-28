@@ -31,6 +31,6 @@ const model = computed({
 
 <template>
   <div :class="rootClass" v-bind="forwardedAttrs">
-    <NeuSelect v-model="model" :options="options" />
+    <NeuSelect v-model="model" :options="options" size="sm" />
   </div>
 </template>

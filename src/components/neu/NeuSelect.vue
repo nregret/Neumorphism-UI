@@ -15,6 +15,7 @@ interface Props {
   disabled?: boolean
   multiple?: boolean
   error?: boolean
+  size?: 'sm' | 'md'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   multiple: false,
   error: false,
+  size: 'md',
 })
 
 const emit = defineEmits<{
@@ -96,8 +98,12 @@ onUnmounted(() => {
 
 // --- Computed Classes ---
 const triggerClasses = computed(() => {
+  const sizeClasses =
+    props.size === 'sm'
+      ? 'px-4 py-2 text-sm rounded-neu-sm'
+      : 'px-6 py-4 text-base rounded-neu-md'
   return [
-    'relative w-full px-6 py-4 text-base font-medium rounded-neu-md transition-all duration-300 flex items-center justify-between select-none',
+    `relative w-full font-medium transition-all duration-300 flex items-center justify-between select-none ${sizeClasses}`,
     'bg-[var(--bg-color)]',
     props.disabled ? 'opacity-50 cursor-not-allowed shadow-neu-flat' : 'cursor-pointer',
     !props.disabled && !isOpen.value ? 'shadow-neu-flat hover:shadow-neu-flat-sm active:shadow-neu-pressed' : '',

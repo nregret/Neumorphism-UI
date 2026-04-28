@@ -14,6 +14,7 @@
   <a href="#组件一览">组件一览</a> ·
   <a href="#主题定制">主题定制</a> ·
   <a href="#国际化">国际化</a> ·
+  <a href="#自动化-skills">自动化 Skills</a> ·
   <a href="#贡献指南">贡献指南</a>
 </p>
 
@@ -50,6 +51,7 @@
 - **主题引擎** — 可视化配置背景色、强调色、阴影深度、圆角规格，支持预设主题
 - **暗色模式** — 内置 light/dark 切换，支持跟随系统偏好
 - **国际化** — 内置 `zh-CN` / `en-US`，可在首页与组件库顶部一键切换（并持久化）
+- **自动化 Skills** — 内置同步脚本，一键同步组件定义与最佳实践，助力 AI 辅助开发
 - **TypeScript** — 基于 Vue 3 Composition API（`<script setup>`）的完整类型支持
 
 ## 快速开始
@@ -163,6 +165,13 @@ npm run lint
 - **样式**：Tailwind CSS 3 + CSS 自定义属性
 - **路由**：Vue Router 4
 - **图标**：Lucide Vue Next
+
+## 自动化 Skills
+项目内置了强大的自动化同步能力，帮助 AI 助手（如 Trae, Codex 等）更好地理解和使用本组件库：
+
+- **同步命令**：`npm run skill:sync`
+- **功能描述**：自动扫描 `src/components/neu/` 下的所有组件，提取 Props 定义、插槽说明及代码示例，并在根目录生成/更新最新的 `skills` 定义。
+- **校验逻辑**：支持通过 `npm run skill:validate` 进行类型安全检查。
 
 ## 贡献指南
 - 欢迎提交 Issue / PR

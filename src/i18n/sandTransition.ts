@@ -69,15 +69,6 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
   overlayRoot.style.zIndex = '9999'
   overlayRoot.style.pointerEvents = 'none'
 
-  const blurLayer = document.createElement('div')
-  blurLayer.style.position = 'absolute'
-  blurLayer.style.inset = '0'
-  blurLayer.style.backdropFilter = 'blur(10px)'
-  blurLayer.style.background = 'rgba(0,0,0,0.06)'
-  blurLayer.style.opacity = '0'
-  blurLayer.style.transition = 'opacity 140ms ease'
-  overlayRoot.appendChild(blurLayer)
-
   const canvas = await html2canvas(appEl, {
     backgroundColor: null,
     scale: window.devicePixelRatio || 1,
@@ -100,9 +91,6 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
   overlayRoot.appendChild(outCanvas)
 
   document.body.appendChild(overlayRoot)
-  requestAnimationFrame(() => {
-    blurLayer.style.opacity = '1'
-  })
 
   const srcCtx = canvas.getContext('2d', { willReadFrequently: true })
   const outCtx = outCanvas.getContext('2d')
@@ -150,13 +138,14 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
     })
   }
 
-  appEl.style.transition = 'opacity 160ms ease'
+  appEl.style.transition = 'none'
   appEl.style.opacity = '0'
 
   setLocale(next)
 
   const duration = 980
-  const fadeInAt = 260
+  const revealStart = 180
+  const revealDuration = 640
 
   const start = performance.now()
   let prev = start
@@ -195,17 +184,16 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
       outCtx.fillRect(pt.x, pt.y, pt.s, pt.s)
     }
 
-    if (t >= fadeInAt) {
-      appEl.style.opacity = '1'
-    }
+    const reveal = clamp((t - revealStart) / revealDuration, 0, 1)
+    appEl.style.opacity = `${reveal}`
 
     if (p < 1) {
       requestAnimationFrame(frame)
       return
     }
 
-    blurLayer.style.opacity = '0'
-    window.setTimeout(() => overlayRoot.remove(), 160)
+    appEl.style.opacity = '1'
+    overlayRoot.remove()
   }
 
   requestAnimationFrame(frame)

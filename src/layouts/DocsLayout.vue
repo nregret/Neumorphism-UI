@@ -157,7 +157,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
         <img :src="logo" alt="Logo" class="w-12 h-12 object-contain neumorphic-logo" />
       </router-link>
       <div class="flex items-center gap-4">
-        <LanguageSelect class="w-28" />
+        <LanguageSelect />
         <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
           <Palette class="w-4 h-4" />
         </NeuButton>

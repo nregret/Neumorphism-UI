@@ -14,7 +14,7 @@ const forwardedAttrs = computed(() => {
 })
 
 const rootClass = computed(() => [
-  'w-32 scale-75 origin-right',
+  'w-44',
   (attrs as Record<string, unknown>).class,
 ])
 
@@ -34,4 +34,3 @@ const model = computed({
     <NeuSelect v-model="model" :options="options" />
   </div>
 </template>
-

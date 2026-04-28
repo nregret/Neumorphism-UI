@@ -1,23 +1,51 @@
-# Neumorphism UI | 新拟态UI
+<p align="center">
+  <img src="src/assets/logo.png" width="160" alt="Neumorphism UI Logo" />
+</p>
+
+<h1 align="center">Neumorphism UI</h1>
 
 <p align="center">
   <strong>一套完整、高度可定制的 Neumorphism（新拟态）风格 Vue 3 组件库</strong>
 </p>
 
+<p align="center">
+  <a href="#快速开始">快速开始</a> ·
+  <a href="#预览">预览</a> ·
+  <a href="#组件一览">组件一览</a> ·
+  <a href="#主题定制">主题定制</a> ·
+  <a href="#国际化">国际化</a> ·
+  <a href="#贡献指南">贡献指南</a>
+</p>
+
+<p align="center">
+  <img alt="Vue" src="https://img.shields.io/badge/Vue-3.x-42b883?logo=vue.js&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white" />
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?logo=tailwindcss&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-black" />
+</p>
+
 ---
 
-## 特性
+## 预览
+<details>
+  <summary>首页截图</summary>
+  <br />
+  <p align="center">
+    <img src="docs/homepage.png" width="960" alt="Homepage Preview" />
+  </p>
+</details>
 
-- **32+ 组件** — 涵盖基础、导航、表单、数据展示、反馈五大类别
-- **新拟态阴影系统** — 基于 CSS 自定义属性的三层深度体系（sm/md/lg），支持凸起/凹陷双态
-- **圆角规格系统** — 三层圆角体系（sm/md/lg），全局乘数 + 逐级微调，主题配置器实时控制
-- **暗色模式** — 内置 light/dark 切换，自动跟随系统偏好
-- **主题引擎** — 可视化配置背景色、强调色、阴影深度、圆角规格，支持 5 种预设主题
-- **TypeScript** — 全面类型支持，基于 Vue 3 Composition API (`<script setup>`)
-- **滚动条工具类** — 全局新拟态滚动条样式（默认/细版/暗版/隐藏四种变体）
+## 特性
+- **32+ 组件** — 覆盖基础 / 导航 / 表单 / 数据展示 / 反馈浮层
+- **新拟态阴影系统** — 基于 CSS 自定义属性的三层深度体系（sm/md/lg），支持凸起 / 凹陷双态
+- **圆角规格系统** — 三层圆角体系（sm/md/lg），全局乘数 + 逐级微调
+- **主题引擎** — 可视化配置背景色、强调色、阴影深度、圆角规格，支持预设主题
+- **暗色模式** — 内置 light/dark 切换，支持跟随系统偏好
+- **国际化** — 内置 `zh-CN` / `en-US`，可在首页与组件库顶部一键切换（并持久化）
+- **TypeScript** — 基于 Vue 3 Composition API（`<script setup>`）的完整类型支持
 
 ## 快速开始
-
 ```bash
 # 安装依赖
 npm install
@@ -35,144 +63,103 @@ npm run check
 npm run lint
 ```
 
-## 组件
+## 国际化
+- 语言包位于 `src/i18n/messages/`，默认支持 `zh-CN` / `en-US`
+- 语言选择会写入 `localStorage` 并在刷新后保持
+
+## 组件一览
 
 ### 基础
-| 组件 | 路径 | 说明 |
-|------|------|------|
-| Button | `/components/button` | 新拟态按钮，支持 primary/icon 变体和圆形/圆角形状 |
-| Card | `/components/card` | 新拟态卡片容器，支持凸起/凹陷及圆角调节 |
-| Divider | `/components/divider` | 新拟态分割线 |
+| 组件 | 路径 |
+|------|------|
+| Button | `/components/button` |
+| Card | `/components/card` |
+| Divider | `/components/divider` |
 
 ### 导航
-| 组件 | 路径 | 说明 |
-|------|------|------|
-| Breadcrumb | `/components/breadcrumb` | 面包屑导航 |
-| Dropdown | `/components/dropdown` | 下拉菜单 |
-| Menu | `/components/menu` | 垂直菜单 |
-| Pagination | `/components/pagination` | 分页器 |
-| Steps | `/components/steps` | 步骤条 |
-| Tabs | `/components/tabs` | 标签页切换 |
+| 组件 | 路径 |
+|------|------|
+| Breadcrumb | `/components/breadcrumb` |
+| Dropdown | `/components/dropdown` |
+| Menu | `/components/menu` |
+| Pagination | `/components/pagination` |
+| Steps | `/components/steps` |
+| Tabs | `/components/tabs` |
 
 ### 表单 & 交互
-| 组件 | 路径 | 说明 |
-|------|------|------|
-| Input | `/components/input` | 输入框 |
-| Select | `/components/select` | 选择器 |
-| Switch | `/components/switch` | 开关 |
-| Radio | `/components/radio` | 单选 |
-| Checkbox | `/components/checkbox` | 复选 |
-| Slider | `/components/slider` | 滑块 |
-| Rate | `/components/rate` | 评分 |
-| DatePicker | `/components/datepicker` | 日期选择 |
-| TimePicker | `/components/timepicker` | 时间选择 |
-| ColorPicker | `/components/colorpicker` | 颜色选择 |
-| Upload | `/components/upload` | 文件上传 |
-| Form | `/components/form` | 表单容器与校验 |
+| 组件 | 路径 |
+|------|------|
+| Input | `/components/input` |
+| Select | `/components/select` |
+| Switch | `/components/switch` |
+| Radio | `/components/radio` |
+| Checkbox | `/components/checkbox` |
+| Slider | `/components/slider` |
+| Rate | `/components/rate` |
+| DatePicker | `/components/datepicker` |
+| TimePicker | `/components/timepicker` |
+| ColorPicker | `/components/colorpicker` |
+| Upload | `/components/upload` |
+| Form | `/components/form` |
 
 ### 数据展示
-| 组件 | 路径 | 说明 |
-|------|------|------|
-| Table | `/components/table` | 表格（排序、筛选） |
-| Avatar | `/components/avatar` | 头像 |
-| Badge | `/components/badge` | 徽标 |
-| Tag | `/components/tag` | 标签 |
-| Progress | `/components/progress` | 进度条 |
-| Accordion | `/components/accordion` | 手风琴折叠面板 |
-| Carousel | `/components/carousel` | 轮播图 |
-| Tree | `/components/tree` | 树形控件 |
-| Skeleton | `/components/skeleton` | 骨架屏 |
-| Scrollbar | `/components/scrollbar` | 新拟态滚动条 |
-| Empty | `/components/empty` | 空状态 |
+| 组件 | 路径 |
+|------|------|
+| Table | `/components/table` |
+| Avatar | `/components/avatar` |
+| Badge | `/components/badge` |
+| Tag | `/components/tag` |
+| Progress | `/components/progress` |
+| Accordion | `/components/accordion` |
+| Carousel | `/components/carousel` |
+| Tree | `/components/tree` |
+| Skeleton | `/components/skeleton` |
+| Scrollbar | `/components/scrollbar` |
+| Empty | `/components/empty` |
 
 ### 反馈 & 浮层
-| 组件 | 路径 | 说明 |
-|------|------|------|
-| Modal | `/components/modal` | 模态框 |
-| Drawer | `/components/drawer` | 抽屉面板（四方向） |
-| Toast | `/components/toast` | 轻提示（支持命令式调用） |
-| Tooltip | `/components/tooltip` | 工具提示 |
-| Popconfirm | `/components/popconfirm` | 气泡确认框 |
-| Alert | `/components/alert` | 警告提示 |
-| Spin | `/components/spin` | 加载中 |
+| 组件 | 路径 |
+|------|------|
+| Modal | `/components/modal` |
+| Drawer | `/components/drawer` |
+| Toast | `/components/toast` |
+| Tooltip | `/components/tooltip` |
+| Popconfirm | `/components/popconfirm` |
+| Alert | `/components/alert` |
+| Spin | `/components/spin` |
 
 ## 主题定制
-
-主题通过 CSS 自定义属性实现，所有组件颜色均引用以下变量：
+主题通过 CSS 自定义属性实现，所有组件颜色引用以下变量：
 
 ```css
 :root {
-  /* 颜色 */
-  --bg-color: #e0e5ec;        /* 背景色 */
-  --text-color: #333333;      /* 文本色 */
-  --text-muted: #666666;      /* 次要文本 */
-  --shadow-light: #ffffff;    /* 亮阴影 */
-  --shadow-dark: #a3b1c6;     /* 暗阴影 */
-  --accent: #4f46e5;          /* 强调色 */
+  --bg-color: #e0e5ec;
+  --text-color: #333333;
+  --shadow-light: #ffffff;
+  --shadow-dark: #a3b1c6;
+  --accent: #4f46e5;
 
-  /* 深度系统 — 全局乘数 (0.4 极柔 ~ 1.6 强烈) */
   --neu-scale: 1;
-
-  /* 圆角系统 — 全局乘数 (0.5 锐利 ~ 1.5 圆润) */
   --neu-radius-scale: 1;
-  --neu-radius-sm: calc(8px  * var(--neu-radius-scale));  /* 标签/徽标/小按钮 */
-  --neu-radius-md: calc(16px * var(--neu-radius-scale));  /* 卡片/按钮/输入框 */
-  --neu-radius-lg: calc(24px * var(--neu-radius-scale));  /* 面板/抽屉/模态框 */
+  --neu-radius-sm: calc(8px * var(--neu-radius-scale));
+  --neu-radius-md: calc(16px * var(--neu-radius-scale));
+  --neu-radius-lg: calc(24px * var(--neu-radius-scale));
 }
 ```
 
-暗色模式通过 `.dark` 类覆盖变量：
-
-```css
-.dark {
-  --bg-color: #292d32;
-  --text-color: #e0e5ec;
-  ...
-}
-```
-
-项目中内置了 **主题配置器**（点击文档站右上角调色板图标），支持：
-- 5 种预设主题一键切换
-- 自定义背景 / 强调 / 文本色
-- 三层阴影深度独立调节 + 全局乘数
-- 三层圆角规格独立调节 + 全局乘数
-- 实时预览并一键复制完整 CSS 变量
+点击文档站右上角调色板图标可打开主题配置器，支持预设主题与参数实时调整，并可一键复制 CSS 变量。
 
 ## 技术栈
+- **框架**：Vue 3（Composition API + `<script setup>`）
+- **语言**：TypeScript
+- **构建**：Vite 5
+- **样式**：Tailwind CSS 3 + CSS 自定义属性
+- **路由**：Vue Router 4
+- **图标**：Lucide Vue Next
 
-- **框架**: Vue 3（Composition API + `<script setup>`）
-- **语言**: TypeScript
-- **构建**: Vite 5
-- **样式**: Tailwind CSS 3 + CSS 自定义属性
-- **路由**: Vue Router 4
-- **图标**: Lucide Vue Next
-- **工具库**: @vueuse/core, clsx, tailwind-merge
-
-## 项目结构
-
-```
-src/
-├── components/
-│   ├── neu/              # 所有 Neumorphism UI 组件（NeuButton, NeuModal...）
-│   ├── CodeBlock.vue     # 文档代码展示
-│   ├── ThemeConfigurator.vue  # 主题配置抽屉
-│   └── Empty.vue
-├── composables/
-│   ├── useTheme.ts       # 亮/暗主题切换
-│   ├── useThemePalette.ts # 主题调色板系统
-│   └── useOverlay.ts     # 浮层通用逻辑（滚动锁定/ESC/点击外部）
-├── layouts/
-│   └── DocsLayout.vue    # 文档站侧边栏布局
-├── views/
-│   ├── Home.vue          # 首页
-│   └── docs/             # 各组件文档页面
-├── router/
-│   └── index.ts          # 路由配置
-├── lib/
-│   └── utils.ts          # cn() 工具函数
-└── style.css             # 全局样式 + CSS 变量 + 滚动条工具类
-```
+## 贡献指南
+- 欢迎提交 Issue / PR
+- 新组件建议保持与现有 neu 组件目录风格一致：`src/components/neu/`
 
 ## License
-
 MIT

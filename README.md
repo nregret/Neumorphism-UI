@@ -1,4 +1,4 @@
-# NeuUI
+# Neumorphism UI | 新拟态UI
 
 <p align="center">
   <strong>一套完整、高度可定制的 Neumorphism（新拟态）风格 Vue 3 组件库</strong>
@@ -153,7 +153,7 @@ npm run lint
 ```
 src/
 ├── components/
-│   ├── neu/              # 所有 NeuUI 组件（NeuButton, NeuModal...）
+│   ├── neu/              # 所有 Neumorphism UI 组件（NeuButton, NeuModal...）
 │   ├── CodeBlock.vue     # 文档代码展示
 │   ├── ThemeConfigurator.vue  # 主题配置抽屉
 │   └── Empty.vue

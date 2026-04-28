@@ -4,6 +4,7 @@ import { ArrowRight, Github, Palette, Pause, Play, SkipBack, SkipForward } from 
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
+import logo from '../assets/logo.png'
 
 const isThemeConfigOpen = ref(false)
 
@@ -70,7 +71,15 @@ onUnmounted(() => {
   <div class="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] overflow-hidden">
     <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md">
-      <div class="text-2xl font-bold tracking-tighter text-neu-text">Neu<span class="text-neu-accent">UI</span></div>
+      <router-link to="/" class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-neu-md shadow-neu-flat-sm flex items-center justify-center bg-[var(--bg-color)] overflow-hidden shrink-0">
+          <img :src="logo" alt="Logo" class="w-12 h-12 object-contain" />
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="text-2xl font-bold tracking-tighter text-neu-text">Neumorphism <span class="text-neu-accent">UI</span></span>
+          <span class="text-xs font-medium text-neu-text/40 tracking-wider mt-0.5">新拟态 UI</span>
+        </div>
+      </router-link>
       <div class="flex items-center space-x-6">
         <router-link to="/components" class="font-medium text-neu-text hover:text-neu-accent transition-colors">组件库</router-link>
         <a href="https://github.com" target="_blank" class="text-neu-text hover:text-neu-accent transition-colors">
@@ -83,6 +92,8 @@ onUnmounted(() => {
     </nav>
 
     <!-- Hero Section -->
+
+    <!-- Hero Section -->
     <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between min-h-[90vh]">
       <div class="lg:w-1/2 space-y-8 z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
@@ -90,7 +101,7 @@ onUnmounted(() => {
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-neu-accent to-purple-500">UI组件库</span>
         </h1>
         <p class="text-lg md:text-xl text-neu-text/80 max-w-lg leading-relaxed">
-          NeuUI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 32 个核心组件。
+          Neumorphism UI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 32 个核心组件。
         </p>
         <div class="flex items-center space-x-6 pt-4">
           <router-link to="/components">

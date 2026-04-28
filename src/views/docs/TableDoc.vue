@@ -15,7 +15,7 @@ const columns: TableColumn[] = [
 ]
 
 const tableData = ref([
-  { name: 'NeuUI 核心组件开发', status: 'completed', progress: 100 },
+  { name: 'Neumorphism UI 核心组件开发', status: 'completed', progress: 100 },
   { name: '后台管理系统模板', status: 'in-progress', progress: 45 },
   { name: '暗黑模式优化测试', status: 'pending', progress: 0 },
   { name: '官网 SEO 及性能优化', status: 'error', progress: 12 },

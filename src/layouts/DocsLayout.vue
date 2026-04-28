@@ -153,11 +153,8 @@ const highlightText = (text: string, query: string): { text: string; match: bool
   <div class="min-h-screen flex flex-col md:flex-row bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-300">
     <!-- Mobile Header -->
     <div class="md:hidden flex items-center justify-between p-4 z-50 sticky top-0 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--shadow-dark)]/10">
-      <router-link to="/" class="flex items-center gap-2">
-        <div class="w-10 h-10 rounded-neu-sm shadow-neu-flat-sm flex items-center justify-center bg-[var(--bg-color)] overflow-hidden">
-          <img :src="logo" alt="Logo" class="w-8 h-8 object-contain" />
-        </div>
-        <span class="text-lg font-bold tracking-tighter">Neumorphism <span class="text-neu-accent">UI</span></span>
+      <router-link to="/" class="flex items-center">
+        <img :src="logo" alt="Logo" class="w-12 h-12 object-contain neumorphic-logo" />
       </router-link>
       <div class="flex items-center gap-4">
         <LanguageSelect class="w-28" />
@@ -183,14 +180,8 @@ const highlightText = (text: string, query: string): { text: string; match: bool
     >
       <!-- Logo + Theme Button -->
       <div class="hidden md:flex items-center justify-between px-5 pt-5 pb-3 shrink-0">
-        <router-link to="/" class="flex items-center gap-3">
-          <div class="w-14 h-14 rounded-neu-md shadow-neu-flat-sm flex items-center justify-center bg-[var(--bg-color)] overflow-hidden shrink-0">
-            <img :src="logo" alt="Logo" class="w-11 h-11 object-contain" />
-          </div>
-          <div class="flex flex-col leading-none">
-            <span class="text-xl font-bold tracking-tighter">Neumorphism <span class="text-neu-accent">UI</span></span>
-            <span class="text-[10px] font-medium text-neu-text/40 tracking-wider mt-0.5">{{ $t('docsLayout.brandSubtitle') }}</span>
-          </div>
+        <router-link to="/">
+          <img :src="logo" alt="Logo" class="w-16 h-16 object-contain neumorphic-logo transition-transform hover:scale-110 duration-300" />
         </router-link>
         <div class="flex items-center gap-3">
           <LanguageSelect />
@@ -308,6 +299,12 @@ const highlightText = (text: string, query: string): { text: string; match: bool
 
 
 <style scoped>
+.neumorphic-logo {
+  filter:
+    drop-shadow(3px 3px 6px var(--shadow-dark))
+    drop-shadow(-3px -3px 6px var(--shadow-light));
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;

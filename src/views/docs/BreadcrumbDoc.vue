@@ -1,17 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import NeuBreadcrumb from '../../components/neu/NeuBreadcrumb.vue'
 import NeuCard from '../../components/neu/NeuCard.vue'
 import CodeBlock from '../../components/CodeBlock.vue'
 import { Home, LayoutDashboard, Settings } from 'lucide-vue-next'
+import { useDocI18n } from './useDocI18n'
 
-const basicItems = [
-  { label: '首页', path: '/' },
-  { label: '组件库', path: '/components' },
-  { label: '基础组件', disabled: true },
-  { label: '面包屑' }
-]
+const { isEn, pick } = useDocI18n()
 
-const usageCode = `
+const basicItems = computed(() => [
+  { label: isEn.value ? 'Home' : '首页', path: '/' },
+  { label: isEn.value ? 'Components' : '组件库', path: '/components' },
+  { label: isEn.value ? 'Base' : '基础组件', disabled: true },
+  { label: isEn.value ? 'Breadcrumb' : '面包屑' }
+])
+
+const usageCode = pick(
+  `
 <script setup>
 import NeuBreadcrumb from './components/neu/NeuBreadcrumb.vue'
 
@@ -32,38 +37,56 @@ const items = [
   <!-- 自定义分隔符 -->
   <NeuBreadcrumb :items="items" separator="/" />
 </template>
+`,
+  `
+<script setup>
+import NeuBreadcrumb from './components/neu/NeuBreadcrumb.vue'
+
+const items = [
+  { label: 'Home', path: '/' },
+  { label: 'Users', path: '/users' },
+  { label: 'Details' }
+]
+<\/script>
+
+<template>
+  <NeuBreadcrumb :items="items" />
+  <NeuBreadcrumb :items="items" variant="pressed" />
+  <NeuBreadcrumb :items="items" separator="/" />
+</template>
 `
+)
 </script>
 
 <template>
   <div class="space-y-12">
     <section>
-      <h1 class="text-4xl font-bold mb-4">Breadcrumb 面包屑</h1>
+      <h1 class="text-4xl font-bold mb-4">{{ pick('Breadcrumb 面包屑', 'Breadcrumb') }}</h1>
       <p class="text-neu-text/80 text-lg">
-        显示当前页面在系统层级结构中的位置，带有新拟态特有的浮雕容器。
+        {{ pick('显示当前页面在系统层级结构中的位置，带有新拟态特有的浮雕容器。', 'Shows the current page location within the navigation hierarchy, with a neumorphic container.') }}
       </p>
     </section>
 
     <section>
-      <h2 class="text-2xl font-semibold mb-6">基础用法 (Basic)</h2>
+      <h2 class="text-2xl font-semibold mb-6">{{ pick('基础用法 (Basic)', 'Basic') }}</h2>
       <NeuCard class="flex flex-col gap-8 p-12 bg-[var(--bg-color)] max-w-4xl">
         <div>
-          <h3 class="font-bold text-sm mb-4 text-neu-text/60">外凸样式 (Flat)</h3>
+          <h3 class="font-bold text-sm mb-4 text-neu-text/60">{{ pick('外凸样式 (Flat)', 'Flat') }}</h3>
           <NeuBreadcrumb :items="basicItems" />
         </div>
 
         <div>
-          <h3 class="font-bold text-sm mb-4 text-neu-text/60">内凹样式 (Pressed)</h3>
+          <h3 class="font-bold text-sm mb-4 text-neu-text/60">{{ pick('内凹样式 (Pressed)', 'Pressed') }}</h3>
           <NeuBreadcrumb :items="basicItems" variant="pressed" />
         </div>
 
         <div>
-          <h3 class="font-bold text-sm mb-4 text-neu-text/60">自定义分隔符 (Separator)</h3>
+          <h3 class="font-bold text-sm mb-4 text-neu-text/60">{{ pick('自定义分隔符 (Separator)', 'Separator') }}</h3>
           <NeuBreadcrumb :items="basicItems" separator="/" />
         </div>
 
         <div>
-          <h3 class="font-bold text-sm mb-4 text-neu-text/60">带图标 (Icons)</h3>
+          <h3 class="font-bold text-sm mb-4 text-neu-text/60">{{ pick('带图标 (Icons)', 'Icons') }}</h3>
           <NeuBreadcrumb :items="basicItems" variant="pressed">
             <template #icon-0><Home class="w-4 h-4" /></template>
             <template #icon-1><LayoutDashboard class="w-4 h-4" /></template>

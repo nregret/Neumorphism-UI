@@ -16,6 +16,7 @@
   "dependencies": {
     "@vueuse/core": "^14.2.1",
     "clsx": "^2.1.1",
+    "html2canvas": "^1.4.1",
     "lucide-vue-next": "^0.511.0",
     "prismjs": "^1.30.0",
     "tailwind-merge": "^3.3.0",

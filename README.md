@@ -32,7 +32,14 @@
   <summary>首页截图</summary>
   <br />
   <p align="center">
-    <img src="docs/homepage.png" width="960" alt="Homepage Preview" />
+    <img src="docs/homepage.jpeg" width="960" alt="Homepage Preview" />
+  </p>
+</details>
+<details>
+  <summary>组件截图</summary>
+  <br />
+  <p align="center">
+    <img src="docs/componentspage.jpeg" width="960" alt="Components Preview" />
   </p>
 </details>
 

@@ -12,9 +12,37 @@ type Particle = {
   g: number
   b: number
   s: number
+  f: number
 }
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v))
+
+const fract = (x: number) => x - Math.floor(x)
+
+const hash2 = (x: number, y: number) => {
+  return fract(Math.sin(x * 127.1 + y * 311.7) * 43758.5453123)
+}
+
+const smooth = (t: number) => t * t * (3 - 2 * t)
+
+const noise2 = (x: number, y: number) => {
+  const x0 = Math.floor(x)
+  const y0 = Math.floor(y)
+  const xf = x - x0
+  const yf = y - y0
+
+  const a = hash2(x0, y0)
+  const b = hash2(x0 + 1, y0)
+  const c = hash2(x0, y0 + 1)
+  const d = hash2(x0 + 1, y0 + 1)
+
+  const u = smooth(xf)
+  const v = smooth(yf)
+
+  const ab = a + (b - a) * u
+  const cd = c + (d - c) * u
+  return ab + (cd - ab) * v
+}
 
 export const switchLocaleWithSand = async (next: SupportedLocale) => {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -87,39 +115,39 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
   const image = srcCtx.getImageData(0, 0, w, h)
   const data = image.data
 
-  const targetParticles = 28000
-  const step = clamp(Math.floor(Math.sqrt((w * h) / targetParticles)), 4, 14)
-  const size = clamp(Math.floor(step * 0.9), 2, 12)
-
   const particles: Particle[] = []
-  for (let y = 0; y < h; y += step) {
-    for (let x = 0; x < w; x += step) {
-      const idx = (y * w + x) * 4
-      const a = data[idx + 3]
-      if (a < 18) continue
+  const target = clamp(Math.floor(28000 / Math.pow(dpr, 1.6)), 9000, 28000)
+  let attempts = 0
+  const maxAttempts = target * 18
 
-      const r = data[idx]
-      const g = data[idx + 1]
-      const b = data[idx + 2]
+  while (particles.length < target && attempts < maxAttempts) {
+    attempts++
+    const x = Math.floor(Math.random() * w)
+    const y = Math.floor(Math.random() * h)
+    const idx = (y * w + x) * 4
+    const a = data[idx + 3]
+    if (a < 18) continue
 
-      const jitter = (Math.random() - 0.5) * step * 0.6
-      const jitter2 = (Math.random() - 0.5) * step * 0.6
+    const r = data[idx]
+    const g = data[idx + 1]
+    const b = data[idx + 2]
 
-      const wind = 0.55 + Math.random() * 1.05
-      const lift = -0.35 - Math.random() * 0.65
+    const n = noise2(x * 0.012, y * 0.012)
+    const wind = (0.35 + n * 1.55) * (0.8 + Math.random() * 0.6)
+    const lift = (-0.25 - (1 - n) * 0.95) * (0.8 + Math.random() * 0.7)
 
-      particles.push({
-        x: x + jitter,
-        y: y + jitter2,
-        vx: wind * step * 0.6,
-        vy: lift * step * 0.55,
-        a: a / 255,
-        r,
-        g,
-        b,
-        s: size,
-      })
-    }
+    particles.push({
+      x: x + (Math.random() - 0.5) * 1.6,
+      y: y + (Math.random() - 0.5) * 1.6,
+      vx: wind,
+      vy: lift,
+      a: (a / 255) * (0.85 + Math.random() * 0.25),
+      r,
+      g,
+      b,
+      s: 0.9 + Math.random() * 1.9,
+      f: 0.85 + Math.random() * 0.6,
+    })
   }
 
   appEl.style.transition = 'opacity 160ms ease'
@@ -127,31 +155,44 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
 
   setLocale(next)
 
-  const duration = 700
-  const fadeInAt = 420
+  const duration = 980
+  const fadeInAt = 260
 
   const start = performance.now()
+  let prev = start
 
   const frame = (now: number) => {
     const t = now - start
     const p = clamp(t / duration, 0, 1)
+    const dt = clamp((now - prev) / 16.6667, 0.4, 2.2)
+    prev = now
 
     outCtx.clearRect(0, 0, w, h)
 
-    const decay = 1 - p
-    const localWind = (0.8 + p * 1.8) * step
-    const swirl = Math.sin(p * Math.PI) * 0.9
+    const decay = Math.pow(1 - p, 1.8)
+    const time = now * 0.001
+    const windBase = 0.85 + p * 2.4
+    const gravity = 0.18 + p * 0.55
+    const drag = 0.965 - p * 0.015
 
     for (let i = 0; i < particles.length; i++) {
       const pt = particles[i]
-      const nx = pt.x + pt.vx * p * localWind + (Math.random() - 0.5) * swirl * step
-      const ny = pt.y + pt.vy * p * localWind + (Math.random() - 0.5) * swirl * step
+      const n1 = noise2(pt.x * 0.01 + time * 0.65, pt.y * 0.01)
+      const n2 = noise2(pt.x * 0.014, pt.y * 0.014 + time * 0.8)
+      const ax = (windBase + (n1 - 0.5) * 2.2) * pt.f
+      const ay = (gravity + (n2 - 0.5) * 1.25) * pt.f
 
-      const alpha = pt.a * Math.pow(decay, 1.3)
+      pt.vx = pt.vx * drag + ax * 0.22 * dt
+      pt.vy = pt.vy * drag + ay * 0.24 * dt
+
+      pt.x += pt.vx * dt * 1.6
+      pt.y += pt.vy * dt * 1.6
+
+      const alpha = pt.a * decay
       if (alpha < 0.02) continue
 
       outCtx.fillStyle = `rgba(${pt.r},${pt.g},${pt.b},${alpha})`
-      outCtx.fillRect(nx, ny, pt.s, pt.s)
+      outCtx.fillRect(pt.x, pt.y, pt.s, pt.s)
     }
 
     if (t >= fadeInAt) {
@@ -169,4 +210,3 @@ export const switchLocaleWithSand = async (next: SupportedLocale) => {
 
   requestAnimationFrame(frame)
 }
-

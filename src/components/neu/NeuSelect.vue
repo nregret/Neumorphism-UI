@@ -100,7 +100,7 @@ onUnmounted(() => {
 const triggerClasses = computed(() => {
   const sizeClasses =
     props.size === 'sm'
-      ? 'px-4 py-2 text-sm rounded-neu-sm'
+      ? 'px-3 py-2 text-sm rounded-neu-sm'
       : 'px-6 py-4 text-base rounded-neu-md'
   return [
     `relative w-full font-medium transition-all duration-300 flex items-center justify-between select-none ${sizeClasses}`,

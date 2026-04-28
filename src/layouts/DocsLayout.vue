@@ -154,10 +154,10 @@ const highlightText = (text: string, query: string): { text: string; match: bool
     <!-- Mobile Header -->
     <div class="md:hidden flex items-center justify-between p-4 z-50 sticky top-0 bg-[var(--bg-color)]/80 backdrop-blur-md border-b border-[var(--shadow-dark)]/10">
       <router-link to="/" class="flex items-center">
-        <img :src="logo" alt="Logo" class="w-12 h-12 object-contain neumorphic-logo" />
+        <img :src="logo" alt="Logo" class="w-14 h-14 object-contain neumorphic-logo" />
       </router-link>
       <div class="flex items-center gap-4">
-        <LanguageSelect />
+        <LanguageSelect class="w-36" />
         <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
           <Palette class="w-4 h-4" />
         </NeuButton>
@@ -181,10 +181,10 @@ const highlightText = (text: string, query: string): { text: string; match: bool
       <!-- Logo + Theme Button -->
       <div class="hidden md:flex items-center justify-between px-5 pt-5 pb-3 shrink-0">
         <router-link to="/">
-          <img :src="logo" alt="Logo" class="w-16 h-16 object-contain neumorphic-logo transition-transform hover:scale-110 duration-300" />
+          <img :src="logo" alt="Logo" class="w-20 h-20 object-contain neumorphic-logo transition-transform hover:scale-110 duration-300" />
         </router-link>
         <div class="flex items-center gap-3">
-          <LanguageSelect />
+          <LanguageSelect class="w-36" />
           <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
             <Palette class="w-4 h-4" />
           </NeuButton>

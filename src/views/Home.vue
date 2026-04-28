@@ -4,6 +4,7 @@ import { ArrowRight, Github, Palette, Pause, Play, SkipBack, SkipForward } from 
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
+import LanguageSelect from '../components/LanguageSelect.vue'
 import logo from '../assets/logo.png'
 
 const isThemeConfigOpen = ref(false)
@@ -75,15 +76,16 @@ onUnmounted(() => {
         <img :src="logo" alt="Logo" class="w-20 h-20 object-contain transition-transform duration-300 group-hover:scale-110 neumorphic-logo" />
         <div class="flex flex-col leading-none">
           <span class="text-2xl font-bold tracking-tighter text-neu-text neumorphic-text-raised">Neumorphism <span class="text-neu-accent">UI</span></span>
-          <span class="text-xs font-medium text-neu-text/40 tracking-wider mt-0.5">新拟态 UI</span>
+          <span class="text-xs font-medium text-neu-text/40 tracking-wider mt-0.5">{{ $t('docsLayout.brandSubtitle') }}</span>
         </div>
       </router-link>
       <div class="flex items-center space-x-6">
-        <router-link to="/components" class="font-medium text-neu-text hover:text-neu-accent transition-colors">组件库</router-link>
+        <router-link to="/components" class="font-medium text-neu-text hover:text-neu-accent transition-colors">{{ $t('nav.components') }}</router-link>
         <a href="https://github.com" target="_blank" class="text-neu-text hover:text-neu-accent transition-colors">
           <Github class="w-6 h-6" />
         </a>
-        <NeuButton variant="icon" shape="circle" @click="isThemeConfigOpen = true" title="Theme Config">
+        <LanguageSelect />
+        <NeuButton variant="icon" shape="circle" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
           <Palette class="w-5 h-5" />
         </NeuButton>
       </div>
@@ -95,18 +97,18 @@ onUnmounted(() => {
     <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between min-h-[90vh]">
       <div class="lg:w-1/2 space-y-8 z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.3] py-4">
-          极简的新拟态 <br />
+          {{ $t('nav.heroTitleLine1') }} <br />
           <span class="text-neu-accent neumorphic-text-raised">
-            UI组件库
+            {{ $t('nav.heroTitleAccent') }}
           </span>
         </h1>
         <p class="text-lg md:text-xl text-neu-text/80 max-w-lg leading-relaxed">
-          Neumorphism UI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 32 个核心组件。
+          {{ $t('nav.heroDescription') }}
         </p>
         <div class="flex items-center space-x-6 pt-4">
           <router-link to="/components">
             <NeuButton size="lg" variant="primary" class="group">
-              快速开始
+              {{ $t('nav.quickStart') }}
               <ArrowRight class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </NeuButton>
           </router-link>
@@ -127,7 +129,7 @@ onUnmounted(() => {
         <NeuCard padding="lg" class="w-full max-w-md relative z-10">
           <div class="space-y-8">
             <div class="flex justify-between items-center">
-              <h3 class="text-xl font-bold">音乐播放器示例</h3>
+              <h3 class="text-xl font-bold">{{ $t('nav.musicPlayerDemo') }}</h3>
               <NeuButton variant="icon" shape="circle" size="sm">
                 <div class="w-2 h-2 rounded-full bg-neu-accent"></div>
               </NeuButton>
@@ -150,14 +152,21 @@ onUnmounted(() => {
             </div>
 
             <div class="flex justify-center space-x-6">
-              <NeuButton variant="icon" shape="circle" @click="seekBy(-10)" title="后退 10 秒">
+              <NeuButton variant="icon" shape="circle" @click="seekBy(-10)" :title="$t('nav.player.back10')">
                 <SkipBack class="w-5 h-5" />
               </NeuButton>
-              <NeuButton variant="icon" shape="circle" size="lg" class="text-neu-accent" @click="togglePlayback" :title="isPlaying ? '暂停' : '播放'">
+              <NeuButton
+                variant="icon"
+                shape="circle"
+                size="lg"
+                class="text-neu-accent"
+                @click="togglePlayback"
+                :title="isPlaying ? $t('nav.player.pause') : $t('nav.player.play')"
+              >
                 <Pause v-if="isPlaying" class="w-6 h-6" />
                 <Play v-else class="w-6 h-6" />
               </NeuButton>
-              <NeuButton variant="icon" shape="circle" @click="seekBy(10)" title="前进 10 秒">
+              <NeuButton variant="icon" shape="circle" @click="seekBy(10)" :title="$t('nav.player.forward10')">
                 <SkipForward class="w-5 h-5" />
               </NeuButton>
             </div>

@@ -2,91 +2,94 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Menu, Palette, Search, X } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuScrollbar from '../components/neu/NeuScrollbar.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
+import LanguageSelect from '../components/LanguageSelect.vue'
 import logo from '../assets/logo.png'
 
 const route = useRoute()
+const { t } = useI18n()
 
 const isSidebarOpen = ref(false)
 const isThemeConfigOpen = ref(false)
 const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 
-const componentGroups = [
+const componentGroups = computed(() => [
   {
-    title: '基础/布局 (Basic)',
+    title: t('docsLayout.groups.basic'),
     links: [
-      { name: 'Button 按钮', path: '/components/button' },
-      { name: 'Card 卡片', path: '/components/card' },
-      { name: 'Divider 分割线', path: '/components/divider' },
+      { name: t('docsLayout.links.button'), path: '/components/button' },
+      { name: t('docsLayout.links.card'), path: '/components/card' },
+      { name: t('docsLayout.links.divider'), path: '/components/divider' },
     ]
   },
   {
-    title: '导航 (Navigation)',
+    title: t('docsLayout.groups.navigation'),
     links: [
-      { name: 'Breadcrumb 面包屑', path: '/components/breadcrumb' },
-      { name: 'Dropdown 下拉菜单', path: '/components/dropdown' },
-      { name: 'Menu 导航菜单', path: '/components/menu' },
-      { name: 'Pagination 分页', path: '/components/pagination' },
-      { name: 'Steps 步骤条', path: '/components/steps' },
-      { name: 'Tabs 标签页', path: '/components/tabs' },
+      { name: t('docsLayout.links.breadcrumb'), path: '/components/breadcrumb' },
+      { name: t('docsLayout.links.dropdown'), path: '/components/dropdown' },
+      { name: t('docsLayout.links.menu'), path: '/components/menu' },
+      { name: t('docsLayout.links.pagination'), path: '/components/pagination' },
+      { name: t('docsLayout.links.steps'), path: '/components/steps' },
+      { name: t('docsLayout.links.tabs'), path: '/components/tabs' },
     ]
   },
   {
-    title: '表单/交互 (Forms)',
+    title: t('docsLayout.groups.forms'),
     links: [
-      { name: 'Form 表单', path: '/components/form' },
-      { name: 'Input 输入框', path: '/components/input' },
-      { name: 'Select 下拉选择', path: '/components/select' },
-      { name: 'DatePicker 日期选择', path: '/components/datepicker' },
-      { name: 'TimePicker 时间选择', path: '/components/timepicker' },
-      { name: 'ColorPicker 颜色选择', path: '/components/colorpicker' },
-      { name: 'Rate 评分', path: '/components/rate' },
-      { name: 'Upload 上传', path: '/components/upload' },
-      { name: 'Switch 开关', path: '/components/switch' },
-      { name: 'Radio 单选框', path: '/components/radio' },
-      { name: 'Checkbox 多选框', path: '/components/checkbox' },
-      { name: 'Slider 滑块', path: '/components/slider' },
+      { name: t('docsLayout.links.form'), path: '/components/form' },
+      { name: t('docsLayout.links.input'), path: '/components/input' },
+      { name: t('docsLayout.links.select'), path: '/components/select' },
+      { name: t('docsLayout.links.datepicker'), path: '/components/datepicker' },
+      { name: t('docsLayout.links.timepicker'), path: '/components/timepicker' },
+      { name: t('docsLayout.links.colorpicker'), path: '/components/colorpicker' },
+      { name: t('docsLayout.links.rate'), path: '/components/rate' },
+      { name: t('docsLayout.links.upload'), path: '/components/upload' },
+      { name: t('docsLayout.links.switch'), path: '/components/switch' },
+      { name: t('docsLayout.links.radio'), path: '/components/radio' },
+      { name: t('docsLayout.links.checkbox'), path: '/components/checkbox' },
+      { name: t('docsLayout.links.slider'), path: '/components/slider' },
     ]
   },
   {
-    title: '数据展示 (Data)',
+    title: t('docsLayout.groups.data'),
     links: [
-      { name: 'Table 表格', path: '/components/table' },
-      { name: 'Avatar 头像', path: '/components/avatar' },
-      { name: 'Badge 徽标', path: '/components/badge' },
-      { name: 'Progress 进度条', path: '/components/progress' },
-      { name: 'Accordion 折叠面板', path: '/components/accordion' },
-      { name: 'Carousel 轮播图', path: '/components/carousel' },
-      { name: 'Scrollbar 滚动条', path: '/components/scrollbar' },
-      { name: 'Skeleton 骨架屏', path: '/components/skeleton' },
-      { name: 'Tag 标签', path: '/components/tag' },
-      { name: 'Tree 树形控件', path: '/components/tree' },
-      { name: 'Empty 空状态', path: '/components/empty' },
+      { name: t('docsLayout.links.table'), path: '/components/table' },
+      { name: t('docsLayout.links.avatar'), path: '/components/avatar' },
+      { name: t('docsLayout.links.badge'), path: '/components/badge' },
+      { name: t('docsLayout.links.progress'), path: '/components/progress' },
+      { name: t('docsLayout.links.accordion'), path: '/components/accordion' },
+      { name: t('docsLayout.links.carousel'), path: '/components/carousel' },
+      { name: t('docsLayout.links.scrollbar'), path: '/components/scrollbar' },
+      { name: t('docsLayout.links.skeleton'), path: '/components/skeleton' },
+      { name: t('docsLayout.links.tag'), path: '/components/tag' },
+      { name: t('docsLayout.links.tree'), path: '/components/tree' },
+      { name: t('docsLayout.links.empty'), path: '/components/empty' },
     ]
   },
   {
-    title: '反馈/浮层 (Feedback)',
+    title: t('docsLayout.groups.feedback'),
     links: [
-      { name: 'Alert 警告提示', path: '/components/alert' },
-      { name: 'Modal 对话框', path: '/components/modal' },
-      { name: 'Drawer 抽屉', path: '/components/drawer' },
-      { name: 'Toast 全局提示', path: '/components/toast' },
-      { name: 'Tooltip 文字提示', path: '/components/tooltip' },
-      { name: 'Popconfirm 气泡确认框', path: '/components/popconfirm' },
-      { name: 'Spin 加载中', path: '/components/spin' },
+      { name: t('docsLayout.links.alert'), path: '/components/alert' },
+      { name: t('docsLayout.links.modal'), path: '/components/modal' },
+      { name: t('docsLayout.links.drawer'), path: '/components/drawer' },
+      { name: t('docsLayout.links.toast'), path: '/components/toast' },
+      { name: t('docsLayout.links.tooltip'), path: '/components/tooltip' },
+      { name: t('docsLayout.links.popconfirm'), path: '/components/popconfirm' },
+      { name: t('docsLayout.links.spin'), path: '/components/spin' },
     ]
   }
-]
+])
 
 // Filtered groups based on search query
 const filteredGroups = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
-  if (!q) return componentGroups
+  if (!q) return componentGroups.value
 
-  return componentGroups
+  return componentGroups.value
     .map(group => ({
       ...group,
       links: group.links.filter(link =>
@@ -154,7 +157,8 @@ const highlightText = (text: string, query: string): { text: string; match: bool
         <img :src="logo" alt="Logo" class="w-12 h-12 object-contain neumorphic-logo" />
       </router-link>
       <div class="flex items-center gap-4">
-        <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
+        <LanguageSelect />
+        <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
           <Palette class="w-4 h-4" />
         </NeuButton>
         <NeuButton variant="icon" shape="circle" size="sm" @click="toggleSidebar">
@@ -179,9 +183,12 @@ const highlightText = (text: string, query: string): { text: string; match: bool
         <router-link to="/">
           <img :src="logo" alt="Logo" class="w-16 h-16 object-contain neumorphic-logo transition-transform hover:scale-110 duration-300" />
         </router-link>
-        <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" title="Theme Config">
-          <Palette class="w-4 h-4" />
-        </NeuButton>
+        <div class="flex items-center gap-3">
+          <LanguageSelect />
+          <NeuButton variant="icon" shape="circle" size="sm" @click="isThemeConfigOpen = true" :title="$t('docsLayout.themeButtonTitle')">
+            <Palette class="w-4 h-4" />
+          </NeuButton>
+        </div>
       </div>
 
       <!-- Search Box -->
@@ -194,9 +201,9 @@ const highlightText = (text: string, query: string): { text: string; match: bool
             ref="searchInputRef"
             v-model="searchQuery"
             type="text"
-            placeholder="搜索组件…"
+            :placeholder="$t('docsLayout.searchPlaceholder')"
             class="flex-1 bg-transparent text-sm text-neu-text placeholder:text-neu-text/30 outline-none min-w-0"
-            aria-label="搜索组件"
+            :aria-label="$t('docsLayout.searchAria')"
           />
           <div class="hidden md:flex items-center gap-1 shrink-0" v-if="!isSearching">
             <kbd class="px-1 py-0.5 rounded text-[10px] font-mono text-neu-text/30 bg-[var(--bg-color)] shadow-neu-flat-sm">⌃K</kbd>
@@ -205,7 +212,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
             v-if="isSearching"
             @click="clearSearch"
             class="shrink-0 w-4 h-4 flex items-center justify-center rounded-full text-neu-text/40 hover:text-neu-text transition-colors"
-            aria-label="清除搜索"
+            :aria-label="$t('docsLayout.clearSearchAria')"
           >
             <X class="w-3 h-3" />
           </button>
@@ -260,8 +267,8 @@ const highlightText = (text: string, query: string): { text: string; match: bool
             <div class="w-12 h-12 rounded-full bg-[var(--bg-color)] shadow-neu-pressed flex items-center justify-center mb-4">
               <Search class="w-5 h-5 text-neu-text/30" />
             </div>
-            <p class="text-sm text-neu-text/40">未找到 "<span class="text-neu-accent">{{ searchQuery }}</span>"</p>
-            <button @click="clearSearch" class="mt-3 text-xs text-neu-accent hover:underline">清除搜索</button>
+            <p class="text-sm text-neu-text/40">{{ $t('docsLayout.noResultsPrefix') }} "<span class="text-neu-accent">{{ searchQuery }}</span>"</p>
+            <button @click="clearSearch" class="mt-3 text-xs text-neu-accent hover:underline">{{ $t('docsLayout.clearSearchText') }}</button>
           </div>
         </nav>
       </NeuScrollbar>
@@ -293,7 +300,7 @@ const highlightText = (text: string, query: string): { text: string; match: bool
 
 <style scoped>
 .neumorphic-logo {
-  filter: 
+  filter:
     drop-shadow(3px 3px 6px var(--shadow-dark))
     drop-shadow(-3px -3px 6px var(--shadow-light));
 }

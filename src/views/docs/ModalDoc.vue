@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import NeuModal from '../../components/neu/NeuModal.vue'
 import NeuButton from '../../components/neu/NeuButton.vue'
 import NeuCard from '../../components/neu/NeuCard.vue'
 import CodeBlock from '../../components/CodeBlock.vue'
+import { useI18n } from 'vue-i18n'
 
 const showBasicModal = ref(false)
 const showCustomModal = ref(false)
 
-const usageCode = `
+const { locale } = useI18n()
+const isEn = computed(() => locale.value === 'en-US')
+
+const title = computed(() => isEn.value ? 'Modal' : 'Modal 对话框')
+const description = computed(() => isEn.value
+  ? 'A tactile neumorphic modal with backdrop blur and an inset scrollbar.'
+  : '保留物理质感的模态框，带有玻璃态背景模糊（Backdrop Blur）和定制的内凹滚动条。'
+)
+const sectionBasic = computed(() => isEn.value ? 'Basic' : '基础用法 (Basic)')
+
+const usageCodeZh = `
 <script setup>
 import { ref } from 'vue'
 import NeuModal from './components/neu/NeuModal.vue'
@@ -34,42 +45,75 @@ const showModal = ref(false)
   </NeuModal>
 </template>
 `
+
+const usageCodeEn = `
+<script setup>
+import { ref } from 'vue'
+import NeuModal from './components/neu/NeuModal.vue'
+import NeuButton from './components/neu/NeuButton.vue'
+
+const showModal = ref(false)
+<\/script>
+
+<template>
+  <NeuButton @click="showModal = true">Open Modal</NeuButton>
+
+  <NeuModal v-model="showModal" title="System Notice">
+    <p class="text-neu-text/80 leading-relaxed">
+      This is a neumorphism-styled modal dialog.
+      It includes backdrop blur, an inset scrollbar, and smooth enter/leave animation.
+    </p>
+
+    <template #footer>
+      <NeuButton @click="showModal = false">Cancel</NeuButton>
+      <NeuButton variant="primary" @click="showModal = false">OK</NeuButton>
+    </template>
+  </NeuModal>
+</template>
+`
+
+const usageCode = computed(() => isEn.value ? usageCodeEn : usageCodeZh)
 </script>
 
 <template>
   <div class="space-y-12">
     <section>
-      <h1 class="text-4xl font-bold mb-4">Modal 对话框</h1>
+      <h1 class="text-4xl font-bold mb-4">{{ title }}</h1>
       <p class="text-neu-text/80 text-lg">
-        保留物理质感的模态框，带有玻璃态背景模糊（Backdrop Blur）和定制的内凹滚动条。
+        {{ description }}
       </p>
     </section>
 
     <section>
-      <h2 class="text-2xl font-semibold mb-6">基础用法 (Basic)</h2>
+      <h2 class="text-2xl font-semibold mb-6">{{ sectionBasic }}</h2>
       <NeuCard class="flex flex-col gap-8 p-12 bg-[var(--bg-color)] max-w-xl">
         <div class="flex gap-4">
-          <NeuButton @click="showBasicModal = true" variant="primary">基础对话框</NeuButton>
-          <NeuButton @click="showCustomModal = true">无标题/自定义宽度</NeuButton>
+          <NeuButton @click="showBasicModal = true" variant="primary">{{ isEn ? 'Basic modal' : '基础对话框' }}</NeuButton>
+          <NeuButton @click="showCustomModal = true">{{ isEn ? 'No title / custom width' : '无标题/自定义宽度' }}</NeuButton>
         </div>
       </NeuCard>
       <CodeBlock :code="usageCode" language="html" />
     </section>
 
     <!-- Basic Modal -->
-    <NeuModal v-model="showBasicModal" title="确认操作" width="md">
+    <NeuModal v-model="showBasicModal" :title="isEn ? 'Confirm action' : '确认操作'" width="md">
       <div class="space-y-4">
         <p class="text-neu-text/80 leading-relaxed">
-          你确定要执行此操作吗？该操作将无法撤销。
+          {{ isEn ? 'Are you sure you want to proceed? This action cannot be undone.' : '你确定要执行此操作吗？该操作将无法撤销。' }}
         </p>
         <p class="text-neu-text/60 text-sm">
-          模态框支持按 <code>Esc</code> 键关闭，点击遮罩层也可以关闭。
+          <template v-if="isEn">
+            Press <code>Esc</code> or click the backdrop to close.
+          </template>
+          <template v-else>
+            模态框支持按 <code>Esc</code> 键关闭，点击遮罩层也可以关闭。
+          </template>
         </p>
       </div>
       
       <template #footer>
-        <NeuButton size="sm" @click="showBasicModal = false">取消</NeuButton>
-        <NeuButton size="sm" variant="primary" @click="showBasicModal = false">确认删除</NeuButton>
+        <NeuButton size="sm" @click="showBasicModal = false">{{ isEn ? 'Cancel' : '取消' }}</NeuButton>
+        <NeuButton size="sm" variant="primary" @click="showBasicModal = false">{{ isEn ? 'Delete' : '确认删除' }}</NeuButton>
       </template>
     </NeuModal>
 
@@ -81,12 +125,12 @@ const showModal = ref(false)
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 class="text-2xl font-bold">支付成功</h3>
+        <h3 class="text-2xl font-bold">{{ isEn ? 'Payment Successful' : '支付成功' }}</h3>
         <p class="text-neu-text/60">
-          您的订单已处理完毕，电子收据已发送至您的注册邮箱。
+          {{ isEn ? 'Your order has been processed. A receipt has been sent to your email.' : '您的订单已处理完毕，电子收据已发送至您的注册邮箱。' }}
         </p>
         <div class="w-full mt-4 pb-4 px-2">
-          <NeuButton variant="primary" class="w-full" @click="showCustomModal = false">返回首页</NeuButton>
+          <NeuButton variant="primary" class="w-full" @click="showCustomModal = false">{{ isEn ? 'Back to Home' : '返回首页' }}</NeuButton>
         </div>
       </div>
     </NeuModal>

@@ -50,7 +50,7 @@ onMounted(() => {
         <button
           @click="copyToClipboard"
           class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm active:scale-95"
-          title="Copy code"
+          :title="copied ? $t('codeBlock.copied') : $t('codeBlock.copy')"
         >
           <Check v-if="copied" class="w-4 h-4 text-green-400" />
           <Copy v-else class="w-4 h-4 text-[#888] group-hover:text-white" />
@@ -64,4 +64,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-

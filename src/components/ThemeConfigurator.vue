@@ -42,8 +42,8 @@ const radiusLg    = ref(saved?.radiusLg    ?? DEFAULT_THEME_PALETTE.radiusLg)
 
 // ── Presets ──────────────────────────────────────────────
 const presets = [
-  { name: '经典白 (Classic Light)', bg: '#e0e5ec', accent: '#4f46e5', text: '#333333' },
-  { name: '深邃黑 (Dark Mode)',      bg: '#292d32', accent: '#6366f1', text: '#e0e5ec' },
+  { name: '经典白 (Classic Light)', bg: '#e0e5ec', accent: '#E89DB5', text: '#333333' },
+  { name: '深邃黑 (Dark Mode)',      bg: '#292d32', accent: '#E89DB5', text: '#e0e5ec' },
   { name: '薄荷绿 (Mint Green)',     bg: '#dcedc8', accent: '#2e7d32', text: '#33691e' },
   { name: '莫兰迪紫 (Morandi)',      bg: '#e1bee7', accent: '#6a1b9a', text: '#4a148c' },
   { name: '暗橙灰 (Dark Orange)',    bg: '#303030', accent: '#ff9800', text: '#f5f5f5' },

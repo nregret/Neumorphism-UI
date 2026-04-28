@@ -71,12 +71,10 @@ onUnmounted(() => {
   <div class="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] overflow-hidden">
     <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md">
-      <router-link to="/" class="flex items-center gap-4">
-        <div class="w-16 h-16 rounded-neu-md shadow-neu-flat-sm flex items-center justify-center bg-[var(--bg-color)] overflow-hidden shrink-0">
-          <img :src="logo" alt="Logo" class="w-12 h-12 object-contain" />
-        </div>
+      <router-link to="/" class="flex items-center gap-4 group">
+        <img :src="logo" alt="Logo" class="w-20 h-20 object-contain transition-transform duration-300 group-hover:scale-110 neumorphic-logo" />
         <div class="flex flex-col leading-none">
-          <span class="text-2xl font-bold tracking-tighter text-neu-text">Neumorphism <span class="text-neu-accent">UI</span></span>
+          <span class="text-2xl font-bold tracking-tighter text-neu-text neumorphic-text-raised">Neumorphism <span class="text-neu-accent">UI</span></span>
           <span class="text-xs font-medium text-neu-text/40 tracking-wider mt-0.5">新拟态 UI</span>
         </div>
       </router-link>
@@ -96,9 +94,11 @@ onUnmounted(() => {
     <!-- Hero Section -->
     <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between min-h-[90vh]">
       <div class="lg:w-1/2 space-y-8 z-10">
-        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.3] py-4">
           极简的新拟态 <br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-neu-accent to-purple-500">UI组件库</span>
+          <span class="text-neu-accent neumorphic-text-raised">
+            UI组件库
+          </span>
         </h1>
         <p class="text-lg md:text-xl text-neu-text/80 max-w-lg leading-relaxed">
           Neumorphism UI 提供了一套开箱即用、高度可定制的新拟态风格组件，完美支持响应式和暗黑模式，让你的应用界面独具物理质感与美学体验。目前已包含 32 个核心组件。
@@ -169,3 +169,25 @@ onUnmounted(() => {
     <ThemeConfigurator v-model="isThemeConfigOpen" />
   </div>
 </template>
+
+<style scoped>
+.neumorphic-logo {
+  filter: 
+    drop-shadow(3px 3px 6px var(--shadow-dark))
+    drop-shadow(-3px -3px 6px var(--shadow-light));
+}
+
+.neumorphic-text-raised {
+  text-shadow: 
+    3px 3px 6px var(--shadow-dark),
+    6px 6px 12px var(--shadow-dark),
+    -3px -3px 6px var(--shadow-light),
+    -6px -6px 12px var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+</style>

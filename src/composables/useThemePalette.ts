@@ -24,7 +24,7 @@ export const THEME_PALETTE_STORAGE_KEY = 'neu-theme-palette'
 
 export const DEFAULT_THEME_PALETTE: Required<ThemePalette> = {
   bg: '#e0e5ec',
-  accent: '#4f46e5',
+  accent: '#E89DB5',
   text: '#333333',
   scale: 1,
   depthSm: 3,

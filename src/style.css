@@ -9,7 +9,7 @@
     --text-muted: #666666;
     --shadow-light: #ffffff;
     --shadow-dark: #a3b1c6;
-    --accent: #4f46e5;
+    --accent: #E89DB5;
 
     /* ─── Neumorphic Depth System ─────────────────────────────── *
      *  --neu-scale   : 全局深度乘数  (0.4 极柔 → 1.0 默认 → 1.6 强烈)  *
@@ -56,7 +56,7 @@
     --text-muted: #a0a5aa;
     --shadow-light: #353a40;
     --shadow-dark: #1d1f24;
-    --accent: #6366f1;
+    --accent: #E89DB5;
   }
 }
 

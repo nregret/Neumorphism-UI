@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
-import { ArrowRight, Github, Palette, Pause, Play, SkipBack, SkipForward } from 'lucide-vue-next'
+import { ArrowRight, Cat, Github, Palette, Pause, Play, SkipBack, SkipForward } from 'lucide-vue-next'
 import NeuButton from '../components/neu/NeuButton.vue'
 import NeuCard from '../components/neu/NeuCard.vue'
+import NeuTooltip from '../components/neu/NeuTooltip.vue'
 import ThemeConfigurator from '../components/ThemeConfigurator.vue'
 import LanguageSelect from '../components/LanguageSelect.vue'
 import logo from '../assets/logo.png'
@@ -118,6 +119,11 @@ onUnmounted(() => {
               GitHub
             </NeuButton>
           </a>
+          <NeuTooltip content="主题设置~">
+            <NeuButton variant="icon" shape="circle" size="lg" @click="isThemeConfigOpen = true" class="text-neu-accent hover:scale-110 transition-transform">
+              <Cat class="w-6 h-6" />
+            </NeuButton>
+          </NeuTooltip>
         </div>
       </div>
 

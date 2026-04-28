@@ -15,7 +15,7 @@ const forwardedAttrs = computed(() => {
 })
 
 const rootClass = computed(() => [
-  'w-44',
+  'w-40',
   (attrs as Record<string, unknown>).class,
 ])
 

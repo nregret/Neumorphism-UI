@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="#快速开始">快速开始</a> ·
+  <a href="#预览">预览</a> ·
   <a href="#组件一览">组件一览</a> ·
   <a href="#主题定制">主题定制</a> ·
   <a href="#国际化">国际化</a> ·
@@ -25,6 +26,15 @@
 </p>
 
 ---
+
+## 预览
+<details>
+  <summary>首页截图</summary>
+  <br />
+  <p align="center">
+    <img src="docs/homepage.png" width="960" alt="Homepage Preview" />
+  </p>
+</details>
 
 ## 特性
 - **32+ 组件** — 覆盖基础 / 导航 / 表单 / 数据展示 / 反馈浮层

@@ -1,0 +1,1640 @@
+{
+  "skill": "neu-ui",
+  "generatedAt": "2026-04-27T13:21:20.272Z",
+  "components": [
+    {
+      "name": "NeuAccordion",
+      "sourcePath": "assets/library/components/neu/NeuAccordion.vue",
+      "description": "新拟态风格的手风琴/折叠面板组件，通过 CSS Grid 实现高度自适应的丝滑展开动画，内容区采用内阴影承载。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "AccordionItem[] modelValue?: (string | number)[] multiple?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "() => []"
+        },
+        {
+          "name": "multiple",
+          "value": "false"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "`content-${item.id}`"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuAccordion-usage.vue"
+      ],
+      "docPage": "AccordionDoc.vue"
+    },
+    {
+      "name": "NeuAlert",
+      "sourcePath": "assets/library/components/neu/NeuAlert.vue",
+      "description": "在页面上展示重要的全局或局部提示信息，采用内凹阴影 (`pressed`) 作为容器背景，并使用悬浮图标传达状态。",
+      "props": [
+        {
+          "name": "variant",
+          "required": false,
+          "type": "'info' | 'success' | 'warning' | 'error' | 'default' title?: string description?: string closable?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'default'"
+        },
+        {
+          "name": "closable",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "close",
+          "payload": ""
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuAlert-usage.vue"
+      ],
+      "docPage": "AlertDoc.vue"
+    },
+    {
+      "name": "NeuAvatar",
+      "sourcePath": "assets/library/components/neu/NeuAvatar.vue",
+      "description": "新拟态风格的头像组件，支持图片加载、文本缩写兜底，并提供在线状态指示器。",
+      "props": [
+        {
+          "name": "src",
+          "required": false,
+          "type": "string alt?: string size?: 'sm' | 'md' | 'lg' | 'xl' shape?: 'circle' | 'rounded' | 'square' bordered?: boolean status?: 'online' | 'offline' | 'away' | 'busy' | 'none'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "size",
+          "value": "'md'"
+        },
+        {
+          "name": "shape",
+          "value": "'circle'"
+        },
+        {
+          "name": "bordered",
+          "value": "true"
+        },
+        {
+          "name": "status",
+          "value": "'none'"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuAvatar-usage.vue"
+      ],
+      "docPage": "AvatarDoc.vue"
+    },
+    {
+      "name": "NeuBadge",
+      "sourcePath": "assets/library/components/neu/NeuBadge.vue",
+      "description": "新拟态风格的徽标组件，用于状态标记、数字提示或分类标签。支持外凸、内凹及幽灵样式。",
+      "props": [
+        {
+          "name": "variant",
+          "required": false,
+          "type": "'default' | 'primary' | 'success' | 'warning' | 'error' type?: 'flat' | 'pressed' | 'ghost' size?: 'sm' | 'md' | 'lg' rounded?: 'full' | 'default' dot?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'default'"
+        },
+        {
+          "name": "type",
+          "value": "'flat'"
+        },
+        {
+          "name": "size",
+          "value": "'md'"
+        },
+        {
+          "name": "rounded",
+          "value": "'full'"
+        },
+        {
+          "name": "dot",
+          "value": "false"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuBadge-usage.vue"
+      ],
+      "docPage": "BadgeDoc.vue"
+    },
+    {
+      "name": "NeuBreadcrumb",
+      "sourcePath": "assets/library/components/neu/NeuBreadcrumb.vue",
+      "description": "显示当前页面在系统层级结构中的位置，带有新拟态特有的浮雕容器。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "BreadcrumbItem[] separator?: string variant?: 'flat' | 'pressed'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'flat'"
+        }
+      ],
+      "events": [
+        {
+          "name": "navigate",
+          "payload": "item: BreadcrumbItem"
+        }
+      ],
+      "slots": [
+        "separator",
+        "`icon-${index}`"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuBreadcrumb-usage.vue"
+      ],
+      "docPage": "BreadcrumbDoc.vue"
+    },
+    {
+      "name": "NeuButton",
+      "sourcePath": "assets/library/components/neu/NeuButton.vue",
+      "description": "新拟态风格的按钮组件，通过内外阴影的切换表现凸起（Default）与凹陷（Pressed/Active）的物理状态。",
+      "props": [
+        {
+          "name": "variant",
+          "required": false,
+          "type": "'default' | 'primary' | 'icon' size?: 'sm' | 'md' | 'lg' shape?: 'rounded' | 'circle' active?: boolean disabled?: boolean type?: 'button' | 'submit' | 'reset'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'default'"
+        },
+        {
+          "name": "size",
+          "value": "'md'"
+        },
+        {
+          "name": "shape",
+          "value": "'rounded'"
+        },
+        {
+          "name": "active",
+          "value": "false"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "type",
+          "value": "'button'"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuButton-usage.vue",
+        "assets/examples/components/NeuButton-size.vue",
+        "assets/examples/components/NeuButton-shape.vue"
+      ],
+      "docPage": "ButtonDoc.vue"
+    },
+    {
+      "name": "NeuCard",
+      "sourcePath": "assets/library/components/neu/NeuCard.vue",
+      "description": "卡片是新拟态UI中最基础的容器组件。通过不同的阴影方向（外阴影或内阴影）区分层级关系。",
+      "props": [
+        {
+          "name": "pressed",
+          "required": false,
+          "type": "boolean padding?: 'none' | 'sm' | 'md' | 'lg' rounded?: 'sm' | 'md' | 'lg' | 'full'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "pressed",
+          "value": "false"
+        },
+        {
+          "name": "padding",
+          "value": "'md'"
+        },
+        {
+          "name": "rounded",
+          "value": "'md'"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuCard-usage.vue"
+      ],
+      "docPage": "CardDoc.vue"
+    },
+    {
+      "name": "NeuCarousel",
+      "sourcePath": "assets/library/components/neu/NeuCarousel.vue",
+      "description": "具有极强物理质感的轮播组件。凹陷外框、毛玻璃导航按钮、动态胶囊指示器， 支持 slide 与 fade 两种切换效果。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "T[] autoPlay?: boolean interval?: number showArrows?: boolean showDots?: boolean /** 切换效果：slide（滑动）| fade（淡入淡出） */ effect?: 'slide' | 'fade' /** 是否显示进度条（在 dots 下方） */ showProgress?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "autoPlay",
+          "value": "true"
+        },
+        {
+          "name": "interval",
+          "value": "3000"
+        },
+        {
+          "name": "showArrows",
+          "value": "true"
+        },
+        {
+          "name": "showDots",
+          "value": "true"
+        },
+        {
+          "name": "effect",
+          "value": "'slide'"
+        },
+        {
+          "name": "showProgress",
+          "value": "false"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [
+        "NeuButton"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuCarousel-basic-usage.vue",
+        "assets/examples/components/NeuCarousel-fade-usage.vue",
+        "assets/examples/components/NeuCarousel-manual-usage.vue"
+      ],
+      "docPage": "CarouselDoc.vue"
+    },
+    {
+      "name": "NeuCheckbox",
+      "sourcePath": "assets/library/components/neu/NeuCheckbox.vue",
+      "description": "新拟态风格的多选框组件，未选中时呈凸起状态，选中时呈现凹陷与勾选图标。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "any[] | boolean value?: any label?: string disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: any[] | boolean"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuCheckbox-usage.vue"
+      ],
+      "docPage": "CheckboxDoc.vue"
+    },
+    {
+      "name": "NeuColorPicker",
+      "sourcePath": "assets/library/components/neu/NeuColorPicker.vue",
+      "description": "用于颜色选择的组件。提供预设颜色和 RGB 滑块，完全采用新拟态风格，具有极强的物理质感。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": false,
+          "type": "string // HEX string e.g. \"#FF0000\" disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "'#4f46e5'"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: string"
+        },
+        {
+          "name": "change",
+          "payload": "value: string"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuColorPicker-basic-usage.vue",
+        "assets/examples/components/NeuColorPicker-disabled-usage.vue"
+      ],
+      "docPage": "ColorPickerDoc.vue"
+    },
+    {
+      "name": "NeuDatePicker",
+      "sourcePath": "assets/library/components/neu/NeuDatePicker.vue",
+      "description": "新拟态风格的日期选择组件，基于原生 date input 封装。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "string // Format: YYYY-MM-DD placeholder?: string disabled?: boolean error?: boolean min?: string max?: string"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "placeholder",
+          "value": "'请选择日期'"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "error",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: string"
+        },
+        {
+          "name": "change",
+          "payload": "value: string"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuDatePicker-usage.vue"
+      ],
+      "docPage": "DatePickerDoc.vue"
+    },
+    {
+      "name": "NeuDivider",
+      "sourcePath": "assets/library/components/neu/NeuDivider.vue",
+      "description": "区隔内容的分割线，支持内凹（沟槽）和外凸（脊线）两种立体质感。",
+      "props": [
+        {
+          "name": "type",
+          "required": false,
+          "type": "'horizontal' | 'vertical' variant?: 'groove' | 'ridge'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "type",
+          "value": "'horizontal'"
+        },
+        {
+          "name": "variant",
+          "value": "'groove'"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuDivider-horizontal-groove.vue",
+        "assets/examples/components/NeuDivider-horizontal-ridge.vue",
+        "assets/examples/components/NeuDivider-vertical-groove.vue"
+      ],
+      "docPage": "DividerDoc.vue"
+    },
+    {
+      "name": "NeuDrawer",
+      "sourcePath": "assets/library/components/neu/NeuDrawer.vue",
+      "description": "这里是抽屉的内容区域...",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "boolean title?: string placement?: 'left' | 'right' | 'top' | 'bottom' size?: string // css width/height value, e.g., '300px', '50vw' closeOnEsc?: boolean closeOnClickOutside?: boolean showCloseIcon?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "false"
+        },
+        {
+          "name": "title",
+          "value": "''"
+        },
+        {
+          "name": "placement",
+          "value": "'right'"
+        },
+        {
+          "name": "size",
+          "value": "'400px'"
+        },
+        {
+          "name": "closeOnEsc",
+          "value": "true"
+        },
+        {
+          "name": "closeOnClickOutside",
+          "value": "true"
+        },
+        {
+          "name": "showCloseIcon",
+          "value": "true"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: boolean"
+        },
+        {
+          "name": "close",
+          "payload": ""
+        },
+        {
+          "name": "open",
+          "payload": ""
+        }
+      ],
+      "slots": [
+        "default",
+        "footer"
+      ],
+      "relatedComponents": [
+        "NeuButton"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuDrawer-usage.vue"
+      ],
+      "docPage": "DrawerDoc.vue"
+    },
+    {
+      "name": "NeuDropdown",
+      "sourcePath": "assets/library/components/neu/NeuDropdown.vue",
+      "description": "带有强烈物理层级感的悬浮下拉菜单，支持点击和悬停触发。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "DropdownItem[] placement?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' trigger?: 'click' | 'hover'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "placement",
+          "value": "'bottom-start'"
+        },
+        {
+          "name": "trigger",
+          "value": "'click'"
+        }
+      ],
+      "events": [
+        {
+          "name": "select",
+          "payload": "item: DropdownItem"
+        }
+      ],
+      "slots": [
+        "trigger"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuDropdown-usage.vue"
+      ],
+      "docPage": "DropdownDoc.vue"
+    },
+    {
+      "name": "NeuEmpty",
+      "sourcePath": "assets/library/components/neu/NeuEmpty.vue",
+      "description": "当目前没有数据时，用于占位的提示组件，采用新拟态独有的内凹式设计。",
+      "props": [
+        {
+          "name": "description",
+          "required": false,
+          "type": "string image?: string"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "description",
+          "value": "'暂无数据'"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "image",
+        "default",
+        "extra"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuEmpty-basic-usage.vue",
+        "assets/examples/components/NeuEmpty-custom-desc.vue",
+        "assets/examples/components/NeuEmpty-custom-icon.vue",
+        "assets/examples/components/NeuEmpty-with-extra.vue"
+      ],
+      "docPage": "EmptyDoc.vue"
+    },
+    {
+      "name": "NeuForm",
+      "sourcePath": "assets/library/components/neu/NeuForm.vue",
+      "description": "具有数据收集、校验和提交功能的表单，包含输入、选择等控件。",
+      "props": [
+        {
+          "name": "model",
+          "required": false,
+          "type": "any rules?: any layout?: 'horizontal' | 'vertical' | 'inline' labelWidth?: string"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "model",
+          "value": "() => ({})"
+        },
+        {
+          "name": "rules",
+          "value": "() => ({})"
+        },
+        {
+          "name": "layout",
+          "value": "'vertical'"
+        },
+        {
+          "name": "labelWidth",
+          "value": "'100px'"
+        }
+      ],
+      "events": [
+        {
+          "name": "submit",
+          "payload": "event: Event"
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuForm-usage.vue"
+      ],
+      "docPage": "FormDoc.vue"
+    },
+    {
+      "name": "NeuFormItem",
+      "sourcePath": "assets/library/components/neu/NeuFormItem.vue",
+      "description": "NeuForm 的表单项容器组件，负责标签、错误信息和布局编排。",
+      "props": [
+        {
+          "name": "label",
+          "required": false,
+          "type": "string prop?: string required?: boolean error?: string"
+        }
+      ],
+      "defaults": [],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuForm-usage.vue"
+      ],
+      "docPage": "FormDoc.vue"
+    },
+    {
+      "name": "NeuInput",
+      "sourcePath": "assets/library/components/neu/NeuInput.vue",
+      "description": "带有内凹阴影效果的新拟态输入框。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "string placeholder?: string type?: string disabled?: boolean error?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "type",
+          "value": "'text'"
+        },
+        {
+          "name": "placeholder",
+          "value": "''"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "error",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: string"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuInput-usage.vue"
+      ],
+      "docPage": "InputDoc.vue"
+    },
+    {
+      "name": "NeuMenu",
+      "sourcePath": "assets/library/components/neu/NeuMenu.vue",
+      "description": "为网站提供导航功能的菜单，支持垂直和水平两种模式。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "MenuItem[] modelValue?: string mode?: 'vertical' | 'horizontal'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "''"
+        },
+        {
+          "name": "mode",
+          "value": "'vertical'"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "key: string"
+        },
+        {
+          "name": "select",
+          "payload": "item: MenuItem"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuMenu-usage.vue"
+      ],
+      "docPage": "MenuDoc.vue"
+    },
+    {
+      "name": "NeuModal",
+      "sourcePath": "assets/library/components/neu/NeuModal.vue",
+      "description": "这是一个基于新拟态风格设计的模态对话框。 它包含背景高斯模糊、内凹的滚动条以及丝滑的弹出动画。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "boolean title?: string width?: 'sm' | 'md' | 'lg' | 'xl' | 'full' closeOnEsc?: boolean closeOnClickOutside?: boolean showCloseIcon?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "false"
+        },
+        {
+          "name": "title",
+          "value": "''"
+        },
+        {
+          "name": "width",
+          "value": "'md'"
+        },
+        {
+          "name": "closeOnEsc",
+          "value": "true"
+        },
+        {
+          "name": "closeOnClickOutside",
+          "value": "true"
+        },
+        {
+          "name": "showCloseIcon",
+          "value": "true"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: boolean"
+        },
+        {
+          "name": "close",
+          "payload": ""
+        },
+        {
+          "name": "open",
+          "payload": ""
+        }
+      ],
+      "slots": [
+        "default",
+        "footer"
+      ],
+      "relatedComponents": [
+        "NeuButton",
+        "NeuCard"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuModal-usage.vue"
+      ],
+      "docPage": "ModalDoc.vue"
+    },
+    {
+      "name": "NeuPagination",
+      "sourcePath": "assets/library/components/neu/NeuPagination.vue",
+      "description": "带有新拟态物理质感的分页组件，当前激活的页码呈现内凹的按压状态。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "number total: number pageSize?: number disabled?: boolean siblingCount?: number"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "pageSize",
+          "value": "10"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "siblingCount",
+          "value": "1"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "page: number"
+        },
+        {
+          "name": "change",
+          "payload": "page: number"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [
+        "NeuButton"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuPagination-usage.vue"
+      ],
+      "docPage": "PaginationDoc.vue"
+    },
+    {
+      "name": "NeuPopconfirm",
+      "sourcePath": "assets/library/components/neu/NeuPopconfirm.vue",
+      "description": "新拟态风格的气泡确认框，点击元素，弹出气泡式的确认框。",
+      "props": [
+        {
+          "name": "title",
+          "required": true,
+          "type": "string content?: string confirmText?: string cancelText?: string position?: 'top' | 'bottom' | 'left' | 'right'"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "confirmText",
+          "value": "'确定'"
+        },
+        {
+          "name": "cancelText",
+          "value": "'取消'"
+        },
+        {
+          "name": "position",
+          "value": "'top'"
+        }
+      ],
+      "events": [
+        {
+          "name": "confirm",
+          "payload": ""
+        },
+        {
+          "name": "cancel",
+          "payload": ""
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [
+        "NeuButton"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuPopconfirm-usage.vue",
+        "assets/examples/components/NeuPopconfirm-position.vue"
+      ],
+      "docPage": "PopconfirmDoc.vue"
+    },
+    {
+      "name": "NeuProgress",
+      "sourcePath": "assets/library/components/neu/NeuProgress.vue",
+      "description": "带有内阴影凹槽和填充色的进度条组件，支持多种尺寸、颜色及条纹动画效果。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "number max?: number height?: 'sm' | 'md' | 'lg' color?: 'accent' | 'success' | 'warning' | 'error' showLabel?: boolean striped?: boolean animated?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "max",
+          "value": "100"
+        },
+        {
+          "name": "height",
+          "value": "'md'"
+        },
+        {
+          "name": "color",
+          "value": "'accent'"
+        },
+        {
+          "name": "showLabel",
+          "value": "false"
+        },
+        {
+          "name": "striped",
+          "value": "false"
+        },
+        {
+          "name": "animated",
+          "value": "false"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "label"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuProgress-usage.vue"
+      ],
+      "docPage": "ProgressDoc.vue"
+    },
+    {
+      "name": "NeuRadio",
+      "sourcePath": "assets/library/components/neu/NeuRadio.vue",
+      "description": "新拟态风格的单选框组件，未选中时呈凸起状态，选中时凹陷并展示点缀色指示器。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "any value: any label?: string disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: any"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuRadio-usage.vue"
+      ],
+      "docPage": "RadioDoc.vue"
+    },
+    {
+      "name": "NeuRate",
+      "sourcePath": "assets/library/components/neu/NeuRate.vue",
+      "description": "星级评分组件。未选中的星星内凹刻印，选中的星星外凸并带有强调色发光效果。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": false,
+          "type": "number max?: number disabled?: boolean readonly?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "0"
+        },
+        {
+          "name": "max",
+          "value": "5"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "readonly",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: number"
+        },
+        {
+          "name": "change",
+          "payload": "value: number"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuRate-basic-usage.vue",
+        "assets/examples/components/NeuRate-readonly-usage.vue"
+      ],
+      "docPage": "RateDoc.vue"
+    },
+    {
+      "name": "NeuScrollbar",
+      "sourcePath": "assets/library/components/neu/NeuScrollbar.vue",
+      "description": "将原生滚动条替换为精心设计的新拟态风格滚动条。轨道呈内凹质感，滑块具备真实的凸起立体感， 鼠标悬停时以主题色高亮，拖拽时配合发光效果。",
+      "props": [
+        {
+          "name": "height",
+          "required": false,
+          "type": "string maxHeight?: string autoHide?: boolean /** 填满父容器剩余高度（flex-1），用于侧边栏等场景 */ fill?: boolean /** * 滚动条轨道距容器顶部和底部的像素间距。 * 当父容器有圆角时（如侧边栏 rounded-r-[2rem] = 32px）， * 需设置足够大的值避免轨道伸入圆角区域。默认 8px。 */ trackInset?: number"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "height",
+          "value": "'auto'"
+        },
+        {
+          "name": "maxHeight",
+          "value": "undefined"
+        },
+        {
+          "name": "autoHide",
+          "value": "false"
+        },
+        {
+          "name": "fill",
+          "value": "false"
+        },
+        {
+          "name": "trackInset",
+          "value": "8"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuScrollbar-basic-usage.vue",
+        "assets/examples/components/NeuScrollbar-fixed-height-usage.vue",
+        "assets/examples/components/NeuScrollbar-auto-hide-usage.vue"
+      ],
+      "docPage": "ScrollbarDoc.vue"
+    },
+    {
+      "name": "NeuSelect",
+      "sourcePath": "assets/library/components/neu/NeuSelect.vue",
+      "description": "新拟态风格的下拉选择组件，点击时容器呈现物理凹陷感，弹出层带有大尺寸浮雕阴影和定制滚动条。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "string | number | (string | number)[] options: SelectOption[] placeholder?: string disabled?: boolean multiple?: boolean error?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "placeholder",
+          "value": "'请选择'"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        },
+        {
+          "name": "multiple",
+          "value": "false"
+        },
+        {
+          "name": "error",
+          "value": "false"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSelect-usage.vue"
+      ],
+      "docPage": "SelectDoc.vue"
+    },
+    {
+      "name": "NeuSkeleton",
+      "sourcePath": "assets/library/components/neu/NeuSkeleton.vue",
+      "description": "在内容加载时展示的占位图形。基于新拟态的内凹阴影 (`shadow-neu-pressed`) 设计，辅以高光扫过的动画效果。",
+      "props": [
+        {
+          "name": "type",
+          "required": false,
+          "type": "'text' | 'circle' | 'rect' | 'card' width?: string height?: string animated?: boolean rows?: number"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "type",
+          "value": "'text'"
+        },
+        {
+          "name": "animated",
+          "value": "true"
+        },
+        {
+          "name": "rows",
+          "value": "3"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSkeleton-usage.vue"
+      ],
+      "docPage": "SkeletonDoc.vue"
+    },
+    {
+      "name": "NeuSlider",
+      "sourcePath": "assets/library/components/neu/NeuSlider.vue",
+      "description": "新拟态风格的滑动条组件，包含一个凹陷的轨道和一个凸起的滑动按钮，并支持拖拽改变数值。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "number min?: number max?: number step?: number disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "min",
+          "value": "0"
+        },
+        {
+          "name": "max",
+          "value": "100"
+        },
+        {
+          "name": "step",
+          "value": "1"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: number"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSlider-usage.vue"
+      ],
+      "docPage": "SliderDoc.vue"
+    },
+    {
+      "name": "NeuSpin",
+      "sourcePath": "assets/library/components/neu/NeuSpin.vue",
+      "description": "新拟态风格的加载动画，用于页面和区块的加载中状态。",
+      "props": [
+        {
+          "name": "size",
+          "required": false,
+          "type": "'sm' | 'md' | 'lg' color?: 'primary' | 'default' tip?: string"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "size",
+          "value": "'md'"
+        },
+        {
+          "name": "color",
+          "value": "'primary'"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSpin-usage.vue",
+        "assets/examples/components/NeuSpin-size.vue",
+        "assets/examples/components/NeuSpin-tip.vue"
+      ],
+      "docPage": "SpinDoc.vue"
+    },
+    {
+      "name": "NeuSteps",
+      "sourcePath": "assets/library/components/neu/NeuSteps.vue",
+      "description": "新拟态风格的步骤条，用于引导用户按照流程完成任务。",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "StepItem[] modelValue?: number direction?: 'horizontal' | 'vertical' clickable?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "0"
+        },
+        {
+          "name": "direction",
+          "value": "'horizontal'"
+        },
+        {
+          "name": "clickable",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: number"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSteps-usage.vue"
+      ],
+      "docPage": "StepsDoc.vue"
+    },
+    {
+      "name": "NeuSwitch",
+      "sourcePath": "assets/library/components/neu/NeuSwitch.vue",
+      "description": "带有立体质感的切换开关组件。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "boolean disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "modelValue",
+          "value": "false"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: boolean"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuSwitch-usage.vue"
+      ],
+      "docPage": "SwitchDoc.vue"
+    },
+    {
+      "name": "NeuTable",
+      "sourcePath": "assets/library/components/neu/NeuTable.vue",
+      "description": "带有新拟态凹陷阴影 (`shadow-neu-pressed`) 的响应式数据表格，支持自定义列渲染、排序与加载状态。",
+      "props": [
+        {
+          "name": "columns",
+          "required": true,
+          "type": "TableColumn[] data: any[] sort?: TableSort | null loading?: boolean striped?: boolean hoverable?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "sort",
+          "value": "null"
+        },
+        {
+          "name": "loading",
+          "value": "false"
+        },
+        {
+          "name": "striped",
+          "value": "false"
+        },
+        {
+          "name": "hoverable",
+          "value": "true"
+        }
+      ],
+      "events": [
+        {
+          "name": "sort",
+          "payload": "sort: TableSort"
+        },
+        {
+          "name": "row-click",
+          "payload": "row: any, index: number"
+        }
+      ],
+      "slots": [
+        "`cell-${col.key}`"
+      ],
+      "relatedComponents": [
+        "NeuSpin"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuTable-usage.vue"
+      ],
+      "docPage": "TableDoc.vue"
+    },
+    {
+      "name": "NeuTabs",
+      "sourcePath": "assets/library/components/neu/NeuTabs.vue",
+      "description": "新拟态风格的标签页和分段控制器，常用于对内容进行分组和层级划分。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": true,
+          "type": "string items: TabItem[] variant?: 'default' | 'pills' fullWidth?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'default'"
+        },
+        {
+          "name": "fullWidth",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: string"
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuTabs-usage.vue"
+      ],
+      "docPage": "TabsDoc.vue"
+    },
+    {
+      "name": "NeuTag",
+      "sourcePath": "assets/library/components/neu/NeuTag.vue",
+      "description": "新拟态风格的标签组件，用于进行标记和分类。支持可关闭功能。",
+      "props": [
+        {
+          "name": "variant",
+          "required": false,
+          "type": "'default' | 'primary' | 'success' | 'warning' | 'error' type?: 'flat' | 'pressed' size?: 'sm' | 'md' | 'lg' closable?: boolean disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "variant",
+          "value": "'default'"
+        },
+        {
+          "name": "type",
+          "value": "'flat'"
+        },
+        {
+          "name": "size",
+          "value": "'md'"
+        },
+        {
+          "name": "closable",
+          "value": "false"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "close",
+          "payload": "event: MouseEvent"
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuTag-usage.vue"
+      ],
+      "docPage": "TagDoc.vue"
+    },
+    {
+      "name": "NeuTimePicker",
+      "sourcePath": "assets/library/components/neu/NeuTimePicker.vue",
+      "description": "带有强烈实体质感的时间选择器。下拉面板采用了类似实体滚轮的交互方式，并在选中区域覆盖了凹陷阴影视窗。",
+      "props": [
+        {
+          "name": "modelValue",
+          "required": false,
+          "type": "string // Format: \"HH:mm\" placeholder?: string disabled?: boolean"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "placeholder",
+          "value": "'请选择时间'"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "payload": "value: string"
+        },
+        {
+          "name": "change",
+          "payload": "value: string"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuTimePicker-basic-usage.vue",
+        "assets/examples/components/NeuTimePicker-disabled-usage.vue"
+      ],
+      "docPage": "TimePickerDoc.vue"
+    },
+    {
+      "name": "NeuToast",
+      "sourcePath": "assets/library/components/neu/toast.ts",
+      "description": "命令式轻提示工具，适合在表单提交、操作反馈和状态通知场景中使用。",
+      "props": [],
+      "defaults": [],
+      "events": [],
+      "slots": [],
+      "relatedComponents": [
+        "NeuToastComponent"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuToast-usage.vue"
+      ],
+      "docPage": "ToastDoc.vue"
+    },
+    {
+      "name": "NeuToastComponent",
+      "sourcePath": "assets/library/components/neu/NeuToastComponent.vue",
+      "description": "NeuToast 的内部渲染组件，负责提示消息的样式、动画和关闭交互。",
+      "props": [],
+      "defaults": [],
+      "events": [
+        {
+          "name": "close",
+          "payload": ""
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuToast-usage.vue"
+      ],
+      "docPage": "ToastDoc.vue"
+    },
+    {
+      "name": "NeuTooltip",
+      "sourcePath": "assets/library/components/neu/NeuTooltip.vue",
+      "description": "新拟态风格的气泡提示框，用于在鼠标悬停时显示附加信息。带有指向箭头和丝滑的弹出动画。",
+      "props": [
+        {
+          "name": "content",
+          "required": true,
+          "type": "string position?: 'top' | 'bottom' | 'left' | 'right' delay?: number"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "position",
+          "value": "'top'"
+        },
+        {
+          "name": "delay",
+          "value": "200"
+        }
+      ],
+      "events": [],
+      "slots": [
+        "default"
+      ],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuTooltip-usage.vue"
+      ],
+      "docPage": "TooltipDoc.vue"
+    },
+    {
+      "name": "NeuTree",
+      "sourcePath": "assets/library/components/neu/NeuTree.vue",
+      "description": "新拟态风格的树形控件，用于清晰地展现层级关系，支持单选、多选和节点展开/收起。",
+      "props": [],
+      "defaults": [
+        {
+          "name": "data",
+          "value": "() => []"
+        },
+        {
+          "name": "selectedKeys",
+          "value": "() => []"
+        },
+        {
+          "name": "multiple",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "select",
+          "payload": "node: TreeNode"
+        },
+        {
+          "name": "expand",
+          "payload": "node: TreeNode"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [
+        "NeuTreeNode"
+      ],
+      "exampleFiles": [
+        "assets/examples/components/NeuTree-usage.vue"
+      ],
+      "docPage": "TreeDoc.vue"
+    },
+    {
+      "name": "NeuTreeNode",
+      "sourcePath": "assets/library/components/neu/NeuTreeNode.vue",
+      "description": "NeuTree 的递归节点组件，负责层级节点的展开、选中和结构渲染。",
+      "props": [
+        {
+          "name": "node",
+          "required": true,
+          "type": "TreeNode level?: number selectedKeys?: (string | number)[]"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "level",
+          "value": "0"
+        },
+        {
+          "name": "selectedKeys",
+          "value": "() => []"
+        }
+      ],
+      "events": [
+        {
+          "name": "toggle",
+          "payload": "node: TreeNode"
+        },
+        {
+          "name": "select",
+          "payload": "node: TreeNode"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuTree-usage.vue"
+      ],
+      "docPage": "TreeDoc.vue"
+    },
+    {
+      "name": "NeuUpload",
+      "sourcePath": "assets/library/components/neu/NeuUpload.vue",
+      "description": "文件选择框和拖拽上传组件。",
+      "props": [
+        {
+          "name": "accept",
+          "required": false,
+          "type": "string multiple?: boolean disabled?: boolean maxSize?: number // in bytes"
+        }
+      ],
+      "defaults": [
+        {
+          "name": "accept",
+          "value": "'*'"
+        },
+        {
+          "name": "multiple",
+          "value": "false"
+        },
+        {
+          "name": "disabled",
+          "value": "false"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "payload": "files: File[]"
+        },
+        {
+          "name": "error",
+          "payload": "error: string"
+        }
+      ],
+      "slots": [],
+      "relatedComponents": [],
+      "exampleFiles": [
+        "assets/examples/components/NeuUpload-usage.vue"
+      ],
+      "docPage": "UploadDoc.vue"
+    }
+  ]
+}

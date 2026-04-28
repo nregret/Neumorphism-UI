@@ -8,6 +8,8 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "check": "vue-tsc -b",
+    "skill:sync": "node ./scripts/skill-sync.mjs",
+    "skill:validate": "node ./scripts/skill-validate.mjs && vue-tsc -p tsconfig.skills.json --noEmit",
     "lint": "eslint . --ext .ts,.vue",
     "lint:fix": "eslint . --ext .ts,.vue --fix"
   },

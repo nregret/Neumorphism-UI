@@ -1,0 +1,18 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "composite": false,
+    "strict": false,
+    "allowJs": true,
+    "checkJs": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/vite-env.d.ts",
+    ".skills/neu-ui/assets/library/**/*.ts",
+    ".skills/neu-ui/assets/library/**/*.vue",
+    ".skills/neu-ui/assets/examples/pages/**/*.vue"
+  ]
+}

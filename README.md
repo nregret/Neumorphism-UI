@@ -29,14 +29,14 @@
 ---
 
 ## 预览
-<details>
+<details open>
   <summary>首页截图</summary>
   <br />
   <p align="center">
     <img src="docs/homepage.jpeg" width="960" alt="Homepage Preview" />
   </p>
 </details>
-<details>
+<details open>
   <summary>组件截图</summary>
   <br />
   <p align="center">

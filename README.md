@@ -23,7 +23,7 @@
   <img alt="Vite" src="https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white" />
   <img alt="TailwindCSS" src="https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?logo=tailwindcss&logoColor=white" />
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-black" />
+  <img alt="License" src="https://img.shields.io/badge/License-Apache--2.0-blue?logo=apache" />
 </p>
 
 ---
@@ -178,4 +178,4 @@ npm run lint
 - 新组件建议保持与现有 neu 组件目录风格一致：`src/components/neu/`
 
 ## License
-MIT
+Apache-2.0
